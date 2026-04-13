@@ -1,4 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
-import HomePage from '../components/home/HomePage'
+import { AgentChangeSection } from '../components/agent-change-section'
+import { DidYouKnowSection } from '../components/did-you-know-section'
+import { FeaturedBySection } from '../components/featured-by-section'
+import { HeroSection } from '../components/hero-section'
+import { ImpactSection } from '../components/impact-section'
 
-export const Route = createFileRoute('/')({ component: HomePage })
+export const Route = createFileRoute('/')({ component: App })
+
+function App() {
+  return (
+    <main className="garda-main">
+      <HeroSection />
+      <DidYouKnowSection />
+      <ImpactSection />
+      <FeaturedBySection />
+      <AgentChangeSection />
+    </main>
+  )
+}

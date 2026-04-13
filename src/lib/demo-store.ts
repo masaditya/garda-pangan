@@ -10,10 +10,14 @@ export const store = new Store<DemoStoreState>({
   lastName: 'Pangan',
 })
 
-export const fullName = new Store(
-  `${store.state.firstName} ${store.state.lastName}`,
-)
-
-store.subscribe((state) => {
-  fullName.setState(() => `${state.firstName} ${state.lastName}`)
-})
+export const fullName = {
+  get state() {
+    const { firstName, lastName } = store.state
+    return `${firstName} ${lastName}`.trim()
+  },
+  subscribe(listener: (value: string) => void) {
+    return store.subscribe(() => {
+      listener(this.state)
+    })
+  },
+}
