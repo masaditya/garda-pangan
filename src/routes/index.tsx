@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AgentChangeSection } from '../components/agent-change-section'
+import { AwardsInstagramSection } from '../components/awards-instagram-section'
 import { DidYouKnowSection } from '../components/did-you-know-section'
 import { FeaturedBySection } from '../components/featured-by-section'
 import { HeroSection } from '../components/hero-section'
@@ -17,6 +18,7 @@ function App() {
       <FeaturedBySection />
       <AgentChangeSection />
       <SupportersCollaboratorsSection />
+      <AwardsInstagramSection />
     </main>
   )
 }
