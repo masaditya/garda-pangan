@@ -1,4 +1,5 @@
 import { Menu } from 'lucide-react'
+import { useLocation } from '@tanstack/react-router'
 
 import { GardaButton } from './garda-button'
 import { GardaLogo } from './garda-logo'
@@ -29,11 +30,8 @@ const navItems = [
   { href: '/merchandise', label: 'Merchandise' },
 ]
 
-type HeaderProps = {
-  currentPath?: string
-}
-
-export default function Header({ currentPath = '/' }: HeaderProps) {
+export default function Header() {
+  const currentPath = useLocation().pathname
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50">
       <SiteContainer>

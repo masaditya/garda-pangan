@@ -125,7 +125,7 @@ function FooterNavBar() {
       {/* Pill nav bar */}
       <nav
         aria-label="Footer navigation"
-        className="inline-flex overflow-x-auto rounded-full bg-garda-forest p-1.5"
+        className="inline-flex overflow-x-auto rounded-full bg-garda-forest p-1.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <div className="flex gap-1.5">
           {footerNavItems.map((item) => {

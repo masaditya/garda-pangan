@@ -9,14 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as TentangKamiRouteImport } from './routes/tentang-kami'
+import { Route as RelawanRouteImport } from './routes/relawan'
+import { Route as MitraRouteImport } from './routes/mitra'
+import { Route as MerchandiseRouteImport } from './routes/merchandise'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const TentangKamiRoute = TentangKamiRouteImport.update({
+  id: '/tentang-kami',
+  path: '/tentang-kami',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RelawanRoute = RelawanRouteImport.update({
+  id: '/relawan',
+  path: '/relawan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MitraRoute = MitraRouteImport.update({
+  id: '/mitra',
+  path: '/mitra',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MerchandiseRoute = MerchandiseRouteImport.update({
+  id: '/merchandise',
+  path: '/merchandise',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,45 +55,100 @@ const DemoStoreRoute = DemoStoreRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/merchandise': typeof MerchandiseRoute
+  '/mitra': typeof MitraRoute
+  '/relawan': typeof RelawanRoute
+  '/tentang-kami': typeof TentangKamiRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/merchandise': typeof MerchandiseRoute
+  '/mitra': typeof MitraRoute
+  '/relawan': typeof RelawanRoute
+  '/tentang-kami': typeof TentangKamiRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/merchandise': typeof MerchandiseRoute
+  '/mitra': typeof MitraRoute
+  '/relawan': typeof RelawanRoute
+  '/tentang-kami': typeof TentangKamiRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/demo/store' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/merchandise'
+    | '/mitra'
+    | '/relawan'
+    | '/tentang-kami'
+    | '/demo/store'
+    | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/demo/store' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/about' | '/demo/store' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/merchandise'
+    | '/mitra'
+    | '/relawan'
+    | '/tentang-kami'
+    | '/demo/store'
+    | '/demo/tanstack-query'
+  id:
+    | '__root__'
+    | '/'
+    | '/merchandise'
+    | '/mitra'
+    | '/relawan'
+    | '/tentang-kami'
+    | '/demo/store'
+    | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  MerchandiseRoute: typeof MerchandiseRoute
+  MitraRoute: typeof MitraRoute
+  RelawanRoute: typeof RelawanRoute
+  TentangKamiRoute: typeof TentangKamiRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/tentang-kami': {
+      id: '/tentang-kami'
+      path: '/tentang-kami'
+      fullPath: '/tentang-kami'
+      preLoaderRoute: typeof TentangKamiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relawan': {
+      id: '/relawan'
+      path: '/relawan'
+      fullPath: '/relawan'
+      preLoaderRoute: typeof RelawanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mitra': {
+      id: '/mitra'
+      path: '/mitra'
+      fullPath: '/mitra'
+      preLoaderRoute: typeof MitraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/merchandise': {
+      id: '/merchandise'
+      path: '/merchandise'
+      fullPath: '/merchandise'
+      preLoaderRoute: typeof MerchandiseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,7 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  MerchandiseRoute: MerchandiseRoute,
+  MitraRoute: MitraRoute,
+  RelawanRoute: RelawanRoute,
+  TentangKamiRoute: TentangKamiRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
