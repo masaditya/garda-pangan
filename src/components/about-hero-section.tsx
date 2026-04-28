@@ -1,14 +1,19 @@
 export function AboutHeroSection({ data }: { data?: any }) {
   const bgImage = data?.heroBackground?.url || '/'
   const title = data?.heroTitle || 'Tentang Kami'
-  const subtitle = data?.heroSubtitle || 'Garda Pangan adalah food bank yang bertujuan menyelamatkan makanan berlebih berpotensi terbuang dari industri hospitality maupun F&B, serta mendistribusikannya kepada masyarakat pra-sejahtera.'
+  const subtitle =
+    data?.heroSubtitle ||
+    'Garda Pangan adalah food bank yang bertujuan menyelamatkan makanan berlebih berpotensi terbuang dari industri hospitality maupun F&B, serta mendistribusikannya kepada masyarakat pra-sejahtera.'
 
   return (
     <section
       role="banner"
       className="relative isolate min-h-screen overflow-hidden bg-garda-forest text-white"
     >
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})` }} />
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,56,30,0.30)_0%,rgba(12,56,30,0.18)_34%,rgba(12,56,30,0.26)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 h-36 bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.98)_100%)] sm:h-44" />
 

@@ -1,6 +1,15 @@
 {
-  "include": ["**/*.ts", "**/*.tsx", "eslint.config.js", "prettier.config.js", "vite.config.js"],
-  
+  "include": [
+    ".astro/types.d.ts",
+    "**/*.astro",
+    "**/*.ts",
+    "**/*.tsx",
+    "astro.config.mjs",
+    "eslint.config.js",
+    "prettier.config.js",
+    "vitest.config.ts"
+  ],
+
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
@@ -11,7 +20,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
+    "types": ["astro/client", "vite/client"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

@@ -18,9 +18,15 @@ describe('FeaturedBySection', () => {
       screen.queryByText(/since 2021, we have partnered with these companies/i),
     ).toBeNull()
     expect(screen.getByTestId('featured-grid').className).toContain('grid')
-    expect(screen.getByTestId('featured-grid').className).toContain('lg:grid-cols-5')
-    expect(screen.getByTestId('featured-card-tempo').className).toContain('shadow-none')
-    expect(screen.getByTestId('featured-card-tempo').className).toContain('rounded-[0.75rem]')
+    expect(screen.getByTestId('featured-grid').className).toContain(
+      'lg:grid-cols-5',
+    )
+    expect(screen.getByTestId('featured-card-tempo').className).toContain(
+      'shadow-none',
+    )
+    expect(screen.getByTestId('featured-card-tempo').className).toContain(
+      'rounded-[0.75rem]',
+    )
     expect(container.querySelector('.featured-section')).toBeNull()
   })
 })

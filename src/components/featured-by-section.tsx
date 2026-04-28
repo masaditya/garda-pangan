@@ -41,7 +41,11 @@ export function FeaturedBySection() {
           className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-5 lg:gap-y-5"
         >
           {featuredLogos.map((logo) => (
-            <LogoCard key={logo.id} className="lg:w-[15rem]" data-testid={`featured-card-${logo.id}`}>
+            <LogoCard
+              key={logo.id}
+              className="lg:w-[15rem]"
+              data-testid={`featured-card-${logo.id}`}
+            >
               <span
                 className={
                   logo.variant === 'tempo'

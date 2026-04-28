@@ -1,0 +1,45 @@
+---
+import { ArticleCard } from '../../components/article-card'
+import { getPublishedArticles } from '../../lib/strapi/articles'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+const articles = await getPublishedArticles()
+---
+
+<BaseLayout
+  title="Artikel | Garda Pangan"
+  description="Cerita, pengetahuan, dan pembaruan dari gerakan penyelamatan makanan Garda Pangan."
+  canonicalPath="/artikel"
+>
+  <main class="bg-garda-paper">
+    <section class="px-4 pb-16 pt-36 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-[1240px]">
+        <div class="max-w-3xl">
+          <p class="text-sm font-bold uppercase tracking-[0.18em] text-garda-forest">
+            Artikel
+          </p>
+          <h1 class="mt-4 text-5xl font-black tracking-tight text-garda-ink sm:text-6xl">
+            Cerita Penyelamatan Makanan
+          </h1>
+          <p class="mt-6 text-lg leading-relaxed text-garda-ink-soft">
+            Baca kabar terbaru, panduan, dan cerita dampak dari Garda Pangan.
+          </p>
+        </div>
+
+        {
+          articles.length > 0 ? (
+            <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {articles.map((article) => (
+                <ArticleCard article={article} />
+              ))}
+            </div>
+          ) : (
+            <div class="mt-12 rounded-[2rem] bg-white p-8 text-garda-ink-soft">
+              Belum ada artikel yang dipublikasikan.
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>

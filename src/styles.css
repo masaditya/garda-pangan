@@ -180,7 +180,11 @@ body {
   font-family: var(--font-sans);
   background-color: var(--paper);
   background:
-    radial-gradient(circle at top left, rgba(223, 255, 240, 0.88), transparent 28%),
+    radial-gradient(
+      circle at top left,
+      rgba(223, 255, 240, 0.88),
+      transparent 28%
+    ),
     linear-gradient(180deg, #f7f5ef 0%, #f0f3ec 46%, #eef4ec 100%);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -222,4 +226,3 @@ pre code {
   background: #1d2e45;
   color: #e8efff;
 }
-

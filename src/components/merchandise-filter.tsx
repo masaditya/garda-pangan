@@ -11,11 +11,15 @@ interface MerchandiseFilterProps {
   onChange: (category: string) => void
 }
 
-export function MerchandiseFilter({ categories, selected, onChange }: MerchandiseFilterProps) {
+export function MerchandiseFilter({
+  categories,
+  selected,
+  onChange,
+}: MerchandiseFilterProps) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-garda-neutral/5">
       <h2 className="mb-6 text-xl font-bold text-garda-ink">Opsi Filter</h2>
-      
+
       <div className="mb-6">
         <h3 className="mb-2 text-sm font-semibold text-garda-ink-soft">
           Kategori yang diterapkan
@@ -25,7 +29,10 @@ export function MerchandiseFilter({ categories, selected, onChange }: Merchandis
         ) : (
           <div className="flex flex-wrap gap-2">
             {selected.map((s) => (
-              <span key={s} className="rounded-full bg-garda-forest/10 px-3 py-1 text-xs font-semibold text-garda-forest">
+              <span
+                key={s}
+                className="rounded-full bg-garda-forest/10 px-3 py-1 text-xs font-semibold text-garda-forest"
+              >
                 {s}
               </span>
             ))}
@@ -54,8 +61,8 @@ export function MerchandiseFilter({ categories, selected, onChange }: Merchandis
                     />
                     <svg
                       className={cn(
-                        "pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white transition-opacity",
-                        isChecked ? "opacity-100" : "opacity-0"
+                        'pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white transition-opacity',
+                        isChecked ? 'opacity-100' : 'opacity-0',
                       )}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"

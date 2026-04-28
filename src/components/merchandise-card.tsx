@@ -31,11 +31,11 @@ export function MerchandiseCard({ product }: { product: MerchandiseItem }) {
           <Calendar className="h-3.5 w-3.5" />
           <span>{product.date}</span>
         </div>
-        
+
         <h3 className="mb-2 text-lg font-bold leading-tight text-garda-ink">
           {product.title}
         </h3>
-        
+
         <p className="mb-6 text-sm leading-relaxed text-garda-ink-soft line-clamp-2">
           {product.description}
         </p>

@@ -1,5 +1,4 @@
 import { Menu } from 'lucide-react'
-import { useLocation } from '@tanstack/react-router'
 
 import { GardaButton } from './garda-button'
 import { GardaLogo } from './garda-logo'
@@ -30,8 +29,11 @@ const navItems = [
   { href: '/merchandise', label: 'Merchandise' },
 ]
 
-export default function Header() {
-  const currentPath = useLocation().pathname
+type HeaderProps = {
+  currentPath?: string
+}
+
+export default function Header({ currentPath = '/' }: HeaderProps) {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50">
       <SiteContainer>
@@ -100,8 +102,8 @@ export default function Header() {
               >
                 <SheetTitle className="sr-only">Site navigation</SheetTitle>
                 <SheetDescription className="sr-only">
-                  Explore Garda Pangan navigation links and the primary
-                  donation call to action.
+                  Explore Garda Pangan navigation links and the primary donation
+                  call to action.
                 </SheetDescription>
                 <div className="mb-5">
                   <GardaLogo />
@@ -130,7 +132,10 @@ export default function Header() {
                   })}
                 </nav>
                 <Separator className="mt-5 bg-garda-border" />
-                <GardaButton href="/dukung" className="mt-5 w-full justify-between">
+                <GardaButton
+                  href="/dukung"
+                  className="mt-5 w-full justify-between"
+                >
                   Dukung
                 </GardaButton>
               </SheetContent>

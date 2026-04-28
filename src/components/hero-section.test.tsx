@@ -26,7 +26,9 @@ describe('HeroSection', () => {
     ).toBeNull()
     expect(hero.className).toContain('min-h-screen')
     expect(hero.className).not.toContain('rounded-[')
-    expect(screen.getByTestId('hero-content').className).toContain('items-center')
+    expect(screen.getByTestId('hero-content').className).toContain(
+      'items-center',
+    )
     expect(container.querySelector('.hero-section')).toBeNull()
   })
 })

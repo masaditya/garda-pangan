@@ -10,7 +10,7 @@ describe('MerchandiseCard', () => {
     category: 'Pupuk',
     date: 'Okt 2024',
     description: 'Maggot fresh yang kaya protein, untuk pakan ternak',
-    platforms: ['Tokopedia', 'Shopee']
+    platforms: ['Tokopedia', 'Shopee'],
   }
 
   it('renders product details correctly', () => {

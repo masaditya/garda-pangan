@@ -7,9 +7,7 @@ describe('ImpactSection', () => {
   test('renders the heading and all figma metrics', () => {
     const { container } = render(<ImpactSection />)
 
-    expect(
-      screen.getByRole('heading', { name: /our impact/i }),
-    ).toBeTruthy()
+    expect(screen.getByRole('heading', { name: /our impact/i })).toBeTruthy()
     expect(screen.getByText('608,311')).toBeTruthy()
     expect(screen.getByText(/portions of food rescued/i)).toBeTruthy()
     expect(screen.getByText('788,500')).toBeTruthy()
@@ -26,8 +24,12 @@ describe('ImpactSection', () => {
     ).toBeTruthy()
     expect(screen.getByAltText('Illustration of food care')).toBeTruthy()
 
-    expect(screen.getByTestId('impact-panel').className).toContain('max-w-[1376px]')
-    expect(screen.getByTestId('impact-panel').className).toContain('rounded-[2rem]')
+    expect(screen.getByTestId('impact-panel').className).toContain(
+      'max-w-[1376px]',
+    )
+    expect(screen.getByTestId('impact-panel').className).toContain(
+      'rounded-[2rem]',
+    )
     expect(screen.getByTestId('impact-stage').className).toContain(
       'lg:grid-cols-[406px_minmax(280px,1fr)_406px]',
     )

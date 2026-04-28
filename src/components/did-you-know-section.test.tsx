@@ -66,7 +66,9 @@ describe('DidYouKnowSection', () => {
       ),
     ).toBeTruthy()
     expect(screen.getByTestId('facts-frame').className).toContain('bg-white')
-    expect(screen.getByTestId('facts-frame').className).not.toContain('rounded-')
+    expect(screen.getByTestId('facts-frame').className).not.toContain(
+      'rounded-',
+    )
     expect(screen.getByTestId('facts-frame').className).not.toContain('shadow-')
     expect(container.querySelector('.facts-section__frame')).toBeNull()
   })
@@ -81,9 +83,9 @@ describe('DidYouKnowSection', () => {
     )
 
     expect(secondSlide).toBeTruthy()
-    expect(secondSlide.closest('[data-active]')?.getAttribute('data-active')).toBe(
-      'true',
-    )
+    expect(
+      secondSlide.closest('[data-active]')?.getAttribute('data-active'),
+    ).toBe('true')
 
     fireEvent.click(screen.getByRole('button', { name: /previous fact/i }))
 
@@ -91,9 +93,9 @@ describe('DidYouKnowSection', () => {
       /kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia/i,
     )
 
-    expect(firstSlide.closest('[data-active]')?.getAttribute('data-active')).toBe(
-      'true',
-    )
+    expect(
+      firstSlide.closest('[data-active]')?.getAttribute('data-active'),
+    ).toBe('true')
     expect(screen.getByTestId('facts-frame').className).toContain('grid')
   })
 })

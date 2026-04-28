@@ -91,16 +91,16 @@ export function MetricCard({
           </p>
         </div>
         <div
-          className={cn(
-            'relative z-10 mt-auto flex',
-            artClasses[variant].wrap,
-          )}
+          className={cn('relative z-10 mt-auto flex', artClasses[variant].wrap)}
         >
           <img
             src={imageSrc}
             alt=""
             aria-hidden="true"
-            className={cn('h-auto max-w-full object-contain', artClasses[variant].image)}
+            className={cn(
+              'h-auto max-w-full object-contain',
+              artClasses[variant].image,
+            )}
           />
         </div>
       </CardContent>
