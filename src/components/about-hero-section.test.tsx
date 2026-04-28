@@ -12,8 +12,6 @@ describe('AboutHeroSection', () => {
 
   it('renders the description text', () => {
     render(<AboutHeroSection />)
-    expect(
-      screen.getByText(/Garda Pangan adalah food bank/i),
-    ).toBeTruthy()
+    expect(screen.getByText(/Garda Pangan adalah food bank/i)).toBeTruthy()
   })
 })

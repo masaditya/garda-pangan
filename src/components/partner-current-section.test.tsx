@@ -6,7 +6,9 @@ import { PartnerCurrentSection } from './partner-current-section'
 describe('PartnerCurrentSection', () => {
   it('renders Current Partner heading', () => {
     render(<PartnerCurrentSection />)
-    expect(screen.getByRole('heading', { name: /Current Partner/i })).toBeTruthy()
+    expect(
+      screen.getByRole('heading', { name: /Current Partner/i }),
+    ).toBeTruthy()
   })
 
   it('renders partner items', () => {

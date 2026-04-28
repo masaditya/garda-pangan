@@ -1,5 +1,6 @@
 import { SectionShell } from './section-shell'
-import type { MitraData } from '../routes/mitra'
+
+import type { MitraPage as MitraData } from '#/lib/strapi/pages'
 
 const CURRENT_PARTNERS = [
   'Organic Market',
@@ -12,17 +13,17 @@ const CURRENT_PARTNERS = [
 
 export function PartnerCurrentSection({ data }: { data?: MitraData }) {
   const sectionTitle = data?.partnerSectionTitle || 'Current Partner'
-  
+
   return (
     <SectionShell tone="white">
       <div className="space-y-12">
         <h2 className="text-3xl font-black tracking-tight text-garda-forest sm:text-4xl">
           {sectionTitle}
         </h2>
-        
+
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:gap-6">
           {CURRENT_PARTNERS.map((partner) => (
-            <div 
+            <div
               key={partner}
               className="flex items-center gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-garda-neutral/10 transition-shadow hover:shadow-md"
             >

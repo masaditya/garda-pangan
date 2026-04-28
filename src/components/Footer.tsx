@@ -1,4 +1,3 @@
-import { useLocation } from '@tanstack/react-router'
 import { Youtube, Instagram, Linkedin, Facebook } from 'lucide-react'
 
 import { GardaLogo } from './garda-logo'
@@ -86,8 +85,7 @@ function SocialLinks({ variant, className }: SocialLinksProps) {
           aria-label={label}
           className={cn(
             'flex size-12 items-center justify-center rounded-full transition hover:opacity-70',
-            variant === 'bordered' &&
-              'border border-black/16 bg-white',
+            variant === 'bordered' && 'border border-black/16 bg-white',
             variant === 'subtle' && 'bg-[#ffffff14]',
           )}
         >
@@ -116,10 +114,7 @@ function FooterWatermark() {
 
 // ─── Section 2: Nav bar + Email ───────────────────────────────────────────────
 
-function FooterNavBar() {
-  const location = useLocation()
-  const currentPath = location.pathname
-
+function FooterNavBar({ currentPath }: { currentPath: string }) {
   return (
     <SiteContainer className="flex flex-col gap-6 pb-8 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
       {/* Pill nav bar */}
@@ -254,11 +249,15 @@ function FooterBottom() {
 
 // ─── Main Footer ──────────────────────────────────────────────────────────────
 
-export default function Footer() {
+type FooterProps = {
+  currentPath?: string
+}
+
+export default function Footer({ currentPath = '/' }: FooterProps) {
   return (
     <footer className="overflow-hidden bg-white">
       <FooterWatermark />
-      <FooterNavBar />
+      <FooterNavBar currentPath={currentPath} />
       <FooterContent />
       <FooterBottom />
     </footer>

@@ -117,7 +117,10 @@ export function DidYouKnowSection() {
               ))}
             </CarouselContent>
 
-            <div className="flex items-center justify-center gap-3" aria-label="Fact carousel controls">
+            <div
+              className="flex items-center justify-center gap-3"
+              aria-label="Fact carousel controls"
+            >
               <CarouselPrevious
                 aria-label="Previous fact"
                 className="static translate-y-0 rounded-full border-transparent bg-garda-mint text-garda-forest shadow-none hover:bg-garda-mint-soft"

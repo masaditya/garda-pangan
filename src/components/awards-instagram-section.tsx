@@ -161,10 +161,7 @@ export function AwardsInstagramSection() {
         </div>
 
         {/* Carousel — full width, slides edge-to-edge */}
-        <Carousel
-          opts={{ align: 'start', loop: true }}
-          className="w-full"
-        >
+        <Carousel opts={{ align: 'start', loop: true }} className="w-full">
           <CarouselContent className="-ml-3.5 px-4 sm:px-6 lg:px-8">
             {awards.map((award) => (
               <CarouselItem
@@ -205,10 +202,7 @@ export function AwardsInstagramSection() {
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-[2.5rem]"
         >
           {instagramPosts.map((post) => (
-            <figure
-              key={post.id}
-              className="overflow-hidden bg-[#d7ddd7]"
-            >
+            <figure key={post.id} className="overflow-hidden bg-[#d7ddd7]">
               <img
                 src={post.src}
                 alt={post.alt}

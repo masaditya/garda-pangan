@@ -1,0 +1,95 @@
+---
+import { ArticleBlockRenderer } from '../../components/article-block-renderer'
+import {
+  getArticleBySlug,
+  getPublishedArticles,
+} from '../../lib/strapi/articles'
+import { normalizeStrapiMediaUrl } from '../../lib/strapi/client'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+import type { Article } from '../../lib/strapi/articles'
+
+export async function getStaticPaths() {
+  const articles = await getPublishedArticles()
+
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }))
+}
+
+const { article } = Astro.props as { article?: Article }
+const resolvedArticle = article ?? (await getArticleBySlug(Astro.params.slug ?? ''))
+
+if (!resolvedArticle) {
+  throw new Error(`Article not found for slug: ${Astro.params.slug}`)
+}
+
+const coverUrl = normalizeStrapiMediaUrl(resolvedArticle.cover?.url)
+const publishedDate = resolvedArticle.publishedAt
+  ? new Intl.DateTimeFormat('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(resolvedArticle.publishedAt))
+  : null
+---
+
+<BaseLayout
+  title={`${resolvedArticle.title} | Garda Pangan`}
+  description={resolvedArticle.description ?? 'Artikel Garda Pangan'}
+  canonicalPath={`/artikel/${resolvedArticle.slug}`}
+  ogImage={coverUrl ?? undefined}
+>
+  <main class="bg-garda-paper">
+    <article class="px-4 pb-20 pt-36 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl">
+        <a
+          href="/artikel"
+          class="text-sm font-bold uppercase tracking-[0.18em] text-garda-forest transition hover:text-garda-ink"
+        >
+          Kembali ke Artikel
+        </a>
+
+        <header class="mt-8">
+          <div class="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-garda-forest/70">
+            {resolvedArticle.category?.name && <span>{resolvedArticle.category.name}</span>}
+            {
+              publishedDate && resolvedArticle.publishedAt && (
+                <time dateTime={resolvedArticle.publishedAt}>{publishedDate}</time>
+              )
+            }
+          </div>
+          <h1 class="mt-5 text-5xl font-black tracking-tight text-garda-ink sm:text-6xl">
+            {resolvedArticle.title}
+          </h1>
+          {
+            resolvedArticle.description && (
+              <p class="mt-6 text-xl leading-relaxed text-garda-ink-soft">
+                {resolvedArticle.description}
+              </p>
+            )
+          }
+        </header>
+
+        {
+          coverUrl && (
+            <img
+              src={coverUrl}
+              alt={
+                resolvedArticle.cover?.alternativeText ||
+                resolvedArticle.cover?.name ||
+                resolvedArticle.title
+              }
+              class="mt-10 aspect-[16/9] w-full rounded-[2rem] object-cover shadow-[0_24px_60px_rgba(13,42,22,0.14)]"
+            />
+          )
+        }
+
+        <div class="mt-12">
+          <ArticleBlockRenderer blocks={resolvedArticle.blocks} />
+        </div>
+      </div>
+    </article>
+  </main>
+</BaseLayout>

@@ -6,7 +6,9 @@ import { VolunteerHeroSection } from './volunteer-hero-section'
 describe('VolunteerHeroSection', () => {
   it('renders the heading correctly', () => {
     render(<VolunteerHeroSection />)
-    const heading = screen.getByRole('heading', { name: /Jadi Pahlawan Pangan Nyata/i })
+    const heading = screen.getByRole('heading', {
+      name: /Jadi Pahlawan Pangan Nyata/i,
+    })
     expect(heading).toBeTruthy()
   })
 

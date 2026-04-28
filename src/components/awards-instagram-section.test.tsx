@@ -77,9 +77,7 @@ describe('AwardsInstagramSection', () => {
     expect(slides[0].getAttribute('aria-roledescription')).toBe('slide')
 
     // Navigation arrows
-    expect(
-      screen.getByRole('button', { name: /previous award/i }),
-    ).toBeTruthy()
+    expect(screen.getByRole('button', { name: /previous award/i })).toBeTruthy()
     expect(screen.getByRole('button', { name: /next award/i })).toBeTruthy()
 
     // Instagram section unchanged
