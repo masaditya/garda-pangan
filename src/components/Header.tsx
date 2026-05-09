@@ -22,28 +22,55 @@ import { cn } from '#/lib/utils'
 
 const navItems = [
   { href: '/', label: 'Beranda' },
-  { href: '/tentang-kami', label: 'Tentang Kami' },
-  { href: '/mitra', label: 'Mitra' },
-  { href: '/penerima', label: 'Penerima' },
-  { href: '/relawan', label: 'Relawan' },
-  { href: '/merchandise', label: 'Merchandise' },
+  { href: '/program', label: 'Program' },
+  { href: '/event', label: 'Event' },
+  { href: '/knowledge', label: 'Knowledge' },
+  { href: '/produk', label: 'Produk' },
+  { href: '/kontak', label: 'Kontak' },
 ]
 
 type HeaderProps = {
   currentPath?: string
 }
 
+function LanguageSwitcher() {
+  return (
+    <button className="flex items-center gap-2 rounded-full border border-garda-border bg-white px-4 py-2 text-sm font-medium text-garda-forest shadow-sm transition hover:bg-garda-mint-soft">
+      <span className="flex size-5 items-center justify-center overflow-hidden rounded-full">
+        <img
+          src="https://flagcdn.com/us.svg"
+          alt="English (US)"
+          className="h-full w-full object-cover"
+        />
+      </span>
+      <span>English (US)</span>
+      <svg
+        className="size-4 opacity-50"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fillRule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </button>
+  )
+}
+
 export default function Header({ currentPath = '/' }: HeaderProps) {
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-4 z-50">
+    <header className="pointer-events-none fixed inset-x-0 top-6 z-50">
       <SiteContainer>
-        <div className="pointer-events-auto flex min-h-20 items-center justify-between gap-4 rounded-full border border-white/60 bg-white/92 px-4 py-3 shadow-[0_24px_60px_rgba(13,42,22,0.14)] backdrop-blur-xl sm:px-5 lg:px-7">
+        <div className="pointer-events-auto flex min-h-[72px] items-center justify-between gap-4 rounded-full border border-white/60 bg-white/95 px-6 py-2 shadow-[0_24px_60px_rgba(13,42,22,0.12)] backdrop-blur-xl sm:px-8">
           <a
             href="/"
             className="shrink-0 no-underline"
             aria-label="Garda Pangan"
           >
-            <GardaLogo />
+            <GardaLogo className="h-10 w-auto" />
           </a>
 
           <nav
@@ -51,7 +78,7 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
             className="hidden flex-1 justify-center lg:flex"
           >
             <NavigationMenu className="max-w-none" viewport={false}>
-              <NavigationMenuList className="gap-1.5 bg-transparent">
+              <NavigationMenuList className="gap-1 bg-transparent">
                 {navItems.map((item) => {
                   const isActive = item.href === currentPath
 
@@ -61,9 +88,9 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                         asChild
                         active={isActive}
                         className={cn(
-                          'rounded-full px-4 py-2.5 text-sm font-medium text-garda-forest/80 transition hover:bg-garda-mint-soft hover:text-garda-forest',
+                          'rounded-full px-5 py-2 text-sm font-medium text-garda-forest/70 transition hover:bg-garda-mint-soft hover:text-garda-forest',
                           isActive &&
-                            'bg-garda-mint text-garda-forest shadow-[inset_0_0_0_1px_rgba(17,113,61,0.06)]',
+                            'bg-garda-mint-soft text-garda-forest font-bold',
                         )}
                       >
                         <a
@@ -81,9 +108,9 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
           </nav>
 
           <div className="flex items-center gap-3">
-            <GardaButton href="/dukung" className="hidden sm:inline-flex">
-              Dukung
-            </GardaButton>
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
 
             <Sheet>
               <SheetTrigger asChild>
@@ -102,11 +129,11 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
               >
                 <SheetTitle className="sr-only">Site navigation</SheetTitle>
                 <SheetDescription className="sr-only">
-                  Explore Garda Pangan navigation links and the primary donation
-                  call to action.
+                  Explore Garda Pangan navigation links and language options.
                 </SheetDescription>
-                <div className="mb-5">
+                <div className="mb-5 flex items-center justify-between">
                   <GardaLogo />
+                  <LanguageSwitcher />
                 </div>
                 <Separator className="bg-garda-border" />
                 <nav
@@ -131,13 +158,6 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                     )
                   })}
                 </nav>
-                <Separator className="mt-5 bg-garda-border" />
-                <GardaButton
-                  href="/dukung"
-                  className="mt-5 w-full justify-between"
-                >
-                  Dukung
-                </GardaButton>
               </SheetContent>
             </Sheet>
           </div>

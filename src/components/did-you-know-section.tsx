@@ -57,12 +57,26 @@ export function DidYouKnowSection() {
     >
       <div
         data-testid="facts-frame"
-        className="relative mx-auto grid w-full max-w-[1321px] gap-8 overflow-hidden bg-white px-4 py-10 sm:px-10 sm:py-12 lg:px-[60px] lg:py-16"
+        className="relative mx-auto flex w-full max-w-[1440px] flex-col items-center justify-center overflow-hidden bg-white px-6 py-20 sm:px-12 md:py-28 lg:py-32"
       >
-        <div className="flex justify-center">
+        {/* Large Decorative Quotation Marks */}
+        <div
+          className="absolute -top-10 left-10 select-none text-[20rem] font-black leading-none text-garda-paper-soft opacity-80 sm:text-[25rem] lg:left-20 lg:text-[30rem]"
+          aria-hidden="true"
+        >
+          “
+        </div>
+        <div
+          className="absolute -bottom-50 right-10 select-none text-[20rem] font-black leading-none text-garda-paper-soft opacity-80 sm:text-[25rem] lg:right-20 lg:text-[30rem]"
+          aria-hidden="true"
+        >
+          ”
+        </div>
+
+        <div className="relative z-10 mb-12 flex justify-center lg:mb-16">
           <h2
             id="facts-heading"
-            className="text-center text-[clamp(3.25rem,5vw,4.5rem)] font-black tracking-[-0.06em] text-[#0a011f]"
+            className="text-center font-sans text-[clamp(2.5rem,6vw,4rem)] font-black tracking-tight text-garda-ink"
           >
             Tahukah Kamu?
           </h2>
@@ -71,22 +85,9 @@ export function DidYouKnowSection() {
         <Carousel
           opts={{ align: 'start', loop: true }}
           setApi={setApi}
-          className="w-full"
+          className="relative z-10 w-full"
         >
-          <div className="relative grid place-items-center gap-6">
-            <img
-              src="/figma/facts-bulb-small.png"
-              alt=""
-              aria-hidden="true"
-              className="absolute left-0 top-[68%] hidden h-auto w-[9.625rem] -translate-y-1/2 md:block"
-            />
-            <img
-              src="/figma/facts-bulb-large.png"
-              alt=""
-              aria-hidden="true"
-              className="absolute right-0 top-[-2.5rem] h-auto w-[9rem] md:w-[16.125rem]"
-            />
-
+          <div className="flex flex-col items-center gap-12">
             <CarouselContent className="w-full">
               {factSlides.map((slide, index) => (
                 <CarouselItem
@@ -95,39 +96,27 @@ export function DidYouKnowSection() {
                 >
                   <article
                     data-active={index === current ? 'true' : 'false'}
-                    className="relative mx-auto grid min-h-[16.75rem] max-w-[77.375rem] place-items-center px-8 pb-4 pt-0 text-center sm:px-16 lg:px-20"
+                    className="mx-auto flex max-w-[1000px] flex-col items-center px-4 text-center sm:px-10"
                   >
-                    <span
-                      className="absolute left-0 top-[-0.625rem] text-[5.5rem] leading-none text-[#0a011f] lg:text-[7.5rem]"
-                      aria-hidden="true"
-                    >
-                      “
-                    </span>
-                    <p className="max-w-[56.9375rem] text-balance font-display text-[clamp(2rem,3.2vw,2.5rem)] font-medium leading-[1.4] tracking-[0.01em] text-[#0a011f]">
+                    <p className="text-pretty font-sans text-[clamp(1.25rem,3vw,2rem)] font-medium leading-normal text-garda-ink">
                       {slide.body}
                     </p>
-                    <span
-                      className="absolute bottom-[-0.625rem] right-[8%] text-[5.5rem] leading-none text-[#0a011f] lg:text-[7.5rem]"
-                      aria-hidden="true"
-                    >
-                      ”
-                    </span>
                   </article>
                 </CarouselItem>
               ))}
             </CarouselContent>
 
             <div
-              className="flex items-center justify-center gap-3"
+              className="flex items-center justify-center gap-4"
               aria-label="Fact carousel controls"
             >
               <CarouselPrevious
                 aria-label="Previous fact"
-                className="static translate-y-0 rounded-full border-transparent bg-garda-mint text-garda-forest shadow-none hover:bg-garda-mint-soft"
+                className="static size-14 translate-y-0 border border-garda-forest/40 bg-white/40 text-garda-forest shadow-none transition-all hover:border-garda-forest hover:bg-white/80"
               />
               <CarouselNext
                 aria-label="Next fact"
-                className="static translate-y-0 rounded-full border-transparent bg-garda-mint text-garda-forest shadow-none hover:bg-garda-mint-soft"
+                className="static size-14 translate-y-0 border border-garda-forest/40 bg-white/40 text-garda-forest shadow-none transition-all hover:border-garda-forest hover:bg-white/80"
               />
             </div>
           </div>

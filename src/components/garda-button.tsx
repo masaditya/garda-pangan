@@ -55,7 +55,7 @@ export function GardaButton({
       <span
         className={cn(
           variant === 'hero' && 'text-white',
-          variant === 'impact' && 'text-garda-sun',
+          variant === 'impact' && 'flex-1 text-center text-garda-sun',
         )}
       >
         {children}

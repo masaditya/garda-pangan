@@ -47,6 +47,19 @@ export type MerchandisePage = StrapiEntry & {
   heroBackground?: StrapiMedia | null
 }
 
+export type Homepage = StrapiEntry & {
+  heroTitle?: string | null
+  heroSubtitle?: string | null
+  heroCtaText?: string | null
+  heroCtaLink?: string | null
+  heroBackground?: StrapiMedia | null
+  impactTitle?: string | null
+  statsPortionsRescued?: string | null
+  statsCo2Reduced?: string | null
+  statsFoodLossPotential?: string | null
+  statsFoodScrap?: string | null
+}
+
 export async function getAboutPage() {
   return fetchStrapiSingle<AboutPage>('/api/about', {
     populate: {
@@ -73,5 +86,11 @@ export async function getMerchandisePage() {
     populate: {
       heroBackground: true,
     },
+  })
+}
+
+export async function getHomepage() {
+  return fetchStrapiSingle<Homepage>('/api/homepage', {
+    populate: '*',
   })
 }

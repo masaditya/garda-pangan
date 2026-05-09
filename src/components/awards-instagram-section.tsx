@@ -3,8 +3,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '#/components/ui/carousel'
 
 import { SectionShell } from './section-shell'
@@ -75,22 +73,19 @@ function AwardCard({ year, title, source, id }: (typeof awards)[number]) {
   return (
     <Card
       data-testid={id}
-      className="relative w-full overflow-hidden rounded-3xl border border-[#ececec] bg-white py-0 shadow-[0_14px_28px_rgba(17,17,17,0.045)]"
+      className="relative w-full overflow-hidden rounded-[1.5rem] border-white bg-white py-0 shadow-[0_14px_28px_rgba(17,17,17,0.045)]"
     >
-      <CardContent className="relative flex min-h-[16rem] flex-col p-6 sm:min-h-[18rem] lg:min-h-[26.25rem]">
-        <span className="text-[1.4rem] font-bold leading-none tracking-[-0.02em] text-[#6b7280] sm:text-[1.6rem] lg:text-[2rem]">
+      <CardContent className="relative flex min-h-[14rem] flex-col p-6 lg:min-h-[18rem]">
+        <span className="text-sm font-bold leading-none tracking-tight text-[#6b7280] lg:text-base">
           {year}
         </span>
-        <h3 className="mt-2 max-w-[9rem] text-[1.2rem] font-bold leading-[1.3] tracking-[-0.02em] text-[#08080c] sm:max-w-[10rem] sm:text-[1.4rem] lg:text-[2rem]">
+        <h3 className="mt-2 max-w-[12rem] text-lg font-black leading-tight tracking-tight text-[#08080c] lg:text-2xl">
           {title}
         </h3>
-        <div className="mt-auto text-[0.8rem] leading-none sm:text-[0.875rem] lg:text-[1.25rem]">
-          <span className="block text-[#6b7280]">Oleh</span>
-          <span className="font-bold tracking-[-0.03em] text-[#e45d51]">
-            {sourceLead}
-          </span>
-          <span className="font-bold tracking-[-0.03em] text-[#6b7280]">
-            .{sourceSuffix}
+        <div className="mt-auto text-xs leading-none lg:text-sm">
+          <span className="block font-medium text-[#6b7280]">Oleh</span>
+          <span className="mt-1 block font-bold tracking-tight text-[#e45d51] uppercase">
+            {sourceLead}.{sourceSuffix}
           </span>
         </div>
 
@@ -98,100 +93,65 @@ function AwardCard({ year, title, source, id }: (typeof awards)[number]) {
           src="/figma/award-medal.svg"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute right-0 bottom-0 h-auto w-[5rem] sm:w-[5.5rem] lg:w-[6rem]"
+          className="pointer-events-none absolute right-2 bottom-2 h-auto w-24 lg:w-32 object-contain"
         />
       </CardContent>
     </Card>
   )
 }
 
-export function AwardsInstagramSection() {
+export function AwardsSection() {
   return (
     <SectionShell
       aria-labelledby="awards-recognition-heading"
-      spacing="compact"
-      tone="white"
+      spacing="default"
+      tone="transparent"
+      className="bg-garda-mint-soft/50"
       innerClassName="max-w-none px-0"
     >
-      {/* Awards sub-section: full viewport width.
-          NO overflow-hidden here — decorative shapes must bleed outside.
-          Body already has overflow-x: hidden globally to prevent scrollbar. */}
-      <div className="relative w-full pt-4 pb-2">
-        {/* Yellow decorative shapes — left edge, partially off-screen */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-[-3rem] top-[2rem] hidden lg:block"
-        >
-          {/* Main tall bar */}
-          <span className="absolute left-[3rem] top-0 h-[20rem] w-[2.5rem] rounded-full bg-[#ffe44f]" />
-          {/* Upper-right diagonal */}
-          <span className="absolute left-[4.5rem] top-[-1.5rem] h-[9rem] w-[2.5rem] rotate-[40deg] rounded-full bg-[#ffe44f]" />
-          {/* Lower-right diagonal */}
-          <span className="absolute left-[4.5rem] top-[10rem] h-[9rem] w-[2.5rem] rotate-[-40deg] rounded-full bg-[#ffe44f]" />
-        </div>
-
-        {/* Green decorative shapes — right edge, partially off-screen */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[-3rem] top-[3rem] hidden lg:block"
-        >
-          {/* Small circle */}
-          <span className="absolute right-[10rem] top-0 h-[2.5rem] w-[2.5rem] rounded-full bg-[#3d7656]" />
-          {/* Arch / half-circle */}
-          <span className="absolute right-[2rem] top-[-0.5rem] h-[3.5rem] w-[3.5rem] rounded-t-[999px] bg-[#3d7656]" />
-          {/* Large diagonal bar */}
-          <span className="absolute right-[6rem] top-[8rem] h-[14rem] w-[2.5rem] rotate-[26deg] rounded-full bg-[#3d7656]" />
-          {/* Vertical bar */}
-          <span className="absolute right-[2rem] top-[7rem] h-[10rem] w-[2.5rem] rounded-full bg-[#3d7656]" />
-          {/* Angled right bar */}
-          <span className="absolute right-[-0.5rem] top-[9rem] h-[9rem] w-[2.5rem] -rotate-[39deg] rounded-full bg-[#3d7656]" />
-        </div>
-
-        {/* Heading — centered, constrained width */}
-        <div className="mb-6 flex justify-center text-center">
+      <div className="relative w-full">
+        <div className="mb-8 flex justify-center text-center">
           <h2
             id="awards-recognition-heading"
-            aria-label="Awards & Recognition"
-            className="text-[clamp(2.65rem,4.6vw,3.5rem)] font-black uppercase leading-[1.1] tracking-[-0.03em] text-[#202020]"
+            className="text-[clamp(2.75rem,5vw,4.5rem)] font-black uppercase leading-none tracking-tight text-garda-forest"
           >
-            Awards &amp;
-            <br />
+            Awards &<br />
             Recognition
           </h2>
         </div>
 
-        {/* Carousel — full width, slides edge-to-edge */}
-        <Carousel opts={{ align: 'start', loop: true }} className="w-full">
-          <CarouselContent className="-ml-3.5 px-4 sm:px-6 lg:px-8">
+        <Carousel
+          opts={{ align: 'start', loop: true }}
+          className="w-full cursor-grab active:cursor-grabbing select-none"
+        >
+          <CarouselContent className="-ml-4 px-4 sm:px-6 lg:px-8">
             {awards.map((award) => (
               <CarouselItem
                 key={award.id}
-                className="basis-[280px] pl-3.5 sm:basis-[300px] lg:basis-[320px]"
+                className="basis-[260px] pl-4 sm:basis-[300px] lg:basis-[320px]"
               >
                 <AwardCard {...award} />
               </CarouselItem>
             ))}
           </CarouselContent>
-
-          <div className="mt-4 flex items-center justify-center gap-3">
-            <CarouselPrevious
-              aria-label="Previous award"
-              className="static translate-y-0 rounded-full border-transparent bg-garda-mint text-garda-forest shadow-none hover:bg-garda-mint-soft"
-            />
-            <CarouselNext
-              aria-label="Next award"
-              className="static translate-y-0 rounded-full border-transparent bg-garda-mint text-garda-forest shadow-none hover:bg-garda-mint-soft"
-            />
-          </div>
         </Carousel>
       </div>
+    </SectionShell>
+  )
+}
 
-      {/* Instagram sub-section */}
-      <div className="mx-auto mt-10 flex w-full max-w-[1410px] flex-col gap-5 px-4 sm:px-6 lg:mt-11 lg:gap-6 lg:px-8">
+export function InstagramSection() {
+  return (
+    <SectionShell
+      aria-labelledby="our-instagram-heading"
+      spacing="compact"
+      tone="white"
+    >
+      <div className="mx-auto flex w-full flex-col gap-8">
         <div className="flex justify-center text-center">
           <h2
             id="our-instagram-heading"
-            className="text-3xl font-black uppercase leading-[1.2] tracking-[-0.02em] text-[#222222] lg:text-[3.5rem]"
+            className="text-[clamp(2.5rem,5vw,3.5rem)] font-black uppercase leading-tight tracking-tight text-garda-forest"
           >
             Our Instagram
           </h2>
@@ -199,14 +159,14 @@ export function AwardsInstagramSection() {
 
         <div
           data-testid="instagram-grid"
-          className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-[2.5rem]"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-6"
         >
           {instagramPosts.map((post) => (
-            <figure key={post.id} className="overflow-hidden bg-[#d7ddd7]">
+            <figure key={post.id} className="overflow-hidden bg-[#d7ddd7] rounded-xl">
               <img
                 src={post.src}
                 alt={post.alt}
-                className="aspect-[3/4] h-full w-full object-cover object-top"
+                className="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </figure>
           ))}

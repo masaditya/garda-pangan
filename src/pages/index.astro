@@ -1,22 +1,42 @@
 ---
 import { AgentChangeSection } from '../components/agent-change-section'
-import { AwardsInstagramSection } from '../components/awards-instagram-section'
+import {
+  AwardsSection,
+  InstagramSection,
+} from '../components/awards-instagram-section'
 import { DidYouKnowSection } from '../components/did-you-know-section'
 import { FeaturedBySection } from '../components/featured-by-section'
 import { HeroSection } from '../components/hero-section'
 import { ImpactSection } from '../components/impact-section'
 import { SupportersCollaboratorsSection } from '../components/supporters-collaborators-section'
 import BaseLayout from '../layouts/BaseLayout.astro'
+import { getHomepage } from '../lib/strapi/pages'
+
+const homepageResponse = await getHomepage()
+const homepage = homepageResponse?.data
 ---
 
 <BaseLayout canonicalPath="/">
   <main class="garda-main">
-    <HeroSection />
+    <HeroSection
+      title={homepage?.heroTitle}
+      subtitle={homepage?.heroSubtitle}
+      ctaText={homepage?.heroCtaText}
+      ctaLink={homepage?.heroCtaLink}
+      backgroundImage={homepage?.heroBackground?.url}
+    />
     <DidYouKnowSection client:load />
-    <ImpactSection />
-    <FeaturedBySection />
+    <ImpactSection
+      title={homepage?.impactTitle}
+      portionsRescued={homepage?.statsPortionsRescued}
+      co2Reduced={homepage?.statsCo2Reduced}
+      foodLossPotential={homepage?.statsFoodLossPotential}
+      foodScrap={homepage?.statsFoodScrap}
+    />
+    <FeaturedBySection client:visible />
     <AgentChangeSection />
     <SupportersCollaboratorsSection />
-    <AwardsInstagramSection />
+    <AwardsSection />
+    <InstagramSection />
   </main>
 </BaseLayout>
