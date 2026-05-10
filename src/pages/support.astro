@@ -1,0 +1,27 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { SupportSection } from '#/components/support-section'
+
+const bgImage = '/garda-hero-reference.png' // Using the project reference image
+---
+
+<BaseLayout 
+  title="Dukung Kami - Garda Pangan"
+  description="Dukung gerakan Garda Pangan dengan berdonasi dana operasional atau menjadi donatur rutin."
+  canonicalPath="/support"
+>
+  <main class="relative isolate min-h-screen">
+    <div
+      class="absolute inset-0 -z-20 bg-cover bg-fixed bg-center"
+      style={`background-image: url(${bgImage})`}
+    >
+    </div>
+    <div class="absolute inset-0 -z-10 bg-[#0C381E]/85 mix-blend-multiply"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 h-[50vh] bg-linear-to-b from-[#0C381E]/60 to-transparent">
+    </div>
+
+    <div class="relative z-10 w-full">
+      <SupportSection client:load />
+    </div>
+  </main>
+</BaseLayout>

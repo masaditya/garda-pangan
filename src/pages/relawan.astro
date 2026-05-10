@@ -1,14 +1,27 @@
 ---
-import { VolunteerHeroSection } from '../components/volunteer-hero-section'
-import BaseLayout from '../layouts/BaseLayout.astro'
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { VolunteerSection } from '#/components/volunteer-section'
+
+const bgImage = 'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop' // Placeholder for field volunteers
 ---
 
-<BaseLayout
-  title="Relawan | Garda Pangan"
-  description="Bergabung sebagai relawan Garda Pangan dan ikut menyelamatkan makanan untuk masyarakat yang membutuhkan."
+<BaseLayout 
+  title="Jadi Relawan - Garda Pangan"
+  description="Bergabunglah menjadi Food Heroes Garda Pangan dan bantu kami menyelamatkan makanan untuk mereka yang membutuhkan."
   canonicalPath="/relawan"
 >
-  <main>
-    <VolunteerHeroSection />
+  <main class="relative isolate min-h-screen">
+    <div
+      class="absolute inset-0 -z-20 bg-cover bg-fixed bg-center"
+      style={`background-image: url(${bgImage})`}
+    >
+    </div>
+    <div class="absolute inset-0 -z-10 bg-[#0C381E]/75 mix-blend-multiply"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 h-[50vh] bg-linear-to-b from-[#0C381E]/60 to-transparent">
+    </div>
+
+    <div class="relative z-10 w-full">
+      <VolunteerSection client:load />
+    </div>
   </main>
 </BaseLayout>
