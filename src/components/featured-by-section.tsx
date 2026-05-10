@@ -2,6 +2,7 @@ import MarqueeComponent from 'react-fast-marquee'
 
 import { LogoCard } from './logo-card'
 import { SectionShell } from './section-shell'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 // Handle ESM/CJS interop for Marquee
 const Marquee = (MarqueeComponent as any).default || (MarqueeComponent as any)
@@ -16,7 +17,12 @@ const featuredLogos = [
   { id: 'reader-1', label: "Reader's Digest", variant: 'reader' },
 ]
 
-type LogoItem = (typeof featuredLogos)[number]
+type LogoItem = {
+  id: string | number
+  label?: string | null
+  url?: string | null
+  variant?: string
+}
 
 const RowLogos = ({
   logos,
@@ -40,56 +46,74 @@ const RowLogos = ({
         className="mx-3 w-[180px] lg:w-[280px]"
         data-testid={`featured-card-${logo.id}`}
       >
-        <span
-          className={
-            logo.variant === 'tempo'
-              ? 'text-center text-[1.4rem] font-black tracking-tight text-[#d7352a] lg:text-[1.8rem]'
-              : logo.variant === 'cnn'
-                ? 'flex flex-col items-center text-[#cf1e1e]'
-                : logo.variant === 'metro'
-                  ? 'text-center text-[1.3rem] font-black tracking-tight text-[#1d6db4] lg:text-[1.6rem]'
-                  : logo.variant === 'forbes'
-                    ? 'flex items-start text-black'
-                    : logo.variant === 'bbc'
-                      ? 'flex flex-col items-center rounded-sm bg-[#bb1e22] px-3 py-1.5 text-[0.85rem] font-black tracking-wider text-white'
-                      : logo.variant === 'trans'
-                        ? 'text-center text-[1.25rem] font-black tracking-tight text-[#1c4e9e] lg:text-[1.5rem]'
-                        : 'text-center text-[1.6rem] font-medium tracking-tight text-[#d7d7d7]'
-          }
-          aria-label={logo.label}
-        >
-          {logo.variant === 'cnn' ? (
-            <>
-              <span className="text-[1.4rem] font-black lg:text-[1.7rem]">
-                CNN
-              </span>
-              <span className="text-[0.6rem] font-bold">Indonesia</span>
-            </>
-          ) : logo.variant === 'forbes' ? (
-            <>
-              <span className="text-[1.6rem] font-black lg:text-[2rem]">
-                Forbes
-              </span>
-              <span className="ml-1 text-[0.5rem] font-semibold">
-                Indonesia
-              </span>
-            </>
-          ) : logo.variant === 'bbc' ? (
-            <>
-              <span>BBC</span>
-              <span>NEWS</span>
-            </>
-          ) : (
-            logo.label
-          )}
-        </span>
+        {logo.url ? (
+          <img
+            src={normalizeStrapiMediaUrl(logo.url) ?? undefined}
+            alt={logo.label ?? ''}
+            className="h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          />
+        ) : (
+          <span
+            className={
+              logo.variant === 'tempo'
+                ? 'text-center text-[1.4rem] font-black tracking-tight text-[#d7352a] lg:text-[1.8rem]'
+                : logo.variant === 'cnn'
+                  ? 'flex flex-col items-center text-[#cf1e1e]'
+                  : logo.variant === 'metro'
+                    ? 'text-center text-[1.3rem] font-black tracking-tight text-[#1d6db4] lg:text-[1.6rem]'
+                    : logo.variant === 'forbes'
+                      ? 'flex items-start text-black'
+                      : logo.variant === 'bbc'
+                        ? 'flex flex-col items-center rounded-sm bg-[#bb1e22] px-3 py-1.5 text-[0.85rem] font-black tracking-wider text-white'
+                        : logo.variant === 'trans'
+                          ? 'text-center text-[1.25rem] font-black tracking-tight text-[#1c4e9e] lg:text-[1.5rem]'
+                          : 'text-center text-[1.6rem] font-medium tracking-tight text-[#d7d7d7]'
+            }
+            aria-label={logo.label ?? ''}
+          >
+            {logo.variant === 'cnn' ? (
+              <>
+                <span className="text-[1.4rem] font-black lg:text-[1.7rem]">
+                  CNN
+                </span>
+                <span className="text-[0.6rem] font-bold">Indonesia</span>
+              </>
+            ) : logo.variant === 'forbes' ? (
+              <>
+                <span className="text-[1.6rem] font-black lg:text-[2rem]">
+                  Forbes
+                </span>
+                <span className="ml-1 text-[0.5rem] font-semibold">
+                  Indonesia
+                </span>
+              </>
+            ) : logo.variant === 'bbc' ? (
+              <>
+                <span>BBC</span>
+                <span>NEWS</span>
+              </>
+            ) : (
+              logo.label
+            )}
+          </span>
+        )}
       </LogoCard>
     ))}
   </Marquee>
 )
 
-export function FeaturedBySection() {
-  const tripleLogos = [...featuredLogos, ...featuredLogos, ...featuredLogos]
+type FeaturedBySectionProps = {
+  title?: string | null
+  logos?: { id: number; url: string; name?: string | null }[]
+}
+
+export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
+  const items: LogoItem[] =
+    logos && logos.length > 0
+      ? logos.map((l) => ({ id: l.id, url: l.url, label: l.name }))
+      : featuredLogos
+
+  const tripleLogos = [...items, ...items, ...items]
 
   return (
     <SectionShell
@@ -104,7 +128,7 @@ export function FeaturedBySection() {
             id="featured-by-heading"
             className="font-sans text-[clamp(2.5rem,6vw,4rem)] font-black tracking-tight text-garda-forest"
           >
-            FEATURED BY
+            {title || 'FEATURED BY'}
           </h2>
         </div>
 
@@ -120,3 +144,4 @@ export function FeaturedBySection() {
     </SectionShell>
   )
 }
+

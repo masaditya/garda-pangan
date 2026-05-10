@@ -1,9 +1,25 @@
 import { ActionCard } from './action-card'
 import { GardaButton } from './garda-button'
 import { SectionShell } from './section-shell'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
-export function AgentChangeSection() {
-  const actionCards = [
+type AgentChangeSectionProps = {
+  title?: string | null
+  subtitle?: string | null
+  cards?: {
+    id: number
+    title: string
+    description: string
+    image?: { url: string } | null
+  }[]
+}
+
+export function AgentChangeSection({
+  title,
+  subtitle,
+  cards,
+}: AgentChangeSectionProps) {
+  const defaultCards = [
     {
       title: 'Donasi Makanan',
       description: 'Methodical Data Collection and Meaningful Organization',
@@ -24,7 +40,18 @@ export function AgentChangeSection() {
       description: 'Methodical Data Collection and Meaningful Organization',
       iconSrc: '/figma/agent-volunteer.png',
     },
-  ] as const
+  ]
+
+  const displayCards =
+    cards && cards.length > 0
+      ? cards.map((card, index) => ({
+          title: card.title,
+          description: card.description,
+          iconSrc:
+            normalizeStrapiMediaUrl(card.image?.url) ||
+            defaultCards[index % defaultCards.length].iconSrc,
+        }))
+      : defaultCards
 
   return (
     <SectionShell
@@ -38,11 +65,11 @@ export function AgentChangeSection() {
           id="agent-change-heading"
           className="text-[clamp(2.75rem,5vw,4.5rem)] font-black uppercase leading-none tracking-tight text-garda-forest"
         >
-          Ayo Jadi Agen Perubahan
+          {title || 'Ayo Jadi Agen Perubahan'}
         </h2>
         <p className="max-w-136 text-balance text-base leading-normal text-[#080808]/80 sm:text-lg">
-          Melalui Garda Pangan kamu bisa berpartisipasi dalam menuntaskan
-          kerawanan pangan di Indonesia.
+          {subtitle ||
+            'Melalui Garda Pangan kamu bisa berpartisipasi dalam menuntaskan kerawanan pangan di Indonesia.'}
         </p>
       </div>
 
@@ -50,7 +77,7 @@ export function AgentChangeSection() {
         data-testid="agent-change-grid"
         className="relative z-10 mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4"
       >
-        {actionCards.map((card) => (
+        {displayCards.map((card) => (
           <ActionCard
             key={card.title}
             title={card.title}
@@ -69,3 +96,4 @@ export function AgentChangeSection() {
     </SectionShell>
   )
 }
+

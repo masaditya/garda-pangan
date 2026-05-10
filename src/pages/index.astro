@@ -25,18 +25,39 @@ const homepage = homepageResponse?.data
       ctaLink={homepage?.heroCtaLink}
       backgroundImage={homepage?.heroBackground?.url}
     />
-    <DidYouKnowSection client:load />
+    <DidYouKnowSection slides={homepage?.didYouKnow} client:load />
     <ImpactSection
       title={homepage?.impactTitle}
       portionsRescued={homepage?.statsPortionsRescued}
       co2Reduced={homepage?.statsCo2Reduced}
       foodLossPotential={homepage?.statsFoodLossPotential}
       foodScrap={homepage?.statsFoodScrap}
+      stats={homepage?.impactStats}
+      impactImage={homepage?.impactImage?.url}
     />
-    <FeaturedBySection client:visible />
-    <AgentChangeSection />
-    <SupportersCollaboratorsSection />
-    <AwardsSection />
-    <InstagramSection />
+    <FeaturedBySection
+      title={homepage?.featuredBy?.title}``
+      logos={homepage?.featuredBy?.logos?.map((l) => ({
+        id: l.id,
+        url: l.url,
+        name: l.name,
+      }))}
+      client:visible
+    />
+    <AgentChangeSection
+      title={homepage?.agenPerubahanTitle}
+      subtitle={homepage?.agenPerubahanSubtitle}
+      cards={homepage?.agenPerubahanCards}
+    />
+    <SupportersCollaboratorsSection
+      title={homepage?.supporterTitle}
+      subtitle={homepage?.supporterSubtitle}
+      supporters={homepage?.supporterCards}
+    />
+    <AwardsSection title={homepage?.awardTitle} awards={homepage?.awardCards} />
+    <InstagramSection
+      title={homepage?.instagramTitle}
+      posts={homepage?.instagramCards}
+    />
   </main>
 </BaseLayout>

@@ -25,7 +25,7 @@ const navItems = [
   { href: '/program', label: 'Program' },
   { href: '/event', label: 'Event' },
   { href: '/knowledge', label: 'Knowledge' },
-  { href: '/produk', label: 'Produk' },
+  { href: '/merchandise', label: 'Produk' },
   { href: '/kontak', label: 'Kontak' },
 ]
 
@@ -90,7 +90,7 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                         className={cn(
                           'rounded-full px-5 py-2 text-sm font-medium text-garda-forest/70 transition hover:bg-garda-mint-soft hover:text-garda-forest',
                           isActive &&
-                            'bg-garda-mint-soft text-garda-forest font-bold',
+                          'bg-garda-mint-soft text-garda-forest font-bold',
                         )}
                       >
                         <a

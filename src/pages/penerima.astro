@@ -1,0 +1,18 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { BeneficiarySection } from '#/components/beneficiary-section'
+const API_URL = 'https://promising-freedom-82afaec97e.strapiapp.com/api/penerima-page?populate=*'
+const response = await fetch(API_URL).catch(() => null)
+const payload = response ? await response.json() : { data: null }
+const data = payload?.data
+---
+
+<BaseLayout 
+  title="Penerima Bantuan - Garda Pangan"
+  description="Penerima manfaat utama dari distribusi makanan Garda Pangan."
+  canonicalPath="/penerima"
+>
+  <main>
+    <BeneficiarySection client:load data={data} />
+  </main>
+</BaseLayout>

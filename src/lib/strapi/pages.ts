@@ -47,13 +47,74 @@ export type MerchandisePage = StrapiEntry & {
   heroBackground?: StrapiMedia | null
 }
 
+export type DidYouKnowItem = {
+  id: number
+  content: string
+}
+
+export type ImpactStat = {
+  id: number
+  label: string
+  value: string
+  image?: StrapiMedia | null
+}
+
+export type FeaturedBy = {
+  id: number
+  title: string
+  logos?: StrapiMedia[] | null
+}
+
+export type AgentChangeCard = {
+  id: number
+  title: string
+  description: string
+  image?: StrapiMedia | null
+}
+
+export type AwardCard = {
+  id: number
+  title: string
+  year: string
+  images?: StrapiMedia[] | null
+}
+
+export type InstagramCard = {
+  id: number
+  title?: string | null
+  subtitle?: string | null
+  instagramHandle?: string | null
+  image?: StrapiMedia | null
+}
+
+export type SupporterCard = {
+  id: number
+  title: string
+  image?: StrapiMedia | null
+}
+
 export type Homepage = StrapiEntry & {
   heroTitle?: string | null
   heroSubtitle?: string | null
   heroCtaText?: string | null
   heroCtaLink?: string | null
   heroBackground?: StrapiMedia | null
+  didYouKnow?: DidYouKnowItem[]
   impactTitle?: string | null
+  impactImage?: StrapiMedia | null
+  impactStats?: ImpactStat[]
+  featuredBy?: FeaturedBy | null
+  agenPerubahanTitle?: string | null
+  agenPerubahanSubtitle?: string | null
+  agenPerubahanCards?: AgentChangeCard[]
+  awardTitle?: string | null
+  awardCards?: AwardCard[]
+  instagramTitle?: string | null
+  instagramCards?: InstagramCard[]
+  supporterTitle?: string | null
+  supporterSubtitle?: string | null
+  supporterCards?: SupporterCard[]
+  // Legacy fields (optional)
   statsPortionsRescued?: string | null
   statsCo2Reduced?: string | null
   statsFoodLossPotential?: string | null
@@ -91,6 +152,29 @@ export async function getMerchandisePage() {
 
 export async function getHomepage() {
   return fetchStrapiSingle<Homepage>('/api/homepage', {
-    populate: '*',
+    populate: {
+      heroBackground: true,
+      didYouKnow: true,
+      impactImage: true,
+      impactStats: {
+        populate: ['image'],
+      },
+      featuredBy: {
+        populate: ['logos'],
+      },
+      agenPerubahanCards: {
+        populate: ['image'],
+      },
+      awardCards: {
+        populate: ['images'],
+      },
+      instagramCards: {
+        populate: ['image'],
+      },
+      supporterCards: {
+        populate: ['image'],
+      },
+    },
   })
 }
+

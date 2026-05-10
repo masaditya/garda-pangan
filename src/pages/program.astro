@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { ProgramHero } from '../components/program-hero'
+import { ProgramDetail } from '../components/program-detail'
+
+// Dummy data or strapi fetch later
+const programData = {
+  heroDescription:
+    'Garda Pangan bermula dari pengalaman salah seorang founder, Dedhy Trunoyudho yang berlatar belakang pengusaha katering pernikahan.',
+  heroBackgroundImage: '/images/program-hero.jpg', // Placeholder
+  details: [
+    {
+      title: 'FOOD RESCUE DARI BISNIS MAKANAN',
+      image: '/images/food-rescue-1.jpg',
+      description: `
+        <p>
+          Food rescue adalah upaya penyelamatan makanan surplus yang
+          dihasilkan oleh industri hospitality dan bisnis makanan dari potensi
+          terbuang.
+        </p>
+        <br />
+        <p>
+          Garda Pangan menjalin kerja sama dengan mitra-mitra dari restoran,
+          hotel, bakery, kafe, rumah makan, katering, ritel, distributor, FMCG, dan
+          berbagai bisnis makanan lainnya yang berkomitmen mendonasikan
+          makanan surplus layak makan yang dihasilkan. Food rescue dilakukan
+          setiap harinya dengan menjemput makanan yang tidak terjual dari mitra
+          untuk didistribusikan langsung secara door-to-door kepada masyarakat
+          membutuhkan.
+        </p>
+      `,
+      buttons: [
+        {
+          text: 'Selengkapnya',
+          href: '/program/food-rescue',
+          variant: 'subtle' as const,
+        },
+        { text: 'Jadi Mitra', href: '/kontak', variant: 'primary' as const },
+      ],
+    },
+    {
+      title: 'FOOD RESCUE DARI EVENT',
+      image: '/images/food-rescue-2.jpg',
+      description: `
+        <p>
+          Garda Pangan menjemput makanan berlebih layak makan yang berasal dari berbagai event, seperti acara pernikahan, conference, festival, pesta, dan berbagai perayaan lainnya. Dalam program ini, Garda Pangan banyak didukung oleh Event Organizer, Wedding Organizer, dan katering.
+        </p>
+        <br />
+        <p>
+          Makanan yang diselamatkan dari event ini akan melalui proses sortir, pengemasan ulang (bila diperlukan), dan langsung dibagikan kepada warga-warga yang paling membutuhkan.
+        </p>
+      `,
+      buttons: [
+        {
+          text: 'Selengkapnya',
+          href: '/program/event-rescue',
+          variant: 'subtle' as const,
+        },
+        { text: 'Jadi Mitra', href: '/kontak', variant: 'primary' as const },
+      ],
+    },
+    {
+      title: 'GLEANING DARI LAHAN PERTANIAN',
+      image: '/images/gleaning.jpg',
+      description: `
+        <p>
+          Gleaning adalah mengumpulkan hasil panen di lahan pertanian atau perkebunan yang terbuang karena penampilannya yang tidak memenuhi standar kosmetik pasar. Gleaning juga dilakukan saat musim puncak panen dan harga komoditas anjlok sehingga banyak petani yang memilih untuk meninggalkan panennya membusuk di lahan.
+        </p>
+        <br />
+        <p>
+          Relawan Garda Pangan akan melakukan panen sehari di lahan pertanian, kemudian hasil panen tersebut akan disalurkan kepada warga pra-sejahtera yang selama ini kesulitan mengakses sayur dan buah bernutrisi.
+        </p>
+      `,
+      buttons: [
+        {
+          text: 'Selengkapnya',
+          href: '/program/gleaning',
+          variant: 'subtle' as const,
+        },
+        { text: 'Jadi Mitra', href: '/kontak', variant: 'primary' as const },
+      ],
+    },
+  ],
+}
+---
+
+<BaseLayout
+  title="Program Kami - Garda Pangan"
+  description="Program-program Garda Pangan dalam menyelamatkan makanan berlebih."
+  canonicalPath="/program"
+>
+  <main class="garda-main bg-white">
+    <ProgramHero
+      title="Program <br /> Kami"
+      description={programData.heroDescription}
+      backgroundImage="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop"
+    />
+
+    <div
+      class="flex flex-col gap-8 bg-white/50 bg-linear-to-b from-white to-garda-mint-soft/30 pb-20 pt-10"
+    >
+      {
+        programData.details.map((detail) => (
+          <ProgramDetail
+            client:load
+            title={detail.title}
+            description={detail.description}
+            image={detail.image}
+            buttons={detail.buttons}
+            reverse={false}
+          />
+        ))
+      }
+    </div>
+  </main>
+</BaseLayout>

@@ -10,24 +10,31 @@ import {
   CarouselPrevious,
 } from '#/components/ui/carousel'
 
-const factSlides = [
-  {
-    id: 'waste-economy',
-    body: 'Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”',
-  },
-  {
-    id: 'food-rescue-definition',
-    body: 'Food rescue is the practice of saving surplus food from the hospitality and food business sectors before it gets thrown away.',
-  },
-  {
-    id: 'food-rescue-value',
-    body: 'With food rescue, edible surplus can reach the people who need it most instead of being wasted.',
-  },
-]
+type DidYouKnowSectionProps = {
+  slides?: { id: number | string; content: string }[]
+}
 
-export function DidYouKnowSection() {
+export function DidYouKnowSection({ slides }: DidYouKnowSectionProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
+
+  const items = slides || [
+    {
+      id: 'waste-economy',
+      content:
+        'Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”',
+    },
+    {
+      id: 'food-rescue-definition',
+      content:
+        'Food rescue is the practice of saving surplus food from the hospitality and food business sectors before it gets thrown away.',
+    },
+    {
+      id: 'food-rescue-value',
+      content:
+        'With food rescue, edible surplus can reach the people who need it most instead of being wasted.',
+    },
+  ]
 
   useEffect(() => {
     if (!api) {
@@ -89,17 +96,17 @@ export function DidYouKnowSection() {
         >
           <div className="flex flex-col items-center gap-12">
             <CarouselContent className="w-full">
-              {factSlides.map((slide, index) => (
+              {items.map((slide, index) => (
                 <CarouselItem
                   key={slide.id}
-                  aria-label={`${index + 1} of ${factSlides.length}`}
+                  aria-label={`${index + 1} of ${items.length}`}
                 >
                   <article
                     data-active={index === current ? 'true' : 'false'}
                     className="mx-auto flex max-w-[1000px] flex-col items-center px-4 text-center sm:px-10"
                   >
                     <p className="text-pretty font-sans text-[clamp(1.25rem,3vw,2rem)] font-medium leading-normal text-garda-ink">
-                      {slide.body}
+                      {slide.content}
                     </p>
                   </article>
                 </CarouselItem>
@@ -125,3 +132,4 @@ export function DidYouKnowSection() {
     </SectionShell>
   )
 }
+

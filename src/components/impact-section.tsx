@@ -1,3 +1,4 @@
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import { SectionShell } from './section-shell'
 import { MetricCard } from './metric-card'
 import { Rocket } from 'lucide-react'
@@ -8,6 +9,13 @@ type ImpactSectionProps = {
   co2Reduced?: string | null
   foodLossPotential?: string | null
   foodScrap?: string | null
+  stats?: {
+    id: number
+    label: string
+    value: string
+    image?: { url: string } | null
+  }[]
+  impactImage?: string | null
 }
 
 export function ImpactSection({
@@ -16,15 +24,26 @@ export function ImpactSection({
   co2Reduced,
   foodLossPotential,
   foodScrap,
+  stats,
+  impactImage,
 }: ImpactSectionProps) {
   const formatNumber = (val?: string | null) => {
     if (!val) return '0'
-    const num = parseInt(val.replace(/,/g, ''), 10)
+    const cleanVal = val.replace(/[^\d.]/g, '')
+    const num = parseFloat(cleanVal)
     if (isNaN(num)) return val
-    return num.toLocaleString('en-US')
+    return num.toLocaleString('en-US') + (val.includes('+') ? '+' : '')
   }
 
-  const impactMetrics = [
+  console.log(title,
+    portionsRescued,
+    co2Reduced,
+    foodLossPotential,
+    foodScrap,
+    stats,
+    impactImage)
+
+  const defaultMetrics = [
     {
       value: formatNumber(portionsRescued) || '608,311',
       label: 'PORTIONS OF FOOD RESCUED',
@@ -55,6 +74,25 @@ export function ImpactSection({
     },
   ]
 
+  const variants = [
+    'clipboard',
+    'megaphone',
+    'target',
+    'ecosystem',
+  ] as const
+
+  const impactMetrics = stats
+    ? stats.map((stat, index) => ({
+      value: stat.value,
+      label: stat.label,
+      imageSrc:
+        normalizeStrapiMediaUrl(stat.image?.url) ||
+        defaultMetrics[index % defaultMetrics.length].imageSrc,
+      variant: variants[index % variants.length],
+      testId: `impact-card-${index}`,
+    }))
+    : defaultMetrics
+
   return (
     <SectionShell
       aria-labelledby="impact-heading"
@@ -72,12 +110,19 @@ export function ImpactSection({
         <div className="relative z-10 grid w-full max-w-[1400px] gap-8 md:grid-cols-2 lg:gap-12 xl:gap-20">
           {/* Card 1: Top Left */}
           <div className="flex justify-center md:justify-start">
-            <MetricCard {...impactMetrics[0]} className="md:rotate-[-2deg]" />
+            {impactMetrics[0] && (
+              <MetricCard
+                {...impactMetrics[0]}
+                className="md:-rotate-2"
+              />
+            )}
           </div>
 
           {/* Card 2: Top Right */}
           <div className="flex justify-center md:justify-end">
-            <MetricCard {...impactMetrics[1]} className="md:rotate-[2deg]" />
+            {impactMetrics[1] && (
+              <MetricCard {...impactMetrics[1]} className="md:rotate-2" />
+            )}
           </div>
 
           {/* Center Element (Desktop Only overlay or separate row) */}
@@ -93,21 +138,34 @@ export function ImpactSection({
                   </>
                 )}
               </h2>
-              <Rocket className="size-16 fill-garda-forest text-garda-forest md:size-20 lg:size-24" />
+              {impactImage ? (
+                <img
+                  src={normalizeStrapiMediaUrl(impactImage) ?? undefined}
+                  alt=""
+                  className="size-16 object-contain md:size-20 lg:size-24"
+                />
+              ) : (
+                <Rocket className="size-16 fill-garda-forest text-garda-forest md:size-20 lg:size-24" />
+              )}
             </div>
           </div>
 
           {/* Card 3: Bottom Left */}
           <div className="flex justify-center md:justify-start md:pt-20 lg:pt-32">
-            <MetricCard {...impactMetrics[2]} className="md:rotate-[1deg]" />
+            {impactMetrics[2] && (
+              <MetricCard {...impactMetrics[2]} className="md:rotate-1" />
+            )}
           </div>
 
           {/* Card 4: Bottom Right */}
           <div className="flex justify-center md:justify-end md:pt-20 lg:pt-32">
-            <MetricCard {...impactMetrics[3]} className="md:rotate-[-1deg]" />
+            {impactMetrics[3] && (
+              <MetricCard {...impactMetrics[3]} className="md:-rotate-1" />
+            )}
           </div>
         </div>
       </div>
     </SectionShell>
   )
 }
+

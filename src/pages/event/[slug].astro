@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import {
+  normalizeStrapiMediaUrl,
+  fetchAllStrapiPages,
+} from '../../lib/strapi/client'
+import { marked } from 'marked'
+import { EventDetail } from '../../components/event-detail'
+
+import type { EventItem } from '../../components/event-list'
+
+export async function getStaticPaths() {
+  const events = await fetchAllStrapiPages<EventItem>('api/events', {
+    populate: '*',
+  })
+  return events.map((event) => ({
+    params: { slug: event.slug },
+    props: { event },
+  }))
+}
+
+const { event } = Astro.props
+
+if (!event) {
+  return Astro.redirect('/404')
+}
+
+const imageUrl =
+  normalizeStrapiMediaUrl(event?.coverImage?.url) ||
+  'https://placehold.co/1200x600'
+const formattedDate = new Intl.DateTimeFormat('id-ID', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+}).format(new Date(event.date))
+console.log('KONTEN ', event)
+
+const parsedContent = event?.content ? await marked.parse(event?.content) : ''
+const eventUrl = `${Astro.url.origin}/event/${event.slug}`
+
+const tags = event?.eventTag
+  ? event?.eventTag.split(',').map((t: string) => t.trim())
+  : ['EVENT']
+const caption = event.coverImage?.caption || 'Image courtesy of Garda Pangan'
+---
+
+<BaseLayout
+  title={`${event.title} | Garda Pangan`}
+  description={event.summary}
+  canonicalPath={`/event/${event.slug}`}
+>
+  <main class="bg-white min-h-screen">
+    <EventDetail
+      client:load
+      title={event.title}
+      date={formattedDate}
+      imageUrl={imageUrl}
+      tags={tags}
+      parsedContent={parsedContent}
+      eventUrl={eventUrl}
+      caption={caption}
+    />
+  </main>
+</BaseLayout>
