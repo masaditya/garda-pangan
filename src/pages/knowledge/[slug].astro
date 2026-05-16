@@ -1,0 +1,65 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { KnowledgeDetail } from '#/components/knowledge-detail'
+import { getArticlesForKnowledge, getKnowledgeArticleBySlug } from '#/lib/strapi/articles'
+import {
+  formatKnowledgeArticleDate,
+  getArticleCarouselImages,
+  getArticleImageCaption,
+} from '#/lib/strapi/knowledge'
+import { marked } from 'marked'
+
+import type { Article } from '#/lib/strapi/articles'
+
+export async function getStaticPaths() {
+  const articles = await getArticlesForKnowledge()
+
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }))
+}
+
+const { article } = Astro.props as { article?: Article }
+const resolvedArticle =
+  article ?? (await getKnowledgeArticleBySlug(Astro.params.slug ?? ''))
+
+if (!resolvedArticle) {
+  return Astro.redirect('/404')
+}
+
+const images = getArticleCarouselImages(resolvedArticle)
+const formattedDate = formatKnowledgeArticleDate(
+  resolvedArticle.publishedAt ?? resolvedArticle.createdAt,
+)
+const parsedContent = resolvedArticle.content
+  ? await marked.parse(resolvedArticle.content)
+  : resolvedArticle.description
+    ? `<p>${resolvedArticle.description}</p>`
+    : ''
+const articleUrl = `${Astro.url.origin}/knowledge/${resolvedArticle.slug}`
+const tags = resolvedArticle.category?.name ? [resolvedArticle.category.name] : []
+const caption = getArticleImageCaption(resolvedArticle)
+const coverUrl = images[0]
+---
+
+<BaseLayout
+  title={`${resolvedArticle.title} | Garda Pangan`}
+  description={resolvedArticle.description ?? 'Knowledge & Insights Garda Pangan'}
+  canonicalPath={`/knowledge/${resolvedArticle.slug}`}
+  ogImage={coverUrl}
+>
+  <main class="min-h-screen bg-white">
+    <KnowledgeDetail
+      client:load
+      title={resolvedArticle.title}
+      authorName={resolvedArticle.author?.name ?? 'Garda Pangan'}
+      date={formattedDate}
+      images={images}
+      tags={tags}
+      parsedContent={parsedContent}
+      articleUrl={articleUrl}
+      caption={caption}
+    />
+  </main>
+</BaseLayout>

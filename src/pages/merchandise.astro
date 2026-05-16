@@ -2,13 +2,26 @@
 import { MerchandiseCatalog } from '../components/merchandise-catalog'
 import { MerchandiseHeroSection } from '../components/merchandise-hero-section'
 import { normalizeStrapiMediaUrl } from '../lib/strapi/client'
+import {
+  buildMerchandiseCategoryCounts,
+  getMerchandiseCategories,
+  getMerchandises,
+  mapMerchandiseToItem,
+} from '../lib/strapi/merchandise'
 import { getMerchandisePage } from '../lib/strapi/pages'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const payload = await getMerchandisePage().catch(() => ({ data: null }))
+const [payload, categories, merchandises] = await Promise.all([
+  getMerchandisePage().catch(() => ({ data: null })),
+  getMerchandiseCategories().catch(() => []),
+  getMerchandises().catch(() => []),
+])
+
 const data = payload.data
 const bgImage =
   normalizeStrapiMediaUrl(data?.heroBackground?.url) || '/garda-hero-reference.png'
+const products = merchandises.map(mapMerchandiseToItem)
+const categoryCounts = buildMerchandiseCategoryCounts(categories, merchandises)
 ---
 
 <BaseLayout
@@ -28,7 +41,11 @@ const bgImage =
 
     <div class="relative z-10 w-full">
       <MerchandiseHeroSection data={data} />
-      <MerchandiseCatalog client:load />
+      <MerchandiseCatalog
+        client:load
+        products={products}
+        categories={categoryCounts}
+      />
     </div>
   </main>
 </BaseLayout>

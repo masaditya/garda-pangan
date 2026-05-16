@@ -2,7 +2,19 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
 
 import { KnowledgeList } from './knowledge-list'
-import type { KnowledgeItem } from './knowledge-list'
+import type { KnowledgeItem } from '#/lib/strapi/knowledge'
+
+const defaultLabels = {
+  searchPlaceholder: 'Cari Knowledge & Insights',
+  categoryFilterLabel: 'Kategori',
+  filterAllLabel: 'Tampilkan Semua',
+  sortNewestLabel: 'Terbaru',
+  sortOldestLabel: 'Terlama',
+  searchSubmitLabel: 'Search',
+  paginationPrevLabel: 'Previous',
+  paginationNextLabel: 'Next',
+  emptyListMessage: 'Tidak ada artikel yang cocok dengan filter Anda.',
+}
 
 describe('KnowledgeList', () => {
   const dummyData: KnowledgeItem[] = [
@@ -12,6 +24,7 @@ describe('KnowledgeList', () => {
       title: 'First Insight',
       slug: 'first-insight',
       category: 'Kategori A',
+      categorySlug: 'kategori-a',
       date: new Date('2026-05-01').toISOString(),
     },
     {
@@ -20,6 +33,7 @@ describe('KnowledgeList', () => {
       title: 'Second Knowledge',
       slug: 'second-knowledge',
       category: 'Kategori B',
+      categorySlug: 'kategori-b',
       date: new Date('2026-04-01').toISOString(),
     },
     {
@@ -28,38 +42,62 @@ describe('KnowledgeList', () => {
       title: 'Third Item',
       slug: 'third-item',
       category: 'Kategori A',
+      categorySlug: 'kategori-a',
       date: new Date('2026-06-01').toISOString(),
     },
   ]
 
+  const categories = [
+    { name: 'Kategori A', slug: 'kategori-a' },
+    { name: 'Kategori B', slug: 'kategori-b' },
+  ]
+
   test('renders search input and category tabs', () => {
-    render(<KnowledgeList initialKnowledges={dummyData} />)
+    render(
+      <KnowledgeList
+        initialKnowledges={dummyData}
+        categories={categories}
+        labels={defaultLabels}
+      />,
+    )
 
     expect(screen.getByPlaceholderText(/Cari Knowledge & Insights/i)).toBeTruthy()
     expect(screen.getByText('Tampilkan Semua')).toBeTruthy()
-    // It should render categories derived from initial data in tabs
     expect(screen.getAllByText('Kategori A').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Kategori B').length).toBeGreaterThan(0)
   })
 
   test('renders provided initial data', () => {
-    render(<KnowledgeList initialKnowledges={dummyData} />)
+    render(
+      <KnowledgeList
+        initialKnowledges={dummyData}
+        categories={categories}
+        labels={defaultLabels}
+      />,
+    )
 
     expect(screen.getByText('First Insight')).toBeTruthy()
     expect(screen.getByText('Second Knowledge')).toBeTruthy()
     expect(screen.getByText('Third Item')).toBeTruthy()
   })
 
-  test('renders dummy UI data when initial array is empty', () => {
-    render(<KnowledgeList initialKnowledges={[]} />)
+  test('shows empty message when no articles match filters', () => {
+    render(
+      <KnowledgeList initialKnowledges={[]} categories={[]} labels={defaultLabels} />,
+    )
 
-    // Should display the preview dummy items
-    expect(screen.getAllByText('Apresiasi Satu Indonesia Awards').length).toBeGreaterThan(0)
-    expect(screen.getAllByText('Garda Pangan dalam One Planet Network Forum').length).toBeGreaterThan(0)
+    expect(screen.getByText(defaultLabels.emptyListMessage)).toBeTruthy()
+    expect(screen.queryByText('Apresiasi Satu Indonesia Awards')).toBeNull()
   })
 
   test('filters by search query', () => {
-    render(<KnowledgeList initialKnowledges={dummyData} />)
+    render(
+      <KnowledgeList
+        initialKnowledges={dummyData}
+        categories={categories}
+        labels={defaultLabels}
+      />,
+    )
 
     const searchInput = screen.getByPlaceholderText(/Cari Knowledge & Insights/i)
     fireEvent.change(searchInput, { target: { value: 'Second' } })
@@ -70,10 +108,15 @@ describe('KnowledgeList', () => {
   })
 
   test('filters by category tab', () => {
-    render(<KnowledgeList initialKnowledges={dummyData} />)
+    render(
+      <KnowledgeList
+        initialKnowledges={dummyData}
+        categories={categories}
+        labels={defaultLabels}
+      />,
+    )
 
-    // Click on 'Kategori B' tab
-    const tabButton = screen.getAllByText('Kategori B')[0] // The first might be the tab, the second might be the dropdown or card label
+    const tabButton = screen.getAllByText('Kategori B')[0]
     fireEvent.click(tabButton)
 
     expect(screen.getByText('Second Knowledge')).toBeTruthy()
@@ -82,24 +125,39 @@ describe('KnowledgeList', () => {
   })
 
   test('sorts items by date correctly', () => {
-    render(<KnowledgeList initialKnowledges={dummyData} />)
+    render(
+      <KnowledgeList
+        initialKnowledges={dummyData}
+        categories={categories}
+        labels={defaultLabels}
+      />,
+    )
 
-    // By default it's sorted by 'Terbaru'
     let headings = screen.getAllByRole('heading', { level: 3 })
-    expect(headings[0].textContent).toBe('Third Item') // June
-    expect(headings[1].textContent).toBe('First Insight') // May
-    expect(headings[2].textContent).toBe('Second Knowledge') // April
+    expect(headings[0].textContent).toBe('Third Item')
+    expect(headings[1].textContent).toBe('First Insight')
+    expect(headings[2].textContent).toBe('Second Knowledge')
 
-    // Change sort to 'Terlama'
-    const sortDropdownToggle = screen.getByText('Terbaru')
-    fireEvent.click(sortDropdownToggle)
-    
-    const sortOption = screen.getByRole('button', { name: 'Terlama' })
-    fireEvent.click(sortOption)
+    fireEvent.click(screen.getByText('Terbaru'))
+    fireEvent.click(screen.getByRole('button', { name: 'Terlama' }))
 
     headings = screen.getAllByRole('heading', { level: 3 })
-    expect(headings[0].textContent).toBe('Second Knowledge') // April
-    expect(headings[1].textContent).toBe('First Insight') // May
-    expect(headings[2].textContent).toBe('Third Item') // June
+    expect(headings[0].textContent).toBe('Second Knowledge')
+    expect(headings[1].textContent).toBe('First Insight')
+    expect(headings[2].textContent).toBe('Third Item')
+  })
+
+  test('links articles to knowledge detail pages', () => {
+    render(
+      <KnowledgeList
+        initialKnowledges={dummyData}
+        categories={categories}
+        labels={defaultLabels}
+      />,
+    )
+
+    expect(screen.getByRole('link', { name: /First Insight/i }).getAttribute('href')).toBe(
+      '/knowledge/first-insight',
+    )
   })
 })

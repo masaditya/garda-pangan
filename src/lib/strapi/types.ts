@@ -61,6 +61,29 @@ export type StrapiMedia = StrapiEntry & {
   provider_metadata?: unknown
 }
 
+export type StrapiImage = StrapiEntry & {
+  name: string
+  alternativeText: string | null
+  caption?: string | null
+  focalPoint: unknown | null
+  width: number | null
+  height: number | null
+  formats?: {
+    large?: StrapiMediaFormat
+    medium?: StrapiMediaFormat
+    small?: StrapiMediaFormat
+    thumbnail?: StrapiMediaFormat
+  } | null
+  hash: string
+  ext: string
+  mime: string
+  size: number
+  url: string
+  previewUrl?: string | null
+  provider: string
+  provider_metadata?: unknown
+}
+
 export type StrapiQueryValue =
   | string
   | number

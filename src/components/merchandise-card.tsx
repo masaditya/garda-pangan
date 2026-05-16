@@ -7,6 +7,7 @@ export type MerchandiseItem = {
   date: string
   description: string
   platforms: string[]
+  imageUrl?: string | null
 }
 
 export function MerchandiseCard({ product }: { product: MerchandiseItem }) {
@@ -22,8 +23,16 @@ export function MerchandiseCard({ product }: { product: MerchandiseItem }) {
         </button>
       </div>
 
-      {/* Image Placeholder */}
-      <div className="mb-5 aspect-[4/3] w-full rounded-xl bg-garda-paper/80" />
+      <div className="mb-5 aspect-[4/3] w-full overflow-hidden rounded-xl bg-garda-paper/80">
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.title}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : null}
+      </div>
 
       {/* Content */}
       <div className="flex flex-1 flex-col">

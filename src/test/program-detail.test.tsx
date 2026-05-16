@@ -1,26 +1,27 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { ProgramDetail } from '../components/program-detail'
 
 describe('ProgramDetail', () => {
-  it('renders title and description correctly', () => {
+  it('renders title and preview description correctly', () => {
     render(
       <ProgramDetail
         title="Food Rescue"
-        description="Penyelamatan makanan surplus."
+        description="<p>Paragraf pertama.</p><p>Paragraf kedua.</p>"
       />,
     )
 
     expect(screen.getByText('Food Rescue')).toBeDefined()
-    expect(screen.getByText('Penyelamatan makanan surplus.')).toBeDefined()
+    expect(screen.getByText('Paragraf pertama.')).toBeDefined()
+    expect(screen.queryByText('Paragraf kedua.')).toBeNull()
   })
 
   it('renders image when provided', () => {
     render(
       <ProgramDetail
         title="Image Test"
-        description="Desc"
+        description="<p>Desc</p>"
         image="/test-image.jpg"
       />,
     )
@@ -30,27 +31,32 @@ describe('ProgramDetail', () => {
     expect(img.getAttribute('src')).toContain('/test-image.jpg')
   })
 
-  it('renders buttons correctly', () => {
+  it('opens modal with full item content when Selengkapnya is clicked', () => {
     const buttons = [
-      { text: 'Selengkapnya', href: '/more', variant: 'subtle' as const },
-      { text: 'Jadi Mitra', href: '/mitra', variant: 'primary' as const },
+      { text: 'Selengkapnya', href: '/mitra', variant: 'subtle' as const },
+      { text: 'Jadi Mitra', href: '/kontak', variant: 'primary' as const },
     ]
 
     render(
       <ProgramDetail
         title="Button Test"
-        description="Desc"
+        description="<p>Ringkasan singkat.</p><p>Detail lengkap program.</p>"
         buttons={buttons}
       />,
     )
 
-    const selengkapnyaBtn = screen.getByText('Selengkapnya')
-    const mitraBtn = screen.getByText('Jadi Mitra')
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(screen.queryByText('Detail lengkap program.')).toBeNull()
 
-    expect(selengkapnyaBtn).toBeDefined()
-    expect(selengkapnyaBtn.closest('a')?.getAttribute('href')).toBe('#')
+    fireEvent.click(screen.getByRole('button', { name: /selengkapnya/i }))
 
-    expect(mitraBtn).toBeDefined()
-    expect(mitraBtn.closest('a')?.getAttribute('href')).toBe('/mitra')
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toBeDefined()
+    expect(within(dialog).getByText('Button Test')).toBeDefined()
+    expect(within(dialog).getByText('Detail lengkap program.')).toBeDefined()
+    expect(within(dialog).getByRole('link', { name: /jadi mitra/i })).toBeDefined()
+    expect(
+      within(dialog).queryByRole('button', { name: /selengkapnya/i }),
+    ).toBeNull()
   })
 })

@@ -2,60 +2,61 @@
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { EventHero } from '#/components/event-hero'
 import { KnowledgeList } from '#/components/knowledge-list'
-import { fetchStrapiSingle, fetchAllStrapiPages } from '#/lib/strapi/client'
+import type { KnowledgeListLabels } from '#/components/knowledge-list'
+import { getCategories } from '#/lib/strapi/categories'
+import { getKnowledgePage } from '#/lib/strapi/knowledge-page'
+import { getArticlesForKnowledge } from '#/lib/strapi/articles'
+import { mapArticleToKnowledgeItem } from '#/lib/strapi/knowledge'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
-type KnowledgePageData = {
-  heroTitle: string
-  heroDescription?: string
-  heroBackground: any
+const [pageResponse, categories, articles] = await Promise.all([
+  getKnowledgePage().catch(() => ({ data: null })),
+  getCategories().catch(() => []),
+  getArticlesForKnowledge().catch(() => []),
+])
+
+const pageData = pageResponse.data
+
+const labels: KnowledgeListLabels = {
+  searchPlaceholder:
+    pageData?.searchPlaceholder ?? 'Cari Knowledge & Insights',
+  categoryFilterLabel: pageData?.categoryFilterLabel ?? 'Kategori',
+  filterAllLabel: pageData?.filterAllLabel ?? 'Tampilkan Semua',
+  sortNewestLabel: pageData?.sortNewestLabel ?? 'Terbaru',
+  sortOldestLabel: 'Terlama',
+  searchSubmitLabel: pageData?.searchSubmitLabel ?? 'Search',
+  paginationPrevLabel: pageData?.paginationPrevLabel ?? 'Previous',
+  paginationNextLabel: pageData?.paginationNextLabel ?? 'Next',
+  emptyListMessage:
+    pageData?.emptyListMessage ??
+    'Tidak ada artikel yang cocok dengan filter Anda.',
 }
 
-let pageData: KnowledgePageData = {
-  heroTitle: 'Knowledge & Insights',
-  heroDescription: '',
-  heroBackground: null,
-}
-
-let knowledgesData: any[] = []
-
-try {
-  const pageResponse = await fetchStrapiSingle<KnowledgePageData>('api/knowledge-page', {
-    populate: '*',
-  })
-  if (pageResponse?.data) {
-    pageData = pageResponse.data
-  }
-} catch (error) {
-  console.error('Failed to fetch knowledge page data:', error)
-}
-
-try {
-  const knowledgesResponse = await fetchAllStrapiPages<any>('api/knowledges', {
-    populate: '*',
-  })
-  knowledgesData = knowledgesResponse || []
-} catch (error) {
-  console.error('Failed to fetch knowledges:', error)
-}
-
-// Sort by date descending
-if (knowledgesData.length > 0) {
-  knowledgesData.sort((a, b) => new Date(b.date || b.createdAt || 0).getTime() - new Date(a.date || a.createdAt || 0).getTime())
-}
+const knowledgeItems = articles.map(mapArticleToKnowledgeItem)
+const heroBackground = normalizeStrapiMediaUrl(pageData?.heroBackground?.url)
 ---
 
 <BaseLayout
-  title={`${pageData.heroTitle} - Garda Pangan`}
-  description={pageData.heroDescription || 'Knowledge and Insights from Garda Pangan'}
+  title={`${pageData?.heroTitle ?? 'Knowledge & Insights'} - Garda Pangan`}
+  description={pageData?.heroSubtitle ?? 'Knowledge and Insights from Garda Pangan'}
   canonicalPath="/knowledge"
 >
   <main class="garda-main bg-[#f4fbf6] overflow-hidden">
     <EventHero
-      title={pageData.heroTitle}
-      description={pageData.heroDescription || ''}
-      backgroundImage={pageData.heroBackground}
+      client:load
+      title={pageData?.heroTitle ?? 'Knowledge & Insights'}
+      description={pageData?.heroSubtitle ?? ''}
+      backgroundImage={heroBackground}
     />
-    
-    <KnowledgeList client:load initialKnowledges={knowledgesData} />
+
+    <KnowledgeList
+      client:load
+      initialKnowledges={knowledgeItems}
+      categories={categories.map((category) => ({
+        name: category.name,
+        slug: category.slug,
+      }))}
+      labels={labels}
+    />
   </main>
 </BaseLayout>

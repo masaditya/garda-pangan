@@ -3,26 +3,17 @@ import { SectionShell } from './section-shell'
 import { MerchandiseFilter } from './merchandise-filter'
 import { MerchandiseCard } from './merchandise-card'
 import type { MerchandiseItem } from './merchandise-card'
+import type { CategoryCount } from './merchandise-filter'
 
-const MOCK_CATEGORIES = [
-  { name: 'Kaos', count: 0 },
-  { name: 'Pupuk', count: 15 },
-  { name: 'Totebag', count: 104 },
-  { name: 'Tumbler', count: 123 },
-]
+type MerchandiseCatalogProps = {
+  products: MerchandiseItem[]
+  categories: CategoryCount[]
+}
 
-const MOCK_PRODUCTS: MerchandiseItem[] = Array.from({ length: 6 }).map(
-  (_, i) => ({
-    id: `prod-${i}`,
-    title: 'FRESH MAGGOT',
-    category: 'Pupuk',
-    date: 'Okt 2024',
-    description: 'Maggot fresh yang kaya protein, untuk pakan ternak',
-    platforms: ['Tokopedia', 'Shopee'],
-  }),
-)
-
-export function MerchandiseCatalog() {
+export function MerchandiseCatalog({
+  products,
+  categories,
+}: MerchandiseCatalogProps) {
   const [selectedCats, setSelectedCats] = useState<string[]>([])
 
   const handleToggle = (cat: string) => {
@@ -31,34 +22,37 @@ export function MerchandiseCatalog() {
     )
   }
 
-  // Filter products if categories are selected, else show all
   const filteredProducts =
     selectedCats.length > 0
-      ? MOCK_PRODUCTS.filter((p) => selectedCats.includes(p.category))
-      : MOCK_PRODUCTS
+      ? products.filter((product) => selectedCats.includes(product.category))
+      : products
 
   return (
     <div className="min-h-screen pb-24">
       <SectionShell tone="transparent" spacing="compact">
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* Sidebar */}
           <div className="lg:col-span-3">
             <div className="sticky top-24">
               <MerchandiseFilter
-                categories={MOCK_CATEGORIES}
+                categories={categories}
                 selected={selectedCats}
                 onChange={handleToggle}
               />
             </div>
           </div>
 
-          {/* Grid */}
           <div className="lg:col-span-9">
-            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {filteredProducts.map((product) => (
-                <MerchandiseCard key={product.id} product={product} />
-              ))}
-            </div>
+            {filteredProducts.length > 0 ? (
+              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredProducts.map((product) => (
+                  <MerchandiseCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <p className="rounded-2xl bg-white px-6 py-12 text-center text-garda-ink-soft shadow-sm ring-1 ring-garda-neutral/5">
+                Belum ada merchandise untuk kategori yang dipilih.
+              </p>
+            )}
           </div>
         </div>
       </SectionShell>

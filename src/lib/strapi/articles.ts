@@ -3,18 +3,22 @@ import { fetchAllStrapiPages, strapiFetch } from './client'
 import type {
   StrapiCollectionResponse,
   StrapiEntry,
+  StrapiImage,
   StrapiMedia,
 } from './types'
 
 export type ArticleAuthor = StrapiEntry & {
   name?: string | null
   email?: string | null
+  bio?: string | null
   avatar?: StrapiMedia | null
 }
 
 export type ArticleCategory = StrapiEntry & {
-  name?: string | null
-  slug?: string | null
+  name: string
+  slug: string
+  description?: string | null
+  sortOrder?: number
 }
 
 export type RichTextBlock = {
@@ -48,12 +52,16 @@ export type Article = StrapiEntry & {
   title: string
   description?: string | null
   slug: string
-  cover?: StrapiMedia | null
+  content?: string | null
+  cover?: StrapiImage | StrapiMedia | null
+  carouselImages?: StrapiImage[] | null
   author?: ArticleAuthor | null
   category?: ArticleCategory | null
   blocks?: ArticleBlock[]
   isFeatured?: boolean
 }
+
+export type ArticlesResponse = StrapiCollectionResponse<Article>
 
 export function getArticlePopulateQuery() {
   return {
@@ -74,6 +82,13 @@ export async function getPublishedArticles() {
   })
 }
 
+export async function getArticlesForKnowledge() {
+  return fetchAllStrapiPages<Article>('/api/articles', {
+    populate: '*',
+    sort: 'publishedAt:desc',
+  })
+}
+
 export async function getArticleBySlug(slug: string) {
   const response = await strapiFetch<StrapiCollectionResponse<Article>>(
     '/api/articles',
@@ -89,6 +104,26 @@ export async function getArticleBySlug(slug: string) {
         pageSize: 1,
       },
       populate: getArticlePopulateQuery(),
+    },
+  )
+
+  return response.data[0] ?? null
+}
+
+export async function getKnowledgeArticleBySlug(slug: string) {
+  const response = await strapiFetch<StrapiCollectionResponse<Article>>(
+    '/api/articles',
+    {
+      filters: {
+        slug: {
+          $eq: slug,
+        },
+      },
+      pagination: {
+        page: 1,
+        pageSize: 1,
+      },
+      populate: '*',
     },
   )
 
