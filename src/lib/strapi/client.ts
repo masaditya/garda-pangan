@@ -68,6 +68,16 @@ export function normalizeStrapiMediaUrl(url: string | null | undefined) {
   return new URL(url, getStrapiBaseUrl()).toString()
 }
 
+function isRetryableStrapiStatus(status: number) {
+  return status === 502 || status === 503 || status === 504
+}
+
+function wait(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+
 export async function strapiFetch<T>(
   path: string,
   query: Record<string, StrapiQueryValue> = {},
@@ -75,25 +85,46 @@ export async function strapiFetch<T>(
 ) {
   const apiToken = getStrapiApiToken()
   const headers = new Headers()
+  const requestUrl = buildStrapiUrl(path, query).toString()
+  const maxAttempts = 3
 
   if (apiToken) {
     headers.set('Authorization', `Bearer ${apiToken}`)
   }
 
-  const response = await (options.fetcher ?? fetch)(
-    buildStrapiUrl(path, query),
-    {
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const response = await (options.fetcher ?? fetch)(requestUrl, {
       headers,
-    },
-  )
+    })
 
-  if (!response.ok) {
-    throw new Error(
-      `Strapi request failed: ${response.status} ${response.statusText}`,
-    )
+    if (response.ok) {
+      return (await response.json()) as T
+    }
+
+    let details = ''
+
+    try {
+      const errorBody = await response.text()
+      if (errorBody) {
+        details = `: ${errorBody.slice(0, 240)}`
+      }
+    } catch {
+      // Ignore parse errors for the error body.
+    }
+
+    const shouldRetry =
+      isRetryableStrapiStatus(response.status) && attempt < maxAttempts
+
+    if (!shouldRetry) {
+      throw new Error(
+        `Strapi request failed: ${response.status} ${response.statusText} (${requestUrl})${details}`,
+      )
+    }
+
+    await wait(500 * attempt)
   }
 
-  return (await response.json()) as T
+  throw new Error(`Strapi request failed after retries (${requestUrl})`)
 }
 
 export async function fetchStrapiSingle<T>(
@@ -133,4 +164,17 @@ export async function fetchAllStrapiPages<T>(
   } while (page <= pageCount)
 
   return results
+}
+
+export async function fetchAllStrapiPagesSafe<T>(
+  path: string,
+  query: Record<string, StrapiQueryValue> = {},
+  options: FetchAllPagesOptions = {},
+) {
+  try {
+    return await fetchAllStrapiPages<T>(path, query, options)
+  } catch (error) {
+    console.warn(`Strapi fetch skipped for ${path}:`, error)
+    return []
+  }
 }

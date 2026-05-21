@@ -2,30 +2,32 @@
 import { ArticleBlockRenderer } from '../../components/article-block-renderer'
 import {
   getArticleBySlug,
-  getPublishedArticles,
+  getArticleSlugsForPaths,
 } from '../../lib/strapi/articles'
 import { normalizeStrapiMediaUrl } from '../../lib/strapi/client'
 import BaseLayout from '../../layouts/BaseLayout.astro'
-
-import type { Article } from '../../lib/strapi/articles'
+import { marked } from 'marked'
 
 export async function getStaticPaths() {
-  const articles = await getPublishedArticles()
+  const slugs = await getArticleSlugsForPaths()
 
-  return articles.map((article) => ({
-    params: { slug: article.slug },
-    props: { article },
+  return slugs.map((slug) => ({
+    params: { slug },
   }))
 }
 
-const { article } = Astro.props as { article?: Article }
-const resolvedArticle = article ?? (await getArticleBySlug(Astro.params.slug ?? ''))
+const resolvedArticle = await getArticleBySlug(Astro.params.slug ?? '').catch(
+  () => null,
+)
 
 if (!resolvedArticle) {
-  throw new Error(`Article not found for slug: ${Astro.params.slug}`)
+  return Astro.redirect('/404')
 }
 
 const coverUrl = normalizeStrapiMediaUrl(resolvedArticle.cover?.url)
+const parsedContent = resolvedArticle.content
+  ? await marked.parse(resolvedArticle.content)
+  : ''
 const publishedDate = resolvedArticle.publishedAt
   ? new Intl.DateTimeFormat('id-ID', {
       day: 'numeric',
@@ -87,7 +89,16 @@ const publishedDate = resolvedArticle.publishedAt
         }
 
         <div class="mt-12">
-          <ArticleBlockRenderer blocks={resolvedArticle.blocks} />
+          {
+            resolvedArticle.blocks && resolvedArticle.blocks.length > 0 ? (
+              <ArticleBlockRenderer blocks={resolvedArticle.blocks} client:load />
+            ) : parsedContent ? (
+              <div
+                class="prose prose-garda prose-lg max-w-none text-garda-ink-soft"
+                set:html={parsedContent}
+              />
+            ) : null
+          }
         </div>
       </div>
     </article>

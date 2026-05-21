@@ -1,4 +1,8 @@
-import { fetchAllStrapiPages, strapiFetch } from './client'
+import {
+  fetchAllStrapiPages,
+  fetchAllStrapiPagesSafe,
+  strapiFetch,
+} from './client'
 
 import type {
   StrapiCollectionResponse,
@@ -68,17 +72,29 @@ export function getArticlePopulateQuery() {
     cover: true,
     author: true,
     category: true,
-    blocks: {
-      populate: '*',
-    },
+    carouselImages: true,
   }
 }
 
-export async function getPublishedArticles() {
-  return fetchAllStrapiPages<Article>('/api/articles', {
-    status: 'published',
+export function getArticleListPopulateQuery() {
+  return {
+    cover: true,
+    category: true,
+  }
+}
+
+export async function getArticleSlugsForPaths() {
+  const articles = await fetchAllStrapiPagesSafe<Article>('/api/articles', {
     sort: 'publishedAt:desc',
-    populate: getArticlePopulateQuery(),
+  })
+
+  return articles.map((article) => article.slug).filter(Boolean)
+}
+
+export async function getPublishedArticles() {
+  return fetchAllStrapiPagesSafe<Article>('/api/articles', {
+    sort: 'publishedAt:desc',
+    populate: getArticleListPopulateQuery(),
   })
 }
 
@@ -93,7 +109,6 @@ export async function getArticleBySlug(slug: string) {
   const response = await strapiFetch<StrapiCollectionResponse<Article>>(
     '/api/articles',
     {
-      status: 'published',
       filters: {
         slug: {
           $eq: slug,

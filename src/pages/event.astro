@@ -2,7 +2,8 @@
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { EventHero } from '#/components/event-hero'
 import { EventList } from '#/components/event-list'
-import { fetchStrapiSingle, fetchAllStrapiPages } from '#/lib/strapi/client'
+import { fetchStrapiSingle } from '#/lib/strapi/client'
+import { getEvents } from '#/lib/strapi/events'
 
 type EventPageData = {
   heroTitle: string
@@ -30,14 +31,7 @@ try {
   console.error('Failed to fetch event page data:', error)
 }
 
-try {
-  const eventsResponse = await fetchAllStrapiPages<any>('api/events', {
-    populate: '*',
-  })
-  eventsData = eventsResponse || []
-} catch (error) {
-  console.error('Failed to fetch events:', error)
-}
+eventsData = await getEvents()
 
 // Sort events by date descending by default
 eventsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { KnowledgeDetail } from '#/components/knowledge-detail'
-import { getArticlesForKnowledge, getKnowledgeArticleBySlug } from '#/lib/strapi/articles'
+import {
+  getArticleSlugsForPaths,
+  getKnowledgeArticleBySlug,
+} from '#/lib/strapi/articles'
 import {
   formatKnowledgeArticleDate,
   getArticleCarouselImages,
@@ -9,20 +12,17 @@ import {
 } from '#/lib/strapi/knowledge'
 import { marked } from 'marked'
 
-import type { Article } from '#/lib/strapi/articles'
-
 export async function getStaticPaths() {
-  const articles = await getArticlesForKnowledge()
+  const slugs = await getArticleSlugsForPaths()
 
-  return articles.map((article) => ({
-    params: { slug: article.slug },
-    props: { article },
+  return slugs.map((slug) => ({
+    params: { slug },
   }))
 }
 
-const { article } = Astro.props as { article?: Article }
-const resolvedArticle =
-  article ?? (await getKnowledgeArticleBySlug(Astro.params.slug ?? ''))
+const resolvedArticle = await getKnowledgeArticleBySlug(
+  Astro.params.slug ?? '',
+).catch(() => null)
 
 if (!resolvedArticle) {
   return Astro.redirect('/404')

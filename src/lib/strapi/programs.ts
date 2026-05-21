@@ -78,6 +78,6 @@ export async function getPrograms() {
     populate: {
       thumbnail: true,
     },
-    sort: ['publishedAt:asc'],
+    sort: 'publishedAt:asc',
   })
 }

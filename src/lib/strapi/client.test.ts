@@ -3,13 +3,13 @@ import { describe, expect, test, vi } from 'vitest'
 import {
   buildStrapiUrl,
   fetchAllStrapiPages,
+  fetchAllStrapiPagesSafe,
   normalizeStrapiMediaUrl,
 } from './client'
 
 describe('Strapi client', () => {
   test('builds Strapi URLs with nested query parameters', () => {
     const url = buildStrapiUrl('/api/articles', {
-      status: 'published',
       sort: 'publishedAt:desc',
       filters: {
         slug: {
@@ -18,9 +18,7 @@ describe('Strapi client', () => {
       },
       populate: {
         cover: true,
-        blocks: {
-          populate: '*',
-        },
+        carouselImages: true,
       },
     })
 
@@ -30,11 +28,10 @@ describe('Strapi client', () => {
       'https://promising-freedom-82afaec97e.strapiapp.com',
     )
     expect(url.pathname).toBe('/api/articles')
-    expect(query).toContain('status=published')
     expect(query).toContain('sort=publishedAt:desc')
     expect(query).toContain('filters[slug][$eq]=food-rescue')
     expect(query).toContain('populate[cover]=true')
-    expect(query).toContain('populate[blocks][populate]=*')
+    expect(query).toContain('populate[carouselImages]=true')
   })
 
   test('normalizes relative Strapi media URLs against the CMS base URL', () => {
@@ -74,7 +71,7 @@ describe('Strapi client', () => {
     const result = await fetchAllStrapiPages<{
       id: number
       documentId: string
-    }>('/api/articles', { status: 'published' }, { fetcher, pageSize: 1 })
+    }>('/api/articles', { sort: 'publishedAt:desc' }, { fetcher, pageSize: 1 })
 
     expect(result).toEqual([
       { id: 1, documentId: 'first' },
@@ -84,5 +81,20 @@ describe('Strapi client', () => {
     expect(decodeURIComponent(fetcher.mock.calls[1][0].toString())).toContain(
       'pagination[page]=2',
     )
+  })
+
+  test('returns an empty array when safe fetch fails', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response('Bad Request', { status: 400, statusText: 'Bad Request' }),
+    )
+
+    const result = await fetchAllStrapiPagesSafe(
+      '/api/events',
+      { populate: '*' },
+      { fetcher },
+    )
+
+    expect(result).toEqual([])
+    expect(fetcher).toHaveBeenCalledTimes(1)
   })
 })

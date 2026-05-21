@@ -1,25 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import {
-  normalizeStrapiMediaUrl,
-  fetchAllStrapiPages,
-} from '../../lib/strapi/client'
+import { normalizeStrapiMediaUrl } from '../../lib/strapi/client'
+import { getEvents } from '../../lib/strapi/events'
 import { marked } from 'marked'
 import { EventDetail } from '../../components/event-detail'
 
-import type { EventItem } from '../../components/event-list'
+import type { Event } from '../../lib/strapi/events'
 
 export async function getStaticPaths() {
-  const events = await fetchAllStrapiPages<EventItem>('api/events', {
-    populate: '*',
-  })
+  const events = await getEvents()
+
   return events.map((event) => ({
     params: { slug: event.slug },
     props: { event },
   }))
 }
 
-const { event } = Astro.props
+const { event } = Astro.props as { event: Event }
 
 if (!event) {
   return Astro.redirect('/404')
