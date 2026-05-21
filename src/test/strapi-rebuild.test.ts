@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 
-import { handler } from './strapi-rebuild'
+import { handler } from '../../netlify/functions/strapi-rebuild'
 
 describe('strapi-rebuild function', () => {
   test('rejects requests without the shared secret', async () => {
