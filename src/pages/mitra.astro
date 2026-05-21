@@ -5,7 +5,7 @@ import { PartnerHeroSection } from '../components/partner-hero-section'
 import { getMitraPage } from '../lib/strapi/pages'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const payload = await getMitraPage().catch(() => ({ data: null }))
+const payload = await getMitraPage()
 const data = payload.data ?? undefined
 ---
 

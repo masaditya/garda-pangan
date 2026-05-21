@@ -135,6 +135,19 @@ export async function fetchStrapiSingle<T>(
   return strapiFetch<StrapiSingleResponse<T>>(path, query, options)
 }
 
+export async function fetchStrapiSingleSafe<T>(
+  path: string,
+  query: Record<string, StrapiQueryValue> = {},
+  options: FetchOptions = {},
+) {
+  try {
+    return await fetchStrapiSingle<T>(path, query, options)
+  } catch (error) {
+    console.warn(`Strapi fetch skipped for ${path}:`, error)
+    return { data: null } satisfies StrapiSingleResponse<T>
+  }
+}
+
 export async function fetchAllStrapiPages<T>(
   path: string,
   query: Record<string, StrapiQueryValue> = {},

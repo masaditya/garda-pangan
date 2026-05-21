@@ -2,16 +2,16 @@
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { BeneficiarySection } from '#/components/beneficiary-section'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { getPenerimaPage } from '#/lib/strapi/pages'
 
-const API_URL = 'https://promising-freedom-82afaec97e.strapiapp.com/api/penerima-page?populate=*'
-const response = await fetch(API_URL).catch(() => null)
-const payload = response ? await response.json() : { data: null }
-const data = payload?.data
+const payload = await getPenerimaPage()
+const data = payload.data ?? undefined
 
-const bgImage = normalizeStrapiMediaUrl(data?.heroBackground?.url) || '/garda-hero-reference.png'
+const bgImage =
+  normalizeStrapiMediaUrl(data?.heroBackground?.url) || '/garda-hero-reference.png'
 ---
 
-<BaseLayout 
+<BaseLayout
   title="Penerima Bantuan - Garda Pangan"
   description="Penerima manfaat utama dari distribusi makanan Garda Pangan."
   canonicalPath="/penerima"
@@ -23,7 +23,9 @@ const bgImage = normalizeStrapiMediaUrl(data?.heroBackground?.url) || '/garda-he
     >
     </div>
     <div class="absolute inset-0 -z-10 bg-[#0C381E]/80 mix-blend-multiply"></div>
-    <div class="absolute inset-x-0 top-0 -z-10 h-[50vh] bg-linear-to-b from-[#0C381E]/60 to-transparent">
+    <div
+      class="absolute inset-x-0 top-0 -z-10 h-[50vh] bg-linear-to-b from-[#0C381E]/60 to-transparent"
+    >
     </div>
 
     <div class="relative z-10 w-full">

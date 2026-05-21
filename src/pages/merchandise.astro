@@ -12,7 +12,7 @@ import { getMerchandisePage } from '../lib/strapi/pages'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
 const [payload, categories, merchandises] = await Promise.all([
-  getMerchandisePage().catch(() => ({ data: null })),
+  getMerchandisePage(),
   getMerchandiseCategories().catch(() => []),
   getMerchandises().catch(() => []),
 ])

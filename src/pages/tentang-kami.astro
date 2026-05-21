@@ -7,7 +7,7 @@ import { AboutVisionMissionSection } from '../components/about-vision-mission-se
 import { getAboutPage } from '../lib/strapi/pages'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-const payload = await getAboutPage().catch(() => ({ data: null }))
+const payload = await getAboutPage()
 const data = payload.data
 ---
 

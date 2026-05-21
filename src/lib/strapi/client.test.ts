@@ -4,6 +4,7 @@ import {
   buildStrapiUrl,
   fetchAllStrapiPages,
   fetchAllStrapiPagesSafe,
+  fetchStrapiSingleSafe,
   normalizeStrapiMediaUrl,
 } from './client'
 
@@ -81,6 +82,23 @@ describe('Strapi client', () => {
     expect(decodeURIComponent(fetcher.mock.calls[1][0].toString())).toContain(
       'pagination[page]=2',
     )
+  })
+
+  test('returns null data when safe single fetch fails', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response('Service Unavailable', {
+        status: 503,
+        statusText: 'Service Unavailable',
+      }),
+    )
+
+    const result = await fetchStrapiSingleSafe<{ heroTitle: string }>(
+      '/api/penerima-page',
+      { populate: '*' },
+      { fetcher },
+    )
+
+    expect(result).toEqual({ data: null })
   })
 
   test('returns an empty array when safe fetch fails', async () => {

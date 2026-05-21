@@ -2,53 +2,59 @@
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { EventHero } from '#/components/event-hero'
 import { EventList } from '#/components/event-list'
-import { fetchStrapiSingle } from '#/lib/strapi/client'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { getEventPage } from '#/lib/strapi/event-page'
 import { getEvents } from '#/lib/strapi/events'
 
-type EventPageData = {
-  heroTitle: string
-  heroDescription: string
-  heroBackground: any
-}
+import type { EventItem } from '#/components/event-list'
 
-let pageData: EventPageData = {
+const pageResponse = await getEventPage()
+const pageData = pageResponse.data ?? {
   heroTitle: 'Our Events',
   heroDescription:
     'Garda Pangan bermula dari pergerakan komunitas kecil yang berkembang jadi sesuatu yang memberikan manfaat lebih.',
   heroBackground: null,
 }
 
-let eventsData: any[] = []
+const eventsData = await getEvents()
 
-try {
-  const pageResponse = await fetchStrapiSingle<EventPageData>('api/event-page', {
-    populate: '*',
-  })
-  if (pageResponse?.data) {
-    pageData = pageResponse.data
-  }
-} catch (error) {
-  console.error('Failed to fetch event page data:', error)
-}
-
-eventsData = await getEvents()
-
-// Sort events by date descending by default
 eventsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+const heroTitle = pageData.heroTitle ?? 'Our Events'
+const heroDescription =
+  pageData.heroDescription ??
+  'Garda Pangan bermula dari pergerakan komunitas kecil yang berkembang jadi sesuatu yang memberikan manfaat lebih.'
+const heroBackground = normalizeStrapiMediaUrl(pageData.heroBackground?.url)
 ---
 
 <BaseLayout
-  title={`${pageData.heroTitle} - Garda Pangan`}
-  description={pageData.heroDescription}
+  title={`${heroTitle} - Garda Pangan`}
+  description={heroDescription}
   canonicalPath="/event"
 >
   <main class="garda-main bg-[#f4fbf6] overflow-hidden">
     <EventHero
-      title={pageData.heroTitle}
-      description={pageData.heroDescription}
-      backgroundImage={pageData.heroBackground}
+      title={heroTitle}
+      description={heroDescription}
+      backgroundImage={heroBackground}
     />
-    
-    <EventList client:load initialEvents={eventsData} />
+
+    <EventList
+      client:load
+      initialEvents={eventsData.map(
+        (event): EventItem => ({
+          id: event.id,
+          documentId: event.documentId,
+          title: event.title,
+          slug: event.slug,
+          date: event.date,
+          summary: event.summary ?? '',
+          location: event.location ?? undefined,
+          eventTag: event.eventTag ?? undefined,
+          content: event.content ?? undefined,
+          coverImage: event.coverImage ?? undefined,
+        }),
+      )}
+    />
   </main>
 </BaseLayout>

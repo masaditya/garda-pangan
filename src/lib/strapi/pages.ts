@@ -1,4 +1,4 @@
-import { fetchStrapiSingle } from './client'
+import { fetchStrapiSingle, fetchStrapiSingleSafe } from './client'
 
 import type { StrapiEntry, StrapiMedia } from './types'
 
@@ -45,6 +45,14 @@ export type MerchandisePage = StrapiEntry & {
   heroTitle?: string | null
   heroDescription?: string | null
   heroBackground?: StrapiMedia | null
+}
+
+export type PenerimaPage = StrapiEntry & {
+  heroTitle?: string | null
+  heroDescription?: string | null
+  heroBackground?: StrapiMedia | null
+  heroVideoUrl?: string | null
+  testimonialButtonLabel?: string | null
 }
 
 export type DidYouKnowItem = {
@@ -122,7 +130,7 @@ export type Homepage = StrapiEntry & {
 }
 
 export async function getAboutPage() {
-  return fetchStrapiSingle<AboutPage>('/api/about', {
+  return fetchStrapiSingleSafe<AboutPage>('/api/about', {
     populate: {
       heroBackground: true,
       historyImages: true,
@@ -131,7 +139,7 @@ export async function getAboutPage() {
 }
 
 export async function getMitraPage() {
-  return fetchStrapiSingle<MitraPage>('/api/mitra', {
+  return fetchStrapiSingleSafe<MitraPage>('/api/mitra', {
     populate: {
       heroBackgroundMedia: true,
       heroInfoCards: true,
@@ -143,15 +151,21 @@ export async function getMitraPage() {
 }
 
 export async function getMerchandisePage() {
-  return fetchStrapiSingle<MerchandisePage>('/api/merchandise-page', {
+  return fetchStrapiSingleSafe<MerchandisePage>('/api/merchandise-page', {
     populate: {
       heroBackground: true,
     },
   })
 }
 
+export async function getPenerimaPage() {
+  return fetchStrapiSingleSafe<PenerimaPage>('/api/penerima-page', {
+    populate: '*',
+  })
+}
+
 export async function getHomepage() {
-  return fetchStrapiSingle<Homepage>('/api/homepage', {
+  return fetchStrapiSingleSafe<Homepage>('/api/homepage', {
     populate: {
       heroBackground: true,
       didYouKnow: true,
