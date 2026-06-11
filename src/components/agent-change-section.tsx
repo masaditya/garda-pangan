@@ -58,16 +58,15 @@ export function AgentChangeSection({
       aria-labelledby="agent-change-heading"
       spacing="default"
       tone="transparent"
-      className="bg-garda-mint-soft/50 rounded-3xl"
     >
       <div className="relative mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
         <h2
           id="agent-change-heading"
-          className="text-[clamp(2.75rem,5vw,4.5rem)] font-black uppercase leading-none tracking-tight text-garda-forest"
+          className="garda-section-heading text-[clamp(2rem,5vw,3.5rem)] capitalize"
         >
-          {title || 'Ayo Jadi Agen Perubahan'}
+          {title || 'Ayo Jadi agen perubahan'}
         </h2>
-        <p className="max-w-136 text-balance text-base leading-normal text-[#080808]/80 sm:text-lg">
+        <p className="max-w-136 text-balance text-base leading-normal text-white/80 sm:text-lg">
           {subtitle ||
             'Melalui Garda Pangan kamu bisa berpartisipasi dalam menuntaskan kerawanan pangan di Indonesia.'}
         </p>
@@ -96,4 +95,3 @@ export function AgentChangeSection({
     </SectionShell>
   )
 }
-

@@ -5,7 +5,7 @@ export function VolunteerSection() {
     <div className="relative flex min-h-screen flex-col items-center justify-center px-6 pb-32 pt-40 text-center lg:pb-48 lg:pt-56">
       <div className="mx-auto max-w-5xl space-y-12">
         {/* Title */}
-        <h1 className="font-sans text-6xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
+        <h1 className="font-serif text-6xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
           Jadi Pahlawan<br />Pangan Nyata
         </h1>
         

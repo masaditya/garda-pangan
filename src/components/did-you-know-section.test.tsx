@@ -96,6 +96,6 @@ describe('DidYouKnowSection', () => {
     expect(
       firstSlide.closest('[data-active]')?.getAttribute('data-active'),
     ).toBe('true')
-    expect(screen.getByTestId('facts-frame').className).toContain('grid')
+    expect(screen.getByTestId('facts-frame').className).toContain('bg-white')
   })
 })

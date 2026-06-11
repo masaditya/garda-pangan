@@ -1,13 +1,8 @@
 ---
 import { AgentChangeSection } from '../components/agent-change-section'
-import {
-  AwardsSection,
-  InstagramSection,
-} from '../components/awards-instagram-section'
-import { DidYouKnowSection } from '../components/did-you-know-section'
+import { AwardsInstagramSection } from '../components/awards-instagram-section'
 import { FeaturedBySection } from '../components/featured-by-section'
-import { HeroSection } from '../components/hero-section'
-import { ImpactSection } from '../components/impact-section'
+import { HeroScrollSequence } from '../components/hero-scroll-sequence'
 import { SupportersCollaboratorsSection } from '../components/supporters-collaborators-section'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import { getHomepage } from '../lib/strapi/pages'
@@ -18,25 +13,22 @@ const homepage = homepageResponse?.data
 
 <BaseLayout canonicalPath="/">
   <main class="garda-main">
-    <HeroSection
+    <HeroScrollSequence
       title={homepage?.heroTitle}
       subtitle={homepage?.heroSubtitle}
       ctaText={homepage?.heroCtaText}
       ctaLink={homepage?.heroCtaLink}
       backgroundImage={homepage?.heroBackground?.url}
-    />
-    <DidYouKnowSection slides={homepage?.didYouKnow} client:load />
-    <ImpactSection
-      title={homepage?.impactTitle}
+      didYouKnowSlides={homepage?.didYouKnow}
       portionsRescued={homepage?.statsPortionsRescued}
       co2Reduced={homepage?.statsCo2Reduced}
       foodLossPotential={homepage?.statsFoodLossPotential}
       foodScrap={homepage?.statsFoodScrap}
-      stats={homepage?.impactStats}
-      impactImage={homepage?.impactImage?.url}
+      impactStats={homepage?.impactStats}
+      client:load
     />
     <FeaturedBySection
-      title={homepage?.featuredBy?.title}``
+      title={homepage?.featuredBy?.title}
       logos={homepage?.featuredBy?.logos?.map((l) => ({
         id: l.id,
         url: l.url,
@@ -54,10 +46,12 @@ const homepage = homepageResponse?.data
       subtitle={homepage?.supporterSubtitle}
       supporters={homepage?.supporterCards}
     />
-    <AwardsSection title={homepage?.awardTitle} awards={homepage?.awardCards} />
-    <InstagramSection
-      title={homepage?.instagramTitle}
+    <AwardsInstagramSection
+      awardTitle={homepage?.awardTitle}
+      awards={homepage?.awardCards}
+      instagramTitle={homepage?.instagramTitle}
       posts={homepage?.instagramCards}
+      client:visible
     />
   </main>
 </BaseLayout>

@@ -106,7 +106,7 @@ export function ContactSection() {
       {/* Hero Content Section */}
       <section className="relative flex min-h-[85vh] flex-col items-start justify-center px-6 text-left">
         <div className="mx-auto w-full max-w-7xl space-y-6 pt-20">
-          <h1 className="font-sans text-6xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
+          <h1 className="font-serif text-6xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
             Hubungi<br />Kami
           </h1>
           <p className="max-w-2xl text-base font-medium leading-relaxed text-white/80 sm:text-lg">

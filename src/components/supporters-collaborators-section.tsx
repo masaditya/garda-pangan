@@ -18,20 +18,16 @@ function SupporterCard({
   alt: string
 }) {
   return (
-    <article className="flex min-h-48 flex-col items-center rounded-2xl bg-white px-4 py-4 shadow-sm">
-      <span
-        aria-hidden="true"
-        className="mb-4 size-1.5 rounded-full bg-slate-300"
-      />
+    <article className="flex min-h-36 flex-col items-center justify-center rounded-2xl bg-white px-3 py-5 shadow-sm">
       <div className="flex flex-1 items-center justify-center p-2">
         <img
-          className="h-16 w-16 object-contain"
+          className="h-14 w-14 object-contain"
           src={logoSrc}
           alt={alt}
           loading="lazy"
         />
       </div>
-      <p className="mt-4 text-center text-[0.7rem] font-bold leading-tight text-garda-forest uppercase">
+      <p className="mt-3 text-center text-[0.65rem] font-bold leading-tight text-garda-forest uppercase">
         {name}
       </p>
     </article>
@@ -70,41 +66,30 @@ export function SupportersCollaboratorsSection({
       aria-labelledby="supporters-collaborators-heading"
       spacing="default"
       tone="transparent"
-      className="pb-24 bg-white"
     >
       <div className="relative grid gap-12">
         <div className="relative z-10 flex flex-col items-center text-center">
           <h2
             id="supporters-collaborators-heading"
-            className="m-0 flex flex-col text-[clamp(2.75rem,5vw,4.5rem)] font-black leading-none tracking-tight text-garda-forest uppercase"
+            className="garda-section-heading text-[clamp(2rem,5vw,3.5rem)] capitalize"
           >
-            {title ? (
-              <span>{title}</span>
-            ) : (
-              <>
-                <span>SUPPORTER &amp;</span>
-                <span>COLLABORATORS</span>
-              </>
-            )}
+            {title || 'Supporter & Collaborators'}
           </h2>
-          <p className="mt-8 mb-0 w-full max-w-3xl text-lg font-medium text-garda-forest/80 lg:text-xl uppercase">
+          <p className="mt-6 max-w-3xl text-base font-medium text-white/75 sm:text-lg">
             {subtitle ||
-              'SINCE 2021, WE HAVE PARTNERED WITH THESE COMPANIES TO CREATE IMPACT FOR THE FUTURE. WILL YOUR LOGO BE NEXT HERE?'}
+              'Since 2021, we have partnered with these companies to create impact for the future. Will your logo be next here?'}
           </p>
         </div>
 
-        <div className="mt-8 rounded-3xl bg-garda-mint-soft/50 p-6">
-          <div
-            data-testid="supporters-grid"
-            className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-8"
-          >
-            {displaySupporters.map((supporter) => (
-              <SupporterCard key={supporter.id} {...supporter} />
-            ))}
-          </div>
+        <div
+          data-testid="supporters-grid"
+          className="grid grid-cols-2 justify-center gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:[grid-template-columns:repeat(8,minmax(9.375rem,9.375rem))]"
+        >
+          {displaySupporters.map((supporter) => (
+            <SupporterCard key={supporter.id} {...supporter} />
+          ))}
         </div>
       </div>
     </SectionShell>
   )
 }
-

@@ -1,8 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   formatProgramDescription,
   getProgramThumbnailUrl,
+  getPrograms,
   mapProgramToDetailButtons,
 } from './programs'
 
@@ -71,5 +74,31 @@ describe('programs helpers', () => {
       { text: 'Selengkapnya', href: '/mitra', variant: 'subtle' },
       { text: 'Jadi Mitra', href: '/kontak', variant: 'primary' },
     ])
+  })
+
+  it('fetches programs from Strapi with populate=*', async () => {
+    const exampleResponse = JSON.parse(
+      readFileSync(
+        resolve('public/example-response/programs (2).json'),
+        'utf8',
+      ),
+    )
+
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response(JSON.stringify(exampleResponse)),
+    )
+
+    const programs = await getPrograms({ fetcher })
+
+    expect(programs).toHaveLength(2)
+    expect(programs[0]?.title).toBe('FOOD RESCUE DARI BISNIS MAKANAN')
+    expect(programs[0]?.thumbnail?.formats?.small?.url).toContain(
+      'strapiapp.com',
+    )
+
+    const requestUrl = decodeURIComponent(fetcher.mock.calls[0][0].toString())
+    expect(requestUrl).toContain('/api/programs')
+    expect(requestUrl).toContain('populate=*')
+    expect(requestUrl).toContain('sort=publishedAt:asc')
   })
 })

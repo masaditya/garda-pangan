@@ -11,21 +11,21 @@ describe('Header', () => {
     expect(
       screen.getByRole('navigation', { name: /primary navigation/i }),
     ).toBeTruthy()
-    expect(screen.getByRole('link', { name: /tentang kami/i })).toBeTruthy()
-    expect(screen.getByRole('link', { name: /mitra/i })).toBeTruthy()
+    expect(screen.getByRole('link', { name: /donasi/i })).toBeTruthy()
     expect(screen.getByRole('link', { name: /relawan/i })).toBeTruthy()
+    expect(screen.getByRole('link', { name: /berita/i })).toBeTruthy()
 
-    const homeLink = screen.getByRole('link', { name: /beranda/i })
+    const homeLink = screen.getByRole('link', { name: /^beranda$/i })
     expect(homeLink.getAttribute('aria-current')).toBe('page')
     expect(container.querySelector('.site-header')).toBeNull()
   })
 
   test('opens the mobile navigation sheet', () => {
-    render(<Header currentPath="/tentang-kami" />)
+    render(<Header currentPath="/kontak" />)
 
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
 
-    expect(screen.getAllByText(/tentang kami/i).length).toBeGreaterThan(0)
-    expect(screen.getByRole('link', { name: /dukung/i })).toBeTruthy()
+    expect(screen.getAllByText(/kontak/i).length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: /donasi/i })).toBeTruthy()
   })
 })

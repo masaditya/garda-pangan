@@ -8,7 +8,7 @@ describe('SupportersCollaboratorsSection', () => {
     const { container } = render(<SupportersCollaboratorsSection />)
 
     const heading = screen.getByRole('heading', {
-      name: /supporter & collabolators/i,
+      name: /supporter & collaborators/i,
     })
 
     expect(heading).toBeTruthy()

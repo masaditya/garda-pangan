@@ -1,6 +1,5 @@
-import { Menu } from 'lucide-react'
+import { Globe, Menu } from 'lucide-react'
 
-import { GardaButton } from './garda-button'
 import { GardaLogo } from './garda-logo'
 import { SiteContainer } from './site-container'
 import {
@@ -23,9 +22,9 @@ import { cn } from '#/lib/utils'
 const navItems = [
   { href: '/', label: 'Beranda' },
   { href: '/program', label: 'Program' },
-  { href: '/event', label: 'Event' },
-  { href: '/knowledge', label: 'Knowledge' },
-  { href: '/merchandise', label: 'Produk' },
+  { href: '/support', label: 'Donasi' },
+  { href: '/relawan', label: 'Relawan' },
+  { href: '/artikel', label: 'Berita' },
   { href: '/kontak', label: 'Kontak' },
 ]
 
@@ -35,27 +34,17 @@ type HeaderProps = {
 
 function LanguageSwitcher() {
   return (
-    <button className="flex items-center gap-2 rounded-full border border-garda-border bg-white px-4 py-2 text-sm font-medium text-garda-forest shadow-sm transition hover:bg-garda-mint-soft">
-      <span className="flex size-5 items-center justify-center overflow-hidden rounded-full">
-        <img
-          src="https://flagcdn.com/us.svg"
-          alt="English (US)"
-          className="h-full w-full object-cover"
-        />
+    <button
+      type="button"
+      className="flex items-center gap-2 rounded-full border border-garda-border bg-white px-4 py-2 text-sm font-medium text-garda-forest shadow-sm transition hover:bg-garda-mint-soft"
+      aria-label="Language switcher"
+    >
+      <Globe className="size-4 text-garda-forest/70" aria-hidden="true" />
+      <span>ID</span>
+      <span className="text-garda-forest/40" aria-hidden="true">
+        |
       </span>
-      <span>English (US)</span>
-      <svg
-        className="size-4 opacity-50"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          fillRule="evenodd"
-          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-          clipRule="evenodd"
-        />
-      </svg>
+      <span className="text-garda-forest/60">EN</span>
     </button>
   )
 }
@@ -90,7 +79,7 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                         className={cn(
                           'rounded-full px-5 py-2 text-sm font-medium text-garda-forest/70 transition hover:bg-garda-mint-soft hover:text-garda-forest',
                           isActive &&
-                          'bg-garda-mint-soft text-garda-forest font-bold',
+                            'bg-garda-forest font-bold text-white hover:bg-garda-forest hover:text-white',
                         )}
                       >
                         <a
@@ -149,7 +138,7 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                         href={item.href}
                         className={cn(
                           'rounded-2xl px-4 py-3 text-base font-medium text-garda-forest/80 transition hover:bg-white hover:text-garda-forest',
-                          isActive && 'bg-white text-garda-forest shadow-sm',
+                          isActive && 'bg-garda-forest text-white shadow-sm',
                         )}
                         aria-current={isActive ? 'page' : undefined}
                       >

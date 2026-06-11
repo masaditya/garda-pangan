@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import { ProgramHero } from '../components/program-hero'
-import { ProgramDetail } from '../components/program-detail'
+import { ProgramListSection } from '../components/program-list-section'
 import {
   formatProgramDescription,
   getProgramThumbnailUrl,
@@ -9,12 +8,12 @@ import {
   mapProgramToDetailButtons,
 } from '../lib/strapi/programs'
 
-const programs = await getPrograms().catch(() => [])
+const programs = await getPrograms()
 
 const programData = {
   heroDescription:
     'Garda Pangan bermula dari pengalaman salah seorang founder, Dedhy Trunoyudho yang berlatar belakang pengusaha katering pernikahan.',
-  details: programs.map((program) => ({
+  programs: programs.map((program) => ({
     title: program.title,
     image: getProgramThumbnailUrl(program.thumbnail),
     description: formatProgramDescription(program.description),
@@ -28,28 +27,13 @@ const programData = {
   description="Program-program Garda Pangan dalam menyelamatkan makanan berlebih."
   canonicalPath="/program"
 >
-  <main class="garda-main bg-white">
-    <ProgramHero
+  <main class="garda-main">
+    <ProgramListSection
+      client:load
       title="Program <br /> Kami"
       description={programData.heroDescription}
       backgroundImage="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop"
+      programs={programData.programs}
     />
-
-    <div
-      class="flex flex-col gap-8 bg-white/50 bg-linear-to-b from-white to-garda-mint-soft/30 pb-20 pt-10"
-    >
-      {
-        programData.details.map((detail) => (
-          <ProgramDetail
-            client:load
-            title={detail.title}
-            description={detail.description}
-            image={detail.image}
-            buttons={detail.buttons}
-            reverse={false}
-          />
-        ))
-      }
-    </div>
   </main>
 </BaseLayout>

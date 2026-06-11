@@ -45,7 +45,7 @@ export function ProgramHero({
         className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 sm:px-12 md:px-16 lg:px-8"
       >
         <div className="flex flex-col items-end justify-between gap-8 md:flex-row">
-          <h1 className="w-full max-w-[900px] font-sans text-[clamp(5rem,15vw,7.5rem)] font-black leading-[1] tracking-[-0.05em] text-white md:w-3/5">
+          <h1 className="font-serif w-full max-w-[900px] text-[clamp(5rem,15vw,7.5rem)] font-black leading-[1] tracking-[-0.05em] text-white md:w-3/5">
             {titleLines.map((line, i) => (
               <span key={i} className="block">
                 {line.trim()}

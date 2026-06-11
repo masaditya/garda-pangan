@@ -3,6 +3,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from '#/components/ui/carousel'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
@@ -110,7 +112,7 @@ function AwardCard({
           src={image || '/figma/award-medal.svg'}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute right-2 bottom-2 h-auto w-24 lg:w-32 object-contain"
+          className="pointer-events-none absolute right-2 bottom-2 h-auto w-24 object-contain lg:w-32"
         />
       </CardContent>
     </Card>
@@ -134,7 +136,7 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
           id: `award-${a.id}`,
           year: a.year,
           title: a.title,
-          source: 'Garda Pangan', // Strapi doesn't have source in the user's list, using fallback
+          source: 'Garda Pangan',
           image: normalizeStrapiMediaUrl(a.images?.[0]?.url) || undefined,
         }))
       : defaultAwards
@@ -144,31 +146,31 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
       aria-labelledby="awards-recognition-heading"
       spacing="default"
       tone="transparent"
-      className="bg-garda-mint-soft/50"
       innerClassName="max-w-none px-0"
     >
       <div className="relative w-full">
         <div className="mb-8 flex justify-center text-center">
           <h2
             id="awards-recognition-heading"
-            className="text-[clamp(2.75rem,5vw,4.5rem)] font-black uppercase leading-none tracking-tight text-garda-forest"
+            className="garda-section-heading text-[clamp(2rem,5vw,3.5rem)] capitalize"
           >
             {title ? (
-              <span dangerouslySetInnerHTML={{ __html: title.replace('\n', '<br/>') }} />
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: title.replace('\n', '<br/>'),
+                }}
+              />
             ) : (
-              <>
-                Awards &<br />
-                Recognition
-              </>
+              'Awards & Recognition'
             )}
           </h2>
         </div>
 
         <Carousel
           opts={{ align: 'start', loop: true }}
-          className="w-full cursor-grab active:cursor-grabbing select-none"
+          className="w-full cursor-grab px-4 active:cursor-grabbing select-none sm:px-6 lg:px-8"
         >
-          <CarouselContent className="-ml-4 px-4 sm:px-6 lg:px-8">
+          <CarouselContent className="-ml-4">
             {displayAwards.map((award) => (
               <CarouselItem
                 key={award.id}
@@ -178,6 +180,14 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
               </CarouselItem>
             ))}
           </CarouselContent>
+          <CarouselPrevious
+            aria-label="Previous award"
+            className="left-2 border-white/20 bg-white/90 text-garda-forest hover:bg-white"
+          />
+          <CarouselNext
+            aria-label="Next award"
+            className="right-2 border-white/20 bg-white/90 text-garda-forest hover:bg-white"
+          />
         </Carousel>
       </div>
     </SectionShell>
@@ -198,7 +208,9 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
     posts && posts.length > 0
       ? posts.map((p) => ({
           id: `ig-${p.id}`,
-          src: normalizeStrapiMediaUrl(p.image?.url) || '/figma/instagram/post-1.png',
+          src:
+            normalizeStrapiMediaUrl(p.image?.url) ||
+            '/figma/instagram/post-1.png',
           alt: p.title || 'Instagram post',
         }))
       : defaultInstagramPosts
@@ -207,13 +219,13 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
     <SectionShell
       aria-labelledby="our-instagram-heading"
       spacing="compact"
-      tone="white"
+      tone="transparent"
     >
       <div className="mx-auto flex w-full flex-col gap-8">
         <div className="flex justify-center text-center">
           <h2
             id="our-instagram-heading"
-            className="text-[clamp(2.5rem,5vw,3.5rem)] font-black uppercase leading-tight tracking-tight text-garda-forest"
+            className="garda-section-heading text-[clamp(2rem,5vw,3rem)] capitalize"
           >
             {title || 'Our Instagram'}
           </h2>
@@ -226,12 +238,12 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
           {displayPosts.map((post) => (
             <figure
               key={post.id}
-              className="overflow-hidden bg-[#d7ddd7] rounded-xl aspect-square"
+              className="aspect-square overflow-hidden rounded-xl bg-[#d7ddd7]"
             >
               <img
                 src={post.src}
                 alt={post.alt}
-                className="h-full w-full object-cover hover:scale-105 transition-transform duration-500"
+                className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 loading="lazy"
               />
             </figure>
@@ -242,3 +254,23 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
   )
 }
 
+type AwardsInstagramSectionProps = {
+  awardTitle?: string | null
+  awards?: AwardsSectionProps['awards']
+  instagramTitle?: string | null
+  posts?: InstagramSectionProps['posts']
+}
+
+export function AwardsInstagramSection({
+  awardTitle,
+  awards,
+  instagramTitle,
+  posts,
+}: AwardsInstagramSectionProps) {
+  return (
+    <>
+      <AwardsSection title={awardTitle} awards={awards} />
+      <InstagramSection title={instagramTitle} posts={posts} />
+    </>
+  )
+}

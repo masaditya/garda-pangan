@@ -73,11 +73,17 @@ export function mapProgramToDetailButtons(program: Program): ProgramDetailButton
   return buttons
 }
 
-export async function getPrograms() {
-  return fetchAllStrapiPages<Program>('/api/programs', {
-    populate: {
-      thumbnail: true,
+type GetProgramsOptions = {
+  fetcher?: typeof fetch
+}
+
+export async function getPrograms(options: GetProgramsOptions = {}) {
+  return fetchAllStrapiPages<Program>(
+    '/api/programs',
+    {
+      populate: '*',
+      sort: 'publishedAt:asc',
     },
-    sort: 'publishedAt:asc',
-  })
+    options,
+  )
 }
