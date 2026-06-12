@@ -82,7 +82,7 @@ export function ProgramListSection({
           className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end px-6 pb-20 pt-32 sm:px-12 md:px-16 lg:px-8"
         >
           <div className="flex flex-col items-end justify-between gap-8 md:flex-row">
-            <h1 className="font-serif w-full max-w-[900px] text-[clamp(3rem,10vw,5.5rem)] font-bold leading-[0.95] tracking-[-0.03em] text-white md:w-3/5">
+            <h1 className="font-serif w-full max-w-[900px] text-[clamp(3rem,10vw,5.5rem)] leading-[0.95] tracking-[-0.03em] text-white md:w-3/5">
               {titleLines.map((line, index) => (
                 <span key={index} className="block font-serif">
                   {line.trim()}
@@ -152,7 +152,7 @@ export function ProgramListSection({
                       />
 
                       <span
-                        className={`relative z-10 font-serif text-[clamp(1.125rem,3.5vw,2.25rem)] font-bold uppercase leading-[1.15] tracking-[-0.02em] transition-colors duration-300 ${
+                        className={`relative z-10 font-serif text-[clamp(1.125rem,3.5vw,2.25rem)] uppercase leading-[1.15] tracking-[-0.02em] transition-colors duration-300 ${
                           isHovered ? 'text-garda-sun' : 'text-white'
                         }`}
                       >

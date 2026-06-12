@@ -156,7 +156,7 @@ export function DidYouKnowSection({
         >
           <h2
             id="facts-heading"
-            className="font-serif text-[clamp(3rem,8vw,5.5rem)] font-bold leading-[0.95] text-garda-sun"
+            className="font-serif text-[clamp(3rem,8vw,5.5rem)] leading-[0.95] text-garda-sun"
           >
             Tahukah Kamu?
           </h2>
@@ -199,7 +199,7 @@ export function DidYouKnowSection({
         <div className="relative z-10 mb-12 flex justify-center lg:mb-16">
           <h2
             id="facts-heading"
-            className="text-center font-sans text-[clamp(2.5rem,6vw,4rem)] font-black tracking-tight text-garda-ink"
+            className="text-center font-sans text-[clamp(2.5rem,6vw,4rem)] tracking-tight text-garda-ink"
           >
             Tahukah Kamu?
           </h2>

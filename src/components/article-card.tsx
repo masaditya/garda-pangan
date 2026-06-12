@@ -45,7 +45,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
           )}
           {article.isFeatured && <span>Featured</span>}
         </div>
-        <h2 className="text-2xl font-black tracking-tight text-garda-ink">
+        <h2 className="text-2xl tracking-tight text-garda-ink">
           <a
             href={`/artikel/${article.slug}`}
             className="transition hover:text-garda-forest"

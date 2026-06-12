@@ -45,7 +45,7 @@ export function PartnerFlowSection({ data }: { data?: MitraData }) {
       {/* Intro block */}
       <div className="mb-24 grid gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <h2 className="text-4xl font-black tracking-tight text-garda-ink sm:text-5xl">
+          <h2 className="text-4xl tracking-tight text-garda-ink sm:text-5xl">
             {flowTitle}
           </h2>
         </div>
@@ -120,7 +120,7 @@ export function PartnerFlowSection({ data }: { data?: MitraData }) {
                             </div>
                           )}
                         </div>
-                        <h3 className="mb-2 text-[1.35rem] font-bold leading-tight text-garda-ink text-balance">
+                        <h3 className="mb-2 text-[1.35rem] leading-tight text-garda-ink text-balance">
                           {step.title}
                         </h3>
                         {step.description && (

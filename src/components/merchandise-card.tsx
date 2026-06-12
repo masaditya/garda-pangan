@@ -41,7 +41,7 @@ export function MerchandiseCard({ product }: { product: MerchandiseItem }) {
           <span>{product.date}</span>
         </div>
 
-        <h3 className="mb-2 text-lg font-bold leading-tight text-garda-ink">
+        <h3 className="mb-2 text-lg leading-tight text-garda-ink">
           {product.title}
         </h3>
 

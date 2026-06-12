@@ -89,7 +89,7 @@ export function PartnerHeroSection({ data }: { data?: MitraData }) {
         <div className="mx-auto w-full max-w-[1240px]">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-end">
             <div>
-              <h1 className="text-5xl font-black tracking-tight text-white mb-6 sm:text-6xl lg:text-7xl whitespace-pre-line">
+              <h1 className="text-5xl tracking-tight text-white mb-6 sm:text-6xl lg:text-7xl whitespace-pre-line">
                 {title}
               </h1>
             </div>

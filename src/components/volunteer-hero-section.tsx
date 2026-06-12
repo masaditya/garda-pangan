@@ -16,7 +16,7 @@ export function VolunteerHeroSection() {
         className="relative z-10 flex h-full flex-col items-center justify-center text-center"
       >
         <div className="max-w-4xl space-y-8 flex flex-col items-center">
-          <h1 className="text-5xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl max-w-4xl leading-tight">
+          <h1 className="text-5xl tracking-tight text-white sm:text-6xl lg:text-7xl max-w-4xl leading-tight">
             Jadi Pahlawan
             <br /> Pangan Nyata
           </h1>

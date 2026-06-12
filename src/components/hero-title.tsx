@@ -16,7 +16,7 @@ export function HeroTitle({ oPortalRef }: HeroTitleProps) {
         <span
           ref={oPortalRef}
           data-testid="hero-o-portal"
-          className="relative mx-[0.02em] inline-block size-[0.52em] translate-y-[0.06em] overflow-hidden rounded-full border-2 border-garda-sun/90 bg-garda-forest/30 align-middle"
+          className="relative mx-[0.02em] inline-block size-[0.8em] -translate-y-[0.1em] overflow-hidden rounded-full border-4 border-garda-sun/90 bg-garda-forest/30 align-middle"
           aria-hidden="true"
         >
           <img

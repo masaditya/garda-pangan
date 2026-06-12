@@ -18,10 +18,10 @@ export function MerchandiseFilter({
 }: MerchandiseFilterProps) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-garda-neutral/5">
-      <h2 className="mb-6 text-xl font-bold text-garda-ink">Opsi Filter</h2>
+      <h2 className="mb-6 text-xl text-garda-ink">Opsi Filter</h2>
 
       <div className="mb-6">
-        <h3 className="mb-2 text-sm font-semibold text-garda-ink-soft">
+        <h3 className="mb-2 text-sm text-garda-ink-soft">
           Kategori yang diterapkan
         </h3>
         {selected.length === 0 ? (
@@ -43,7 +43,7 @@ export function MerchandiseFilter({
       <div className="mb-6 h-px w-full bg-garda-neutral/10" />
 
       <div>
-        <h3 className="mb-4 text-sm font-semibold text-garda-ink-soft">
+        <h3 className="mb-4 text-sm text-garda-ink-soft">
           Daftar Kategori
         </h3>
         <ul className="space-y-3">

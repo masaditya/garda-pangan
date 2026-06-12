@@ -189,7 +189,7 @@ function FooterContent() {
       <div className="ml-auto grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-10 lg:gap-14">
         {footerLinkColumns.map((col) => (
           <div key={col.title}>
-            <h3 className="mb-4 text-base font-bold tracking-[-0.02em] text-[#020202]">
+            <h3 className="mb-4 text-base tracking-[-0.02em] text-[#020202]">
               {col.title}
             </h3>
             <ul className="space-y-3">

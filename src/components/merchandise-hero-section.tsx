@@ -14,7 +14,7 @@ export function MerchandiseHeroSection({
     <section className="relative z-10 flex min-h-screen flex-col justify-center gap-8 px-6 pb-28 pt-32 text-center sm:px-10 sm:pt-36 md:gap-10 lg:px-8 lg:pb-32 lg:pt-40">
       <div className="mx-auto w-full max-w-[1240px]">
         <div className="mx-auto max-w-4xl space-y-6">
-          <h1 className="text-5xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="text-5xl tracking-tight text-white sm:text-6xl lg:text-7xl">
             {title}
           </h1>
           <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-white/90 sm:text-lg">

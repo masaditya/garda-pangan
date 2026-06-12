@@ -107,7 +107,7 @@ export function ProgramDetailModal({
 
             <h2
               id={modalTitleId}
-              className="mb-8 max-w-3xl text-center font-serif text-3xl font-black uppercase leading-[1.15] tracking-[-0.02em] text-garda-forest sm:text-4xl md:text-[2.75rem]"
+              className="mb-8 max-w-3xl text-center font-serif text-3xl uppercase leading-[1.15] tracking-[-0.02em] text-garda-forest sm:text-4xl md:text-[2.75rem]"
             >
               {title}
             </h2>

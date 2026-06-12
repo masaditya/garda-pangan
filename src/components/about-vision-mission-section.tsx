@@ -24,7 +24,7 @@ export function AboutVisionMissionSection({ data }: { data?: any }) {
             <span className="absolute -left-4 -top-8 -z-10 select-none text-[8rem] font-black leading-none text-garda-forest/5 sm:-left-8 sm:-top-12 sm:text-[12rem]">
               Visi
             </span>
-            <h2 className="text-4xl font-black tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32">
+            <h2 className="text-4xl tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32">
               Visi
             </h2>
           </div>
@@ -46,7 +46,7 @@ export function AboutVisionMissionSection({ data }: { data?: any }) {
             <span className="absolute -left-4 -top-8 -z-10 select-none text-[8rem] font-black leading-none text-garda-forest/5 sm:-left-8 sm:-top-12 sm:text-[12rem]">
               Misi
             </span>
-            <h2 className="text-4xl font-black tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32">
+            <h2 className="text-4xl tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32">
               Misi
             </h2>
           </div>

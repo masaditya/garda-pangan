@@ -106,7 +106,7 @@ export function ContactSection() {
       {/* Hero Content Section */}
       <section className="relative flex min-h-[85vh] flex-col items-start justify-center px-6 text-left">
         <div className="mx-auto w-full max-w-7xl space-y-6 pt-20">
-          <h1 className="font-serif text-6xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
+          <h1 className="font-serif text-6xl tracking-tight text-white sm:text-7xl lg:text-8xl">
             Hubungi<br />Kami
           </h1>
           <p className="max-w-2xl text-base font-medium leading-relaxed text-white/80 sm:text-lg">
@@ -132,7 +132,7 @@ export function ContactSection() {
                    </div>
                 </div>
 
-                <h3 className="mb-4 font-sans text-xl font-bold leading-tight tracking-wider text-black/80 uppercase">
+                <h3 className="mb-4 font-sans text-xl leading-tight tracking-wider text-black/80 uppercase">
                   {cat.title}
                 </h3>
                 <p className="mb-8 text-lg font-medium leading-relaxed text-black/70">

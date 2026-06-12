@@ -64,7 +64,7 @@ export function ProgramDetail({
             </div>
 
             <div className="flex w-full flex-col justify-center gap-6 lg:w-1/2">
-              <h2 className="font-serif text-3xl font-black uppercase leading-[1.1] tracking-[-0.02em] text-garda-forest sm:text-4xl lg:text-[2.75rem]">
+              <h2 className="font-serif text-3xl uppercase leading-[1.1] tracking-[-0.02em] text-garda-forest sm:text-4xl lg:text-[2.75rem]">
                 {title}
               </h2>
               <div

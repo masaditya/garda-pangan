@@ -41,7 +41,7 @@ export function HeroSection({
         <div className="flex max-w-5xl flex-col items-center gap-6">
           <h1
             aria-label="ONE STOP FOOD LOSS & WASTE SOLUTION"
-            className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] font-bold uppercase leading-[0.95] tracking-[-0.03em]"
+            className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
           >
             {title ? (
               <span className="block text-white">{title}</span>

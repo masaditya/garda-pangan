@@ -9,7 +9,7 @@ export function AboutLegalitySection({ data }: { data?: any }) {
   return (
     <SectionShell tone="white" spacing="compact">
       <div className="rounded-3xl bg-garda-paper p-8 sm:p-12">
-        <h2 className="mb-6 text-2xl font-bold tracking-tight text-garda-forest sm:text-3xl">
+        <h2 className="mb-6 text-2xl tracking-tight text-garda-forest sm:text-3xl">
           Legalitas
         </h2>
         <div className="space-y-4 text-sm leading-relaxed text-garda-ink-soft sm:text-base">

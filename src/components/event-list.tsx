@@ -133,7 +133,7 @@ export function EventList({ initialEvents }: EventListProps) {
 
       {/* Background Watermark */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 opacity-[0.03]">
-        <h2 className="font-sans text-[clamp(6rem,20vw,18rem)] font-black uppercase tracking-tighter text-garda-forest whitespace-nowrap">
+        <h2 className="font-sans text-[clamp(6rem,20vw,18rem)] uppercase tracking-tighter text-garda-forest whitespace-nowrap">
           GardaPangan
         </h2>
       </div>
@@ -194,7 +194,7 @@ export function EventList({ initialEvents }: EventListProps) {
                     <span className="capitalize">{formattedDate}</span>
                   </div>
 
-                  <h3 className="mb-3 font-sans text-2xl font-bold leading-tight text-[#111827] line-clamp-2">
+                  <h3 className="mb-3 font-sans text-2xl leading-tight text-[#111827] line-clamp-2">
                     {event.title}
                   </h3>
 
@@ -211,7 +211,7 @@ export function EventList({ initialEvents }: EventListProps) {
           <div className="mb-4 flex size-20 items-center justify-center rounded-full bg-garda-mint-soft text-garda-forest/50">
             <Search className="size-8" />
           </div>
-          <h3 className="mb-2 text-2xl font-bold text-garda-forest">
+          <h3 className="mb-2 text-2xl text-garda-forest">
             Tidak ada event ditemukan
           </h3>
           <p className="text-garda-forest/70">

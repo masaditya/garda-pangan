@@ -36,7 +36,7 @@ export function ActionCard({
           )}
         </div>
         <div className="mt-6 flex flex-1 flex-col text-center">
-          <h3 className="text-xl font-bold leading-tight text-garda-forest">
+          <h3 className="text-xl leading-tight text-garda-forest">
             {title}
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-[#6b7280]">

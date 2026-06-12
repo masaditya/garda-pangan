@@ -133,7 +133,7 @@ function HeroScrollSequenceStatic({
           <div className="flex max-w-5xl flex-col items-center gap-6">
             <h1
               aria-label={headingLabel}
-              className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] font-bold uppercase leading-[0.95] tracking-[-0.03em]"
+              className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
             >
               <HeroTitle />
             </h1>
@@ -173,10 +173,10 @@ function HeroScrollSequenceStatic({
           >
             {metrics.map((metric) => (
               <div key={metric.label} className="text-center">
-                <p className="font-serif text-[clamp(2rem,4vw,3.25rem)] font-bold leading-none text-garda-sun">
+                <p className="font-serif text-[clamp(2rem,4vw,3.25rem)] leading-none text-garda-sun">
                   {metric.value}
                 </p>
-                <p className="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-white/90 sm:text-sm">
+                <p className="mt-3 text-xs uppercase tracking-[0.12em] text-white/90 sm:text-sm">
                   {metric.label}
                 </p>
               </div>
@@ -464,24 +464,24 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
           <div className="flex max-w-5xl flex-col items-center gap-6">
             <h1
               aria-label={headingLabel}
-              className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] font-bold uppercase leading-[0.95] tracking-[-0.03em]"
+              className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
             >
               <HeroTitle oPortalRef={oPortalRef} />
             </h1>
-            {props.subtitle ? (
+            {/* {props.subtitle ? (
               <p className="max-w-[600px] text-lg font-medium text-white/85 sm:text-xl">
                 {props.subtitle}
               </p>
-            ) : null}
+            ) : null} */}
           </div>
 
-          <GardaButton
+          {/* <GardaButton
             href={props.ctaLink || '/program'}
             variant="hero"
             className="h-16 px-8 text-lg"
           >
             {props.ctaText || 'Pelajari Selengkapnya'}
-          </GardaButton>
+          </GardaButton> */}
 
           <a
             href="#featured-by"
@@ -500,10 +500,10 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
           <div className="mx-auto grid w-full max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {metrics.map((metric) => (
               <div key={metric.label} className="text-center">
-                <p className="font-serif text-[clamp(2rem,4vw,3.25rem)] font-bold leading-none text-garda-sun">
+                <p className="font-serif text-[clamp(2rem,4vw,3.25rem)] leading-none text-garda-sun">
                   {metric.value}
                 </p>
-                <p className="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-white/90 sm:text-sm">
+                <p className="mt-3 text-xs uppercase tracking-[0.12em] text-white/90 sm:text-sm">
                   {metric.label}
                 </p>
               </div>

@@ -76,7 +76,7 @@ export function MetricCard({
           />
         ) : null}
         <div className="relative z-10 flex flex-col gap-4">
-          <p className="font-sans text-[clamp(2.5rem,6vw,4.5rem)] font-black leading-none tracking-tight text-garda-forest">
+          <p className="font-sans text-[clamp(2.5rem,6vw,4.5rem)] leading-none tracking-tight text-garda-forest">
             {value}
           </p>
           <p className="max-w-[280px] text-[1.125rem] font-bold leading-snug tracking-tight text-garda-forest/80">

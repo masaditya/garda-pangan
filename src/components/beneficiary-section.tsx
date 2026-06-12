@@ -95,7 +95,7 @@ export function BeneficiarySection({ data }: { data?: any }) {
         )}
 
         <div className={`mx-auto max-w-4xl space-y-8 pt-20 transition-all duration-700 ${isPlaying ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-          <h1 className="font-sans text-6xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
+          <h1 className="font-sans text-6xl tracking-tight text-white sm:text-7xl lg:text-8xl">
             {title.split(' ').map((word: string, i: number) => (
               <span key={i}>
                 {word}

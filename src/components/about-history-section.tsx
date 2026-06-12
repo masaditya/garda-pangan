@@ -12,7 +12,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-5">
           <h2
-            className="text-4xl font-black tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32"
+            className="text-4xl tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32"
             dangerouslySetInnerHTML={{
               __html: title.split(' ').join('<br class="hidden lg:block" /> '),
             }}

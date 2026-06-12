@@ -97,7 +97,7 @@ function AwardCard({
         <span className="text-sm font-bold leading-none tracking-tight text-[#6b7280] lg:text-base">
           {year}
         </span>
-        <h3 className="mt-2 max-w-48 text-lg font-black leading-tight tracking-tight text-[#08080c] lg:text-2xl">
+        <h3 className="mt-2 max-w-48 text-lg leading-tight tracking-tight text-[#08080c] lg:text-2xl">
           {title}
         </h3>
         <div className="mt-auto text-xs leading-none lg:text-sm">

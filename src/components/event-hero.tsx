@@ -39,7 +39,7 @@ export function EventHero({
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 text-center">
-        <h1 className="mb-6 font-sans text-5xl leading-tight font-black text-white sm:text-6xl md:text-7xl lg:text-[6rem]">
+        <h1 className="mb-6 font-sans text-5xl leading-tight text-white sm:text-6xl md:text-7xl lg:text-[6rem]">
           {title}
         </h1>
         <p className="max-w-2xl text-lg font-medium leading-relaxed text-white/90 sm:text-xl md:text-2xl">

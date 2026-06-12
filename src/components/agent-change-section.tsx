@@ -19,6 +19,8 @@ export function AgentChangeSection({
   subtitle,
   cards,
 }: AgentChangeSectionProps) {
+  console.log(cards?.length);
+
   const defaultCards = [
     {
       title: 'Donasi Makanan',
@@ -82,6 +84,7 @@ export function AgentChangeSection({
             title={card.title}
             description={card.description}
             iconSrc={card.iconSrc}
+            className='rounded-lg!'
             action={
               <div className="flex">
                 <GardaButton href="#" variant="impact" className="w-full">

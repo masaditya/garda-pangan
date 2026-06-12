@@ -130,7 +130,7 @@ export function ImpactSection({
             <div className="pointer-events-auto flex flex-col items-center gap-4 text-center">
               <h2
                 id="impact-heading"
-                className="font-sans text-[3rem] font-black uppercase leading-none tracking-tight text-garda-forest md:text-[4.5rem] lg:text-[5.5rem]"
+                className="font-sans text-[3rem] uppercase leading-none tracking-tight text-garda-forest md:text-[4.5rem] lg:text-[5.5rem]"
               >
                 {title || (
                   <>
