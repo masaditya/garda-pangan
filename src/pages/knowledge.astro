@@ -18,8 +18,7 @@ const [pageResponse, categories, articles] = await Promise.all([
 const pageData = pageResponse.data
 
 const labels: KnowledgeListLabels = {
-  searchPlaceholder:
-    pageData?.searchPlaceholder ?? 'Cari Knowledge & Insights',
+  searchPlaceholder: pageData?.searchPlaceholder ?? 'Cari Knowledge & Insights',
   categoryFilterLabel: pageData?.categoryFilterLabel ?? 'Kategori',
   filterAllLabel: pageData?.filterAllLabel ?? 'Tampilkan Semua',
   sortNewestLabel: pageData?.sortNewestLabel ?? 'Terbaru',
@@ -38,12 +37,14 @@ const heroBackground = normalizeStrapiMediaUrl(pageData?.heroBackground?.url)
 
 <BaseLayout
   title={`${pageData?.heroTitle ?? 'Knowledge & Insights'} - Garda Pangan`}
-  description={pageData?.heroSubtitle ?? 'Knowledge and Insights from Garda Pangan'}
+  description={pageData?.heroSubtitle ??
+    'Knowledge and Insights from Garda Pangan'}
   canonicalPath="/knowledge"
 >
-  <main class="garda-main bg-[#f4fbf6] overflow-hidden">
+  <main class="garda-main !bg-[#f4fbf6] overflow-hidden">
     <EventHero
       client:load
+      serifTitle
       title={pageData?.heroTitle ?? 'Knowledge & Insights'}
       description={pageData?.heroSubtitle ?? ''}
       backgroundImage={heroBackground}

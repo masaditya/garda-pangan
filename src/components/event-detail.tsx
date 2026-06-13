@@ -22,9 +22,9 @@ export function EventDetail({
   return (
     <>
       {/* Dark Green Hero Section */}
-      <section className="relative bg-[#052E16] px-6 pb-0 pt-32 text-center text-white">
+      <section className="relative bg-[#052E16] px-6 pb-0 pt-40 text-center text-white sm:pt-44 lg:pt-48">
         <div className="mx-auto flex max-w-4xl flex-col items-center">
-          <h1 className="mb-8 max-w-4xl font-sans text-3xl leading-tight tracking-tight md:text-5xl lg:text-[3.5rem]">
+          <h1 className="mb-8 max-w-4xl font-serif text-3xl leading-tight tracking-tight md:text-5xl lg:text-[3.5rem]">
             {title}
           </h1>
           <div className="flex items-center justify-center gap-3">
@@ -126,7 +126,7 @@ export function EventDetail({
         {/* Markdown Content */}
         <div className="mx-auto max-w-[800px]">
           <div
-            className="prose prose-garda prose-lg max-w-none text-gray-700 prose-headings:font-normal prose-headings:text-garda-forest prose-a:text-garda-forest prose-img:rounded-2xl"
+            className="prose prose-garda prose-lg max-w-none font-serif text-gray-700 prose-headings:font-serif prose-headings:font-normal prose-headings:text-garda-forest prose-p:font-serif prose-a:text-garda-forest prose-img:rounded-2xl"
             dangerouslySetInnerHTML={{ __html: parsedContent }}
           />
         </div>

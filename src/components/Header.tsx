@@ -17,19 +17,38 @@ import {
   SheetTrigger,
 } from '#/components/ui/sheet'
 import { Button } from '#/components/ui/button'
+import { isNavItemActive, type NavItem } from '#/lib/nav-active'
 import { cn } from '#/lib/utils'
 
-const navItems = [
+const navItems: NavItem[] = [
   { href: '/', label: 'Beranda' },
   { href: '/program', label: 'Program' },
   { href: '/support', label: 'Donasi' },
   { href: '/relawan', label: 'Relawan' },
-  { href: '/artikel', label: 'Berita' },
+  {
+    href: '/knowledge',
+    label: 'Berita',
+    matchPaths: ['/knowledge', '/artikel'],
+  },
   { href: '/kontak', label: 'Kontak' },
 ]
 
+const inactiveNavClassName =
+  'text-garda-forest/70 hover:bg-garda-mint-soft hover:text-garda-forest'
+
+const activeNavClassName =
+  'bg-garda-forest text-garda-sun hover:bg-garda-forest hover:text-garda-sun data-[active=true]:bg-garda-forest data-[active=true]:text-garda-sun data-[active=true]:hover:bg-garda-forest data-[active=true]:hover:text-garda-sun data-[active=true]:focus:bg-garda-forest'
+
 type HeaderProps = {
   currentPath?: string
+}
+
+function getNavLinkClassName(isActive: boolean, className?: string) {
+  return cn(
+    'font-medium transition',
+    className,
+    isActive ? activeNavClassName : inactiveNavClassName,
+  )
 }
 
 function LanguageSwitcher() {
@@ -50,6 +69,8 @@ function LanguageSwitcher() {
 }
 
 export default function Header({ currentPath = '/' }: HeaderProps) {
+  const pathname = currentPath
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-6 z-50">
       <SiteContainer>
@@ -69,17 +90,16 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
             <NavigationMenu className="max-w-none" viewport={false}>
               <NavigationMenuList className="gap-1 bg-transparent">
                 {navItems.map((item) => {
-                  const isActive = item.href === currentPath
+                  const isActive = isNavItemActive(item, pathname)
 
                   return (
                     <NavigationMenuItem key={item.href}>
                       <NavigationMenuLink
                         asChild
                         active={isActive}
-                        className={cn(
-                          'rounded-full px-5 py-2 text-sm font-medium text-garda-forest/70 transition hover:bg-garda-mint-soft hover:text-garda-forest',
-                          isActive &&
-                            'bg-garda-forest font-bold text-white hover:bg-garda-forest hover:text-white',
+                        className={getNavLinkClassName(
+                          isActive,
+                          'rounded-full px-5 py-2 text-sm',
                         )}
                       >
                         <a
@@ -130,17 +150,17 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                   aria-label="Mobile menu"
                 >
                   {navItems.map((item) => {
-                    const isActive = item.href === currentPath
+                    const isActive = isNavItemActive(item, pathname)
 
                     return (
                       <a
                         key={item.href}
                         href={item.href}
-                        className={cn(
-                          'rounded-2xl px-4 py-3 text-base font-medium text-garda-forest/80 transition hover:bg-white hover:text-garda-forest',
-                          isActive && 'bg-garda-forest text-white shadow-sm',
-                        )}
                         aria-current={isActive ? 'page' : undefined}
+                        className={getNavLinkClassName(
+                          isActive,
+                          'rounded-2xl px-4 py-3 text-base',
+                        )}
                       >
                         {item.label}
                       </a>

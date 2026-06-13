@@ -248,7 +248,7 @@ export function KnowledgeList({
                       {item.category}
                     </span>
                   ) : null}
-                  <h3 className="font-sans text-2xl leading-tight text-white md:text-3xl line-clamp-3">
+                  <h3 className="font-serif text-2xl leading-tight text-white md:text-3xl line-clamp-3">
                     {item.title}
                   </h3>
                 </div>

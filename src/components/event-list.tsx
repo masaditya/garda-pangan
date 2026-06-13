@@ -194,7 +194,7 @@ export function EventList({ initialEvents }: EventListProps) {
                     <span className="capitalize">{formattedDate}</span>
                   </div>
 
-                  <h3 className="mb-3 font-sans text-2xl leading-tight text-[#111827] line-clamp-2">
+                  <h3 className="mb-3 font-serif text-2xl leading-tight text-[#111827] line-clamp-2">
                     {event.title}
                   </h3>
 

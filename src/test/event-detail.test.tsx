@@ -16,8 +16,9 @@ describe('EventDetail Component', () => {
   it('renders the hero section correctly', () => {
     render(<EventDetail {...mockProps} />)
     
-    // Check title
-    expect(screen.getByText('Test Event Title')).toBeDefined()
+    const title = screen.getByRole('heading', { level: 1 })
+    expect(title.textContent).toContain('Test Event Title')
+    expect(title.className).toContain('font-serif')
     
     // Check author and date
     expect(screen.getByText('Admin')).toBeDefined()

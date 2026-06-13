@@ -6,7 +6,8 @@ import { MerchandiseHeroSection } from './merchandise-hero-section'
 describe('MerchandiseHeroSection', () => {
   it('renders the heading and description', () => {
     render(<MerchandiseHeroSection />)
-    expect(screen.getByRole('heading', { name: /Merchandise/i })).toBeTruthy()
+    const heading = screen.getByRole('heading', { name: /Merchandise/i })
+    expect(heading.className).toContain('font-serif')
     expect(screen.getByText(/gaya hidup bebas sampah/i)).toBeTruthy()
   })
 })

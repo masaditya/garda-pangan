@@ -1,15 +1,18 @@
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { cn } from '#/lib/utils'
 
 type EventHeroProps = {
   title: string
   description: string
   backgroundImage?: string | null
+  serifTitle?: boolean
 }
 
 export function EventHero({
   title,
   description,
   backgroundImage,
+  serifTitle = false,
 }: EventHeroProps) {
   const bgUrl =
     normalizeStrapiMediaUrl(backgroundImage) ||
@@ -39,7 +42,12 @@ export function EventHero({
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 text-center">
-        <h1 className="mb-6 font-sans text-5xl leading-tight text-white sm:text-6xl md:text-7xl lg:text-[6rem]">
+        <h1
+          className={cn(
+            'mb-6 text-5xl leading-tight text-white sm:text-6xl md:text-7xl lg:text-[6rem]',
+            serifTitle ? 'font-serif' : 'font-sans',
+          )}
+        >
           {title}
         </h1>
         <p className="max-w-2xl text-lg font-medium leading-relaxed text-white/90 sm:text-xl md:text-2xl">

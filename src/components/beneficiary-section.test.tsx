@@ -12,6 +12,8 @@ const dummyData = {
 describe('BeneficiarySection', () => {
   it('should render the hero section with correct title', () => {
     render(<BeneficiarySection data={dummyData} />)
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading.className).toContain('font-serif')
     expect(screen.getAllByText(/Penerima/i)).toBeDefined()
     expect(screen.getAllByText(/Bantuan/i)).toBeDefined()
   })

@@ -21,7 +21,9 @@ describe('KnowledgeDetail', () => {
   it('renders hero with author and date', () => {
     render(<KnowledgeDetail {...mockProps} />)
 
-    expect(screen.getByText('Apresiasi Satu Indonesia Awards')).toBeDefined()
+    const title = screen.getByRole('heading', { level: 1 })
+    expect(title.textContent).toContain('Apresiasi Satu Indonesia Awards')
+    expect(title.className).toContain('font-serif')
     expect(screen.getByText('Admin Garda Pangan')).toBeDefined()
     expect(screen.getByText('16 Mei 2026')).toBeDefined()
   })
