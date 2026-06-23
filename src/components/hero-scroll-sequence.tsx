@@ -185,7 +185,7 @@ function HeroScrollSequenceStatic({
         </div>
       </section>
 
-      <DidYouKnowSection slides={didYouKnowSlides} variant="immersive" />
+      <DidYouKnowSection slides={didYouKnowSlides} variant="immersive" autoPlay />
     </div>
   )
 }
@@ -519,6 +519,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
             <DidYouKnowSection
               slides={props.didYouKnowSlides}
               variant="immersive"
+              autoPlay
             />
           </div>
         </div>

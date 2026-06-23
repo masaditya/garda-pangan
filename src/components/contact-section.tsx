@@ -34,11 +34,11 @@ export function ContactSection({
 
       <section className="relative px-6 pb-48 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((cat) => (
               <div
                 key={cat.id}
-                className="mb-6 break-inside-avoid flex flex-col items-start rounded-3xl bg-white p-8 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ring-1 ring-garda-border/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
+                className="flex h-full flex-col items-start rounded-3xl bg-white p-8 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ring-1 ring-garda-border/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
               >
                 <div className="mb-8 flex aspect-video w-full items-center justify-center rounded-2xl bg-garda-mint-soft/30 overflow-hidden">
                   <div className="flex flex-col items-center gap-2 opacity-40">
@@ -55,7 +55,7 @@ export function ContactSection({
                 <p className="mb-8 text-lg font-medium leading-relaxed text-black/70">
                   {cat.description}
                 </p>
-                <div className="self-end">
+                <div className="mt-auto self-end">
                   <a
                     href={cat.buttonLink}
                     className="inline-flex items-center gap-2 rounded-full bg-garda-forest px-5 py-2 text-xs font-bold text-white transition-all hover:bg-garda-forest-strong hover:gap-3"

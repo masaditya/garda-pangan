@@ -1,8 +1,12 @@
 import { useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import type { ProgramDetailButton } from '#/lib/strapi/programs'
-import { ProgramDetailModal } from './program-detail-modal'
+import { GardaButton } from './garda-button'
+
+function isMoreDetailsButton(button: ProgramDetailButton) {
+  return button.text.toLowerCase().includes('selengkapnya')
+}
 
 export type ProgramListItem = {
   title: string
@@ -32,9 +36,7 @@ export function ProgramListSection({
 }: ProgramListSectionProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [previewTop, setPreviewTop] = useState<number | null>(null)
-  const [selectedProgram, setSelectedProgram] = useState<ProgramListItem | null>(
-    null,
-  )
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const listContainerRef = useRef<HTMLDivElement>(null)
 
   const bgUrl =
@@ -122,12 +124,15 @@ export function ProgramListSection({
             <ul className="flex flex-col" role="list">
               {programs.map((program, index) => {
                 const isHovered = hoveredIndex === index
+                const isExpanded = expandedIndex === index
+                const modalButtons = program.buttons?.filter((button) => !isMoreDetailsButton(button)) || []
+                const imageUrl = getImageUrl(program.image)
 
                 return (
                   <li key={`${program.title}-${index}`}>
                     <button
                       type="button"
-                      onClick={() => setSelectedProgram(program)}
+                      onClick={() => setExpandedIndex(isExpanded ? null : index)}
                       onMouseEnter={(event) => {
                         setHoveredIndex(index)
                         updatePreviewPosition(event.currentTarget)
@@ -138,24 +143,24 @@ export function ProgramListSection({
                         updatePreviewPosition(event.currentTarget)
                       }}
                       onBlur={clearHover}
-                      className="group relative flex w-full items-center justify-between gap-4 border-b border-white/10 px-2 py-4 text-left transition-colors duration-300 sm:gap-6 sm:px-4 sm:py-5 md:py-6"
+                      className={`group relative flex w-full items-center justify-between gap-4 border-b border-white/10 px-2 py-4 text-left transition-colors duration-300 sm:gap-6 sm:px-4 sm:py-5 md:py-6 ${isExpanded ? 'bg-white/5' : ''}`}
                     >
                       <span
                         className={`absolute inset-y-0 left-0 w-1 bg-garda-sun transition-transform duration-300 ${
-                          isHovered ? 'scale-y-100' : 'scale-y-0'
+                          isHovered || isExpanded ? 'scale-y-100' : 'scale-y-0'
                         }`}
                         aria-hidden="true"
                       />
                       <span
                         className={`absolute inset-0 bg-garda-forest/70 transition-opacity duration-300 ${
-                          isHovered ? 'opacity-100' : 'opacity-0'
+                          isHovered && !isExpanded ? 'opacity-100' : 'opacity-0'
                         }`}
                         aria-hidden="true"
                       />
 
                       <span
                         className={`relative z-10 font-serif text-[clamp(1.125rem,3.5vw,2.25rem)] uppercase leading-[1.15] tracking-[-0.02em] transition-colors duration-300 ${
-                          isHovered ? 'text-garda-sun' : 'text-white'
+                          isHovered || isExpanded ? 'text-garda-sun' : 'text-white'
                         }`}
                       >
                         {program.title}
@@ -163,17 +168,59 @@ export function ProgramListSection({
 
                       <span
                         className={`relative z-10 flex shrink-0 items-center gap-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em] transition-colors duration-300 sm:gap-2 sm:text-xs ${
-                          isHovered ? 'text-garda-sun' : 'text-garda-sun/80'
+                          isHovered || isExpanded ? 'text-garda-sun' : 'text-garda-sun/80'
                         }`}
                       >
                         <span className="hidden sm:inline">{moreLabel}</span>
-                        <ArrowUpRight
-                          className="size-4 sm:size-5"
+                        <ChevronDown
+                          className={`size-4 sm:size-5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
                           strokeWidth={2.5}
                           aria-hidden="true"
                         />
                       </span>
                     </button>
+
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="bg-[#f8fdf9] p-6 sm:p-8 md:p-10 text-garda-forest rounded-b-xl border border-t-0 border-white/10">
+                          <div className="flex flex-col gap-8 md:flex-row">
+                            <div className="w-full md:w-1/3 shrink-0">
+                              <div className="aspect-4/3 w-full overflow-hidden rounded-2xl shadow-md">
+                                <img
+                                  src={imageUrl}
+                                  alt={program.title}
+                                  className="h-full w-full object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex w-full flex-col justify-start">
+                              <div
+                                className="prose prose-garda prose-sm sm:prose-base max-w-none text-garda-forest/80 mb-6"
+                                dangerouslySetInnerHTML={{ __html: program.description }}
+                              />
+                              {modalButtons.length > 0 ? (
+                                <div className="flex flex-wrap items-center gap-4 mt-auto">
+                                  {modalButtons.map((btn, i) => (
+                                    <GardaButton
+                                      key={i}
+                                      href={btn.href}
+                                      variant={btn.variant || 'primary'}
+                                    >
+                                      {btn.text}
+                                    </GardaButton>
+                                  ))}
+                                </div>
+                              ) : null}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                 )
               })}
@@ -182,14 +229,7 @@ export function ProgramListSection({
         </div>
       </section>
 
-      <ProgramDetailModal
-        isOpen={selectedProgram !== null}
-        onClose={() => setSelectedProgram(null)}
-        title={selectedProgram?.title ?? ''}
-        description={selectedProgram?.description ?? ''}
-        image={selectedProgram?.image}
-        buttons={selectedProgram?.buttons}
-      />
+
     </>
   )
 }

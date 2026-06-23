@@ -9,14 +9,12 @@ type HeroTitleProps = {
 export function HeroTitle({ oPortalRef }: HeroTitleProps) {
   return (
     <>
-      <span className="block text-white">ONE STOP FOOD</span>
-      <span className="block text-white">LOSS &amp; WASTE</span>
-      <span className="relative block text-garda-sun">
-        S
+      <span className="relative block text-white">
+        ONE STOP F
         <span
           ref={oPortalRef}
           data-testid="hero-o-portal"
-          className="relative mx-[0.02em] inline-block size-[0.8em] -translate-y-[0.1em] overflow-hidden rounded-full border-4 border-garda-sun/90 bg-garda-forest/30 align-middle"
+          className="relative mx-[0.02em] inline-block size-[0.8em] -translate-y-[0.1em] overflow-hidden rounded-full border-4 border-white/90 bg-garda-forest/30 align-middle"
           aria-hidden="true"
         >
           <img
@@ -25,8 +23,10 @@ export function HeroTitle({ oPortalRef }: HeroTitleProps) {
             className="h-full w-full object-cover"
           />
         </span>
-        LUTION
+        OD
       </span>
+      <span className="block text-white">LOSS &amp; WASTE</span>
+      <span className="block text-garda-sun">SOLUTION</span>
     </>
   )
 }

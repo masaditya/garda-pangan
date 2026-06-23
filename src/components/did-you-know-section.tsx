@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Autoplay from 'embla-carousel-autoplay'
 
 import { SectionShell } from './section-shell'
 import type { CarouselApi } from '#/components/ui/carousel'
@@ -14,6 +15,7 @@ import { cn } from '#/lib/utils'
 type DidYouKnowSectionProps = {
   slides?: { id: number | string; content: string }[]
   variant?: 'default' | 'immersive'
+  autoPlay?: boolean
 }
 
 const defaultSlides = [
@@ -39,17 +41,24 @@ function DidYouKnowCarousel({
   variant,
   setApi,
   current,
+  autoPlay = false,
 }: {
   items: { id: number | string; content: string }[]
   variant: 'default' | 'immersive'
   setApi: (api: CarouselApi) => void
   current: number
+  autoPlay?: boolean
 }) {
   const isImmersive = variant === 'immersive'
+
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  )
 
   return (
     <Carousel
       opts={{ align: 'start', loop: true }}
+      plugins={autoPlay ? [plugin.current] : []}
       setApi={setApi}
       className={cn('relative z-10 w-full', isImmersive && 'max-w-xl')}
     >
@@ -122,6 +131,7 @@ function DidYouKnowCarousel({
 export function DidYouKnowSection({
   slides,
   variant = 'default',
+  autoPlay = false,
 }: DidYouKnowSectionProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
@@ -166,6 +176,7 @@ export function DidYouKnowSection({
             variant={variant}
             setApi={setApi}
             current={current}
+            autoPlay={autoPlay}
           />
         </div>
       </section>
@@ -210,6 +221,7 @@ export function DidYouKnowSection({
           variant={variant}
           setApi={setApi}
           current={current}
+          autoPlay={autoPlay}
         />
       </div>
     </SectionShell>
