@@ -6,6 +6,8 @@ import {
 } from 'lucide-react'
 
 import type { KnowledgeItem } from '#/lib/strapi/knowledge'
+import type { Locale } from '#/lib/i18n/locales'
+import { localizedPath } from '#/lib/i18n/routing'
 
 export type { KnowledgeItem }
 
@@ -30,12 +32,14 @@ type KnowledgeListProps = {
   initialKnowledges: KnowledgeItem[]
   categories: KnowledgeCategory[]
   labels: KnowledgeListLabels
+  locale?: Locale
 }
 
 export function KnowledgeList({
   initialKnowledges,
   categories,
   labels,
+  locale = 'id',
 }: KnowledgeListProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategoryDropdown, setSelectedCategoryDropdown] = useState('')
@@ -225,7 +229,7 @@ export function KnowledgeList({
           {filteredKnowledges.map((item) => {
             const imageUrl =
               item.coverImageUrl || 'https://placehold.co/600x900'
-            const itemUrl = `/knowledge/${item.slug}`
+            const itemUrl = localizedPath(`/knowledge/${item.slug}`, locale)
 
             return (
               <a

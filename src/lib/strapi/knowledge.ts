@@ -1,4 +1,6 @@
 import { normalizeStrapiMediaUrl } from './client'
+import type { Locale } from '#/lib/i18n/locales'
+import { getIntlLocale } from '#/lib/i18n/locales'
 
 import type { Article } from './articles'
 import type { StrapiImage } from './types'
@@ -24,12 +26,24 @@ export type KnowledgeItem = {
   coverImageUrl?: string | null
 }
 
-export function formatKnowledgeArticleDate(date: string) {
-  return new Intl.DateTimeFormat('id-ID', {
+export function formatKnowledgeArticleDate(
+  date: string,
+  locale: Locale = 'id',
+) {
+  return new Intl.DateTimeFormat(getIntlLocale(locale), {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
   }).format(new Date(date))
+}
+
+export function getArticleImageCaption(
+  article: Article,
+  fallback = 'Image courtesy of Garda Pangan',
+) {
+  const cover = article.cover
+
+  return cover?.caption || cover?.alternativeText || fallback
 }
 
 export function getArticleCarouselImages(article: Article) {
@@ -48,16 +62,6 @@ export function getArticleCarouselImages(article: Article) {
   }
 
   return images
-}
-
-export function getArticleImageCaption(article: Article) {
-  const cover = article.cover
-
-  return (
-    cover?.caption ||
-    cover?.alternativeText ||
-    'Image courtesy of Garda Pangan'
-  )
 }
 
 export function mapArticleToKnowledgeItem(article: Article): KnowledgeItem {

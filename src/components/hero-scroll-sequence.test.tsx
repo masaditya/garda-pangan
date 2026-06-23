@@ -90,7 +90,7 @@ describe('HeroScrollSequence', () => {
       screen.getByRole('heading', { name: /tahukah kamu\?/i }),
     ).toBeTruthy()
     expect(
-      screen.getByRole('link', { name: /pelajari selengkapnya/i }),
+      screen.getByRole('link', { name: /scroll ke konten/i }),
     ).toBeTruthy()
     expect(gsap.timeline).toHaveBeenCalled()
   })

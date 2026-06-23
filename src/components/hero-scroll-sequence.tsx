@@ -350,19 +350,19 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       )
 
       timeline.to(
-        stats,
+        facts,
         { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' },
         0.52,
       )
 
       timeline.to(
-        stats,
+        facts,
         { opacity: 0, y: -16, duration: 0.16, ease: 'power1.in' },
         0.78,
       )
 
       timeline.to(
-        facts,
+        stats,
         { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' },
         0.84,
       )

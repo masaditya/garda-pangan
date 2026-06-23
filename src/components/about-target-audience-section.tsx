@@ -1,4 +1,5 @@
 import { SectionShell } from './section-shell'
+import type { Locale } from '#/lib/i18n/locales'
 
 const TARGET_DONATUR = [
   'Industri Makanan',
@@ -30,14 +31,16 @@ function AudienceCard({ title }: { title: string }) {
   )
 }
 
-export function AboutTargetAudienceSection() {
+export function AboutTargetAudienceSection({ locale = 'id' }: { locale?: Locale }) {
+  const donorTitle = locale === 'en' ? 'Donor Targets' : 'Target Donatur'
+  const recipientTitle = locale === 'en' ? 'Beneficiary Targets' : 'Target Penerima'
+
   return (
     <SectionShell tone="white">
       <div className="space-y-20">
-        {/* Donatur */}
         <div className="space-y-8">
           <h2 className="text-3xl tracking-tight text-garda-forest sm:text-4xl">
-            Target Donatur
+            {donorTitle}
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
             {TARGET_DONATUR.map((target) => (
@@ -46,10 +49,9 @@ export function AboutTargetAudienceSection() {
           </div>
         </div>
 
-        {/* Penerima */}
         <div className="space-y-8">
           <h2 className="text-3xl tracking-tight text-garda-forest sm:text-4xl">
-            Target Penerima
+            {recipientTitle}
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
             {TARGET_PENERIMA.map((target) => (

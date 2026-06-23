@@ -27,6 +27,7 @@ describe('ProgramListSection', () => {
         title="Program <br /> Kami"
         description="Deskripsi hero program."
         programs={samplePrograms}
+        moreLabel="Selengkapnya"
       />,
     )
 
@@ -48,6 +49,7 @@ describe('ProgramListSection', () => {
         title="Program Kami"
         description="Deskripsi."
         programs={samplePrograms}
+        moreLabel="Selengkapnya"
       />,
     )
 
@@ -71,6 +73,7 @@ describe('ProgramListSection', () => {
         title="Program Kami"
         description="Deskripsi."
         programs={samplePrograms}
+        moreLabel="Selengkapnya"
       />,
     )
 

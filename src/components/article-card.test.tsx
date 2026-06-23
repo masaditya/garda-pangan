@@ -52,7 +52,7 @@ describe('ArticleCard', () => {
       screen
         .getByRole('link', { name: /food rescue 101/i })
         .getAttribute('href'),
-    ).toBe('/artikel/food-rescue-101')
+    ).toBe('/id/artikel/food-rescue-101')
     expect(screen.getByText('Knowledge')).toBeTruthy()
     expect(
       screen.getByRole('img', { name: /food rescue volunteers/i }),

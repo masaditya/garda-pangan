@@ -1,10 +1,22 @@
 ---
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { BeneficiarySection } from '#/components/beneficiary-section'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import { getPenerimaPage } from '#/lib/strapi/pages'
 
-const payload = await getPenerimaPage()
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const payload = await getPenerimaPage({ locale })
 const data = payload.data ?? undefined
 
 const bgImage =
@@ -12,9 +24,10 @@ const bgImage =
 ---
 
 <BaseLayout
-  title="Penerima Bantuan - Garda Pangan"
-  description="Penerima manfaat utama dari distribusi makanan Garda Pangan."
-  canonicalPath="/penerima"
+  locale={locale}
+  title={messages.penerima.pageTitle}
+  description={messages.penerima.pageDescription}
+  canonicalPath={localizedPath('/penerima', locale)}
 >
   <main class="relative isolate min-h-screen">
     <div
@@ -29,7 +42,7 @@ const bgImage =
     </div>
 
     <div class="relative z-10 w-full">
-      <BeneficiarySection client:load data={data} />
+      <BeneficiarySection client:load data={data} locale={locale} />
     </div>
   </main>
 </BaseLayout>

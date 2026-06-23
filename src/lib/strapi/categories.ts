@@ -1,4 +1,5 @@
 import { fetchAllStrapiPages } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type { StrapiCollectionResponse, StrapiEntry } from './types'
 
@@ -11,8 +12,14 @@ export type Category = StrapiEntry & {
 
 export type CategoriesResponse = StrapiCollectionResponse<Category>
 
-export async function getCategories() {
-  return fetchAllStrapiPages<Category>('/api/categories', {
-    sort: 'sortOrder:asc,name:asc',
-  })
+export async function getCategories({ locale = 'id' }: StrapiLocaleOptions = {}) {
+  return fetchAllStrapiPages<Category>(
+    '/api/categories',
+    withStrapiLocale(
+      {
+        sort: 'sortOrder:asc,name:asc',
+      },
+      locale,
+    ),
+  )
 }

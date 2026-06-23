@@ -9,6 +9,17 @@ import {
 } from './client'
 
 describe('Strapi client', () => {
+  test('builds Strapi URLs with locale parameter', () => {
+    const url = buildStrapiUrl('/api/homepage', {
+      locale: 'en',
+      populate: {
+        heroBackground: true,
+      },
+    })
+
+    expect(decodeURIComponent(url.search)).toContain('locale=en')
+  })
+
   test('builds Strapi URLs with nested query parameters', () => {
     const url = buildStrapiUrl('/api/articles', {
       sort: 'publishedAt:desc',

@@ -8,6 +8,21 @@ import {
 } from 'lucide-react'
 
 import type { StrapiMedia } from '../lib/strapi/types'
+import type { Locale } from '#/lib/i18n/locales'
+import { getIntlLocale } from '#/lib/i18n/locales'
+import { localizedPath } from '#/lib/i18n/routing'
+
+export type EventListLabels = {
+  searchPlaceholder: string
+  yearFilter: string
+  allYears: string
+  search: string
+  defaultTag: string
+  shareLabel: string
+  linkCopied: string
+  emptyTitle: string
+  emptyDescription: string
+}
 
 export type EventItem = {
   id: number
@@ -24,9 +39,15 @@ export type EventItem = {
 
 type EventListProps = {
   initialEvents: EventItem[]
+  labels: EventListLabels
+  locale?: Locale
 }
 
-export function EventList({ initialEvents }: EventListProps) {
+export function EventList({
+  initialEvents,
+  labels,
+  locale = 'id',
+}: EventListProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedYear, setSelectedYear] = useState<string>('')
   const [isYearDropdownOpen, setIsYearDropdownOpen] = useState(false)
@@ -58,7 +79,7 @@ export function EventList({ initialEvents }: EventListProps) {
         })
       } else {
         await navigator.clipboard.writeText(url)
-        alert('Tautan disalin ke clipboard!')
+        alert(labels.linkCopied)
       }
     } catch (err) {
       console.error('Error sharing:', err)
@@ -73,7 +94,7 @@ export function EventList({ initialEvents }: EventListProps) {
           <div className="flex flex-1 items-center px-6 py-3 w-full">
             <input
               type="text"
-              placeholder="Cari nama events"
+              placeholder={labels.searchPlaceholder}
               className="w-full bg-transparent text-garda-forest outline-none placeholder:text-garda-forest/40 font-medium"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -90,7 +111,7 @@ export function EventList({ initialEvents }: EventListProps) {
             >
               <div className="flex items-center gap-2">
                 <CalendarDays className="size-5 text-garda-forest/50" />
-                <span>{selectedYear || 'Filter Tahun'}</span>
+                <span>{selectedYear || labels.yearFilter}</span>
               </div>
               <ChevronDown
                 className={`size-4 text-garda-forest/50 transition-transform ${isYearDropdownOpen ? 'rotate-180' : ''}`}
@@ -106,7 +127,7 @@ export function EventList({ initialEvents }: EventListProps) {
                     setIsYearDropdownOpen(false)
                   }}
                 >
-                  Semua Tahun
+                  {labels.allYears}
                 </button>
                 {years.map((year) => (
                   <button
@@ -125,7 +146,7 @@ export function EventList({ initialEvents }: EventListProps) {
           </div>
 
           <button className="flex h-12 w-full md:w-auto items-center justify-center gap-2 rounded-full bg-garda-forest px-8 font-bold text-white transition-colors hover:bg-garda-forest-strong shadow-md">
-            <span>Search</span>
+            <span>{labels.search}</span>
             <Search className="size-4" />
           </button>
         </div>
@@ -145,12 +166,11 @@ export function EventList({ initialEvents }: EventListProps) {
             const imageUrl =
               event?.coverImage?.url || 'https://placehold.co/600x400'
             const dateObj = new Date(event.date)
-            const formattedDate = new Intl.DateTimeFormat('id-ID', {
+            const formattedDate = new Intl.DateTimeFormat(getIntlLocale(locale), {
               month: 'short',
               year: 'numeric',
             }).format(dateObj)
-            console.log(event.slug)
-            const eventUrl = `/event/${event.slug}`
+            const eventUrl = localizedPath(`/event/${event.slug}`, locale)
 
             return (
               <a
@@ -162,7 +182,7 @@ export function EventList({ initialEvents }: EventListProps) {
                 <div className="mb-4 flex items-center justify-between">
                   <div className="flex items-center gap-2 rounded-full bg-[#EAF5EF] px-4 py-2 text-sm font-semibold text-garda-forest">
                     <FolderOpen className="size-4" />
-                    <span>{event.eventTag || 'Event XXX'}</span>
+                    <span>{event.eventTag || labels.defaultTag}</span>
                   </div>
                   <button
                     onClick={(e) => {
@@ -171,7 +191,7 @@ export function EventList({ initialEvents }: EventListProps) {
                       handleShare(event.title, eventUrl)
                     }}
                     className="flex size-10 items-center justify-center rounded-full bg-[#0D2A16] text-white transition-transform hover:scale-110 shadow-sm"
-                    aria-label="Share Event"
+                    aria-label={labels.shareLabel}
                   >
                     <Share2 className="size-4" />
                   </button>
@@ -212,11 +232,9 @@ export function EventList({ initialEvents }: EventListProps) {
             <Search className="size-8" />
           </div>
           <h3 className="mb-2 text-2xl text-garda-forest">
-            Tidak ada event ditemukan
+            {labels.emptyTitle}
           </h3>
-          <p className="text-garda-forest/70">
-            Silakan coba kata kunci atau filter tahun yang berbeda.
-          </p>
+          <p className="text-garda-forest/70">{labels.emptyDescription}</p>
         </div>
       )}
     </div>

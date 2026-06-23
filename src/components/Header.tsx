@@ -17,21 +17,16 @@ import {
   SheetTrigger,
 } from '#/components/ui/sheet'
 import { Button } from '#/components/ui/button'
-import { isNavItemActive, type NavItem } from '#/lib/nav-active'
+import {
+  DEFAULT_LOCALE,
+  getHeaderNavItems,
+  getMessages,
+  localizedPath,
+  switchLocalePath,
+  type Locale,
+} from '#/lib/i18n'
+import { isNavItemActive } from '#/lib/nav-active'
 import { cn } from '#/lib/utils'
-
-const navItems: NavItem[] = [
-  { href: '/', label: 'Beranda' },
-  { href: '/program', label: 'Program' },
-  { href: '/support', label: 'Donasi' },
-  { href: '/relawan', label: 'Relawan' },
-  {
-    href: '/knowledge',
-    label: 'Berita',
-    matchPaths: ['/knowledge', '/artikel'],
-  },
-  { href: '/kontak', label: 'Kontak' },
-]
 
 const inactiveNavClassName =
   'text-garda-forest/70 hover:bg-garda-mint-soft hover:text-garda-forest'
@@ -41,6 +36,7 @@ const activeNavClassName =
 
 type HeaderProps = {
   currentPath?: string
+  locale?: Locale
 }
 
 function getNavLinkClassName(isActive: boolean, className?: string) {
@@ -51,32 +47,53 @@ function getNavLinkClassName(isActive: boolean, className?: string) {
   )
 }
 
-function LanguageSwitcher() {
+function LanguageSwitcher({
+  currentPath,
+  locale,
+}: {
+  currentPath: string
+  locale: Locale
+}) {
+  const alternateLocale: Locale = locale === 'id' ? 'en' : 'id'
+  const alternatePath = switchLocalePath(currentPath, alternateLocale)
+
   return (
-    <button
-      type="button"
+    <a
+      href={alternatePath}
       className="flex items-center gap-2 rounded-full border border-garda-border bg-white px-4 py-2 text-sm font-medium text-garda-forest shadow-sm transition hover:bg-garda-mint-soft"
-      aria-label="Language switcher"
+      aria-label={
+        locale === 'id' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'
+      }
     >
       <Globe className="size-4 text-garda-forest/70" aria-hidden="true" />
-      <span>ID</span>
+      <span className={locale === 'id' ? 'text-garda-forest' : 'text-garda-forest/60'}>
+        ID
+      </span>
       <span className="text-garda-forest/40" aria-hidden="true">
         |
       </span>
-      <span className="text-garda-forest/60">EN</span>
-    </button>
+      <span className={locale === 'en' ? 'text-garda-forest' : 'text-garda-forest/60'}>
+        EN
+      </span>
+    </a>
   )
 }
 
-export default function Header({ currentPath = '/' }: HeaderProps) {
+export default function Header({
+  currentPath = '/',
+  locale = DEFAULT_LOCALE,
+}: HeaderProps) {
   const pathname = currentPath
+  const messages = getMessages(locale)
+  const navItems = getHeaderNavItems(locale, messages)
+  const homeHref = localizedPath('/', locale)
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-6 z-50">
       <SiteContainer>
         <div className="pointer-events-auto flex min-h-[72px] items-center justify-between gap-4 rounded-full border border-white/60 bg-white/95 px-6 py-2 shadow-[0_24px_60px_rgba(13,42,22,0.12)] backdrop-blur-xl sm:px-8">
           <a
-            href="/"
+            href={homeHref}
             className="shrink-0 no-underline"
             aria-label="Garda Pangan"
           >
@@ -118,7 +135,7 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
 
           <div className="flex items-center gap-3">
             <div className="hidden md:block">
-              <LanguageSwitcher />
+              <LanguageSwitcher currentPath={pathname} locale={locale} />
             </div>
 
             <Sheet>
@@ -142,7 +159,7 @@ export default function Header({ currentPath = '/' }: HeaderProps) {
                 </SheetDescription>
                 <div className="mb-5 flex items-center justify-between">
                   <GardaLogo />
-                  <LanguageSwitcher />
+                  <LanguageSwitcher currentPath={pathname} locale={locale} />
                 </div>
                 <Separator className="bg-garda-border" />
                 <nav

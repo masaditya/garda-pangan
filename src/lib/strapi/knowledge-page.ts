@@ -1,4 +1,5 @@
 import { fetchStrapiSingle } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type { StrapiEntry, StrapiImage, StrapiSingleResponse } from './types'
 
@@ -18,8 +19,16 @@ export type KnowledgePage = StrapiEntry & {
 
 export type KnowledgePageResponse = StrapiSingleResponse<KnowledgePage>
 
-export async function getKnowledgePage() {
-  return fetchStrapiSingle<KnowledgePage>('/api/knowledge-page', {
-    populate: '*',
-  })
+export async function getKnowledgePage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingle<KnowledgePage>(
+    '/api/knowledge-page',
+    withStrapiLocale(
+      {
+        populate: '*',
+      },
+      locale,
+    ),
+  )
 }

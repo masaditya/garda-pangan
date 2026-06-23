@@ -5,27 +5,36 @@ export type CategoryCount = {
   count: number
 }
 
+export type MerchandiseFilterLabels = {
+  filterTitle: string
+  appliedCategoriesLabel: string
+  categoryListLabel: string
+  emptyCategories: string
+}
+
 interface MerchandiseFilterProps {
   categories: CategoryCount[]
   selected: string[]
   onChange: (category: string) => void
+  labels: MerchandiseFilterLabels
 }
 
 export function MerchandiseFilter({
   categories,
   selected,
   onChange,
+  labels,
 }: MerchandiseFilterProps) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-garda-neutral/5">
-      <h2 className="mb-6 text-xl text-garda-ink">Opsi Filter</h2>
+      <h2 className="mb-6 text-xl text-garda-ink">{labels.filterTitle}</h2>
 
       <div className="mb-6">
         <h3 className="mb-2 text-sm text-garda-ink-soft">
-          Kategori yang diterapkan
+          {labels.appliedCategoriesLabel}
         </h3>
         {selected.length === 0 ? (
-          <p className="text-sm text-garda-ink-soft/70">Belum ada</p>
+          <p className="text-sm text-garda-ink-soft/70">{labels.emptyCategories}</p>
         ) : (
           <div className="flex flex-wrap gap-2">
             {selected.map((s) => (
@@ -44,7 +53,7 @@ export function MerchandiseFilter({
 
       <div>
         <h3 className="mb-4 text-sm text-garda-ink-soft">
-          Daftar Kategori
+          {labels.categoryListLabel}
         </h3>
         <ul className="space-y-3">
           {categories.map((cat) => {

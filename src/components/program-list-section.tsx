@@ -16,6 +16,7 @@ type ProgramListSectionProps = {
   description: string
   backgroundImage?: string | null
   programs: ProgramListItem[]
+  moreLabel: string
 }
 
 function getImageUrl(image?: string | null) {
@@ -27,6 +28,7 @@ export function ProgramListSection({
   description,
   backgroundImage,
   programs,
+  moreLabel,
 }: ProgramListSectionProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [previewTop, setPreviewTop] = useState<number | null>(null)
@@ -164,7 +166,7 @@ export function ProgramListSection({
                           isHovered ? 'text-garda-sun' : 'text-garda-sun/80'
                         }`}
                       >
-                        <span className="hidden sm:inline">Selengkapnya</span>
+                        <span className="hidden sm:inline">{moreLabel}</span>
                         <ArrowUpRight
                           className="size-4 sm:size-5"
                           strokeWidth={2.5}

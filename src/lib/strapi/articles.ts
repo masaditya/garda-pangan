@@ -3,6 +3,7 @@ import {
   fetchAllStrapiPagesSafe,
   strapiFetch,
 } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type {
   StrapiCollectionResponse,
@@ -83,63 +84,99 @@ export function getArticleListPopulateQuery() {
   }
 }
 
-export async function getArticleSlugsForPaths() {
-  const articles = await fetchAllStrapiPagesSafe<Article>('/api/articles', {
-    sort: 'publishedAt:desc',
-  })
+export async function getArticleSlugsForPaths({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  const articles = await fetchAllStrapiPagesSafe<Article>(
+    '/api/articles',
+    withStrapiLocale(
+      {
+        sort: 'publishedAt:desc',
+      },
+      locale,
+    ),
+  )
 
   return articles.map((article) => article.slug).filter(Boolean)
 }
 
-export async function getPublishedArticles() {
-  return fetchAllStrapiPagesSafe<Article>('/api/articles', {
-    sort: 'publishedAt:desc',
-    populate: getArticleListPopulateQuery(),
-  })
+export async function getPublishedArticles({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchAllStrapiPagesSafe<Article>(
+    '/api/articles',
+    withStrapiLocale(
+      {
+        sort: 'publishedAt:desc',
+        populate: getArticleListPopulateQuery(),
+      },
+      locale,
+    ),
+  )
 }
 
-export async function getArticlesForKnowledge() {
-  return fetchAllStrapiPages<Article>('/api/articles', {
-    populate: '*',
-    sort: 'publishedAt:desc',
-  })
+export async function getArticlesForKnowledge({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchAllStrapiPages<Article>(
+    '/api/articles',
+    withStrapiLocale(
+      {
+        populate: '*',
+        sort: 'publishedAt:desc',
+      },
+      locale,
+    ),
+  )
 }
 
-export async function getArticleBySlug(slug: string) {
+export async function getArticleBySlug(
+  slug: string,
+  { locale = 'id' }: StrapiLocaleOptions = {},
+) {
   const response = await strapiFetch<StrapiCollectionResponse<Article>>(
     '/api/articles',
-    {
-      filters: {
-        slug: {
-          $eq: slug,
+    withStrapiLocale(
+      {
+        filters: {
+          slug: {
+            $eq: slug,
+          },
         },
+        pagination: {
+          page: 1,
+          pageSize: 1,
+        },
+        populate: getArticlePopulateQuery(),
       },
-      pagination: {
-        page: 1,
-        pageSize: 1,
-      },
-      populate: getArticlePopulateQuery(),
-    },
+      locale,
+    ),
   )
 
   return response.data[0] ?? null
 }
 
-export async function getKnowledgeArticleBySlug(slug: string) {
+export async function getKnowledgeArticleBySlug(
+  slug: string,
+  { locale = 'id' }: StrapiLocaleOptions = {},
+) {
   const response = await strapiFetch<StrapiCollectionResponse<Article>>(
     '/api/articles',
-    {
-      filters: {
-        slug: {
-          $eq: slug,
+    withStrapiLocale(
+      {
+        filters: {
+          slug: {
+            $eq: slug,
+          },
         },
+        pagination: {
+          page: 1,
+          pageSize: 1,
+        },
+        populate: '*',
       },
-      pagination: {
-        page: 1,
-        pageSize: 1,
-      },
-      populate: '*',
-    },
+      locale,
+    ),
   )
 
   return response.data[0] ?? null

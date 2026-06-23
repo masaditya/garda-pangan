@@ -1,0 +1,35 @@
+---
+import { PartnerCurrentSection } from '#/components/partner-current-section'
+import { PartnerFlowSection } from '#/components/partner-flow-section'
+import { PartnerHeroSection } from '#/components/partner-hero-section'
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+import { getMitraPage } from '#/lib/strapi/pages'
+
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const payload = await getMitraPage({ locale })
+const data = payload.data ?? undefined
+---
+
+<BaseLayout
+  locale={locale}
+  title={messages.mitra.pageTitle}
+  description={messages.mitra.pageDescription}
+  canonicalPath={localizedPath('/mitra', locale)}
+>
+  <main>
+    <PartnerHeroSection data={data} client:load />
+    <PartnerFlowSection data={data} />
+    <PartnerCurrentSection data={data} />
+  </main>
+</BaseLayout>

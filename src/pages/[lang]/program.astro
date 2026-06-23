@@ -1,0 +1,52 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { ProgramListSection } from '#/components/program-list-section'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+import {
+  formatProgramDescription,
+  getProgramThumbnailUrl,
+  getPrograms,
+  mapProgramToDetailButtons,
+} from '#/lib/strapi/programs'
+
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const programs = await getPrograms({ locale })
+
+const programData = {
+  heroDescription: messages.program.heroDescription,
+  programs: programs.map((program) => ({
+    title: program.title,
+    image: getProgramThumbnailUrl(program.thumbnail),
+    description: formatProgramDescription(program.description),
+    buttons: mapProgramToDetailButtons(program, locale),
+  })),
+}
+---
+
+<BaseLayout
+  locale={locale}
+  title={messages.program.pageTitle}
+  description={messages.program.pageDescription}
+  canonicalPath={localizedPath('/program', locale)}
+>
+  <main class="garda-main">
+    <ProgramListSection
+      client:load
+      title={messages.program.heroTitle}
+      description={programData.heroDescription}
+      moreLabel={messages.program.moreLabel}
+      backgroundImage="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop"
+      programs={programData.programs}
+    />
+  </main>
+</BaseLayout>

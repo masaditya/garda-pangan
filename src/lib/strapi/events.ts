@@ -1,4 +1,5 @@
 import { fetchAllStrapiPagesSafe } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type { StrapiCollectionResponse, StrapiEntry, StrapiMedia } from './types'
 
@@ -15,11 +16,17 @@ export type Event = StrapiEntry & {
 
 export type EventsResponse = StrapiCollectionResponse<Event>
 
-export async function getEvents() {
-  return fetchAllStrapiPagesSafe<Event>('/api/events', {
-    populate: {
-      coverImage: true,
-    },
-    sort: 'date:desc',
-  })
+export async function getEvents({ locale = 'id' }: StrapiLocaleOptions = {}) {
+  return fetchAllStrapiPagesSafe<Event>(
+    '/api/events',
+    withStrapiLocale(
+      {
+        populate: {
+          coverImage: true,
+        },
+        sort: 'date:desc',
+      },
+      locale,
+    ),
+  )
 }

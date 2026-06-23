@@ -1,27 +1,40 @@
 ---
-import { ArticleBlockRenderer } from '../../components/article-block-renderer'
+import { ArticleBlockRenderer } from '#/components/article-block-renderer'
 import {
   getArticleBySlug,
   getArticleSlugsForPaths,
-} from '../../lib/strapi/articles'
-import { normalizeStrapiMediaUrl } from '../../lib/strapi/client'
-import BaseLayout from '../../layouts/BaseLayout.astro'
+} from '#/lib/strapi/articles'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import {
+  getIntlLocale,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
 import { marked } from 'marked'
 
 export async function getStaticPaths() {
-  const slugs = await getArticleSlugsForPaths()
+  const [idSlugs, enSlugs] = await Promise.all([
+    getArticleSlugsForPaths({ locale: 'id' }),
+    getArticleSlugsForPaths({ locale: 'en' }),
+  ])
 
-  return slugs.map((slug) => ({
-    params: { slug },
-  }))
+  return [
+    ...idSlugs.map((slug) => ({ params: { lang: 'id', slug } })),
+    ...enSlugs.map((slug) => ({ params: { lang: 'en', slug } })),
+  ]
 }
 
-const resolvedArticle = await getArticleBySlug(Astro.params.slug ?? '').catch(
-  () => null,
-)
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+
+const resolvedArticle = await getArticleBySlug(Astro.params.slug ?? '', {
+  locale,
+}).catch(() => null)
 
 if (!resolvedArticle) {
-  return Astro.redirect('/404')
+  return Astro.redirect(localizedPath('/artikel', locale))
 }
 
 const coverUrl = normalizeStrapiMediaUrl(resolvedArticle.cover?.url)
@@ -29,7 +42,7 @@ const parsedContent = resolvedArticle.content
   ? await marked.parse(resolvedArticle.content)
   : ''
 const publishedDate = resolvedArticle.publishedAt
-  ? new Intl.DateTimeFormat('id-ID', {
+  ? new Intl.DateTimeFormat(getIntlLocale(locale), {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -38,19 +51,20 @@ const publishedDate = resolvedArticle.publishedAt
 ---
 
 <BaseLayout
-  title={`${resolvedArticle.title} | Garda Pangan`}
-  description={resolvedArticle.description ?? 'Artikel Garda Pangan'}
-  canonicalPath={`/artikel/${resolvedArticle.slug}`}
+  locale={locale}
+  title={`${resolvedArticle.title} | ${messages.meta.titleSuffix}`}
+  description={resolvedArticle.description ?? messages.artikel.pageDescription}
+  canonicalPath={localizedPath(`/artikel/${resolvedArticle.slug}`, locale)}
   ogImage={coverUrl ?? undefined}
 >
   <main class="bg-garda-paper">
     <article class="px-4 pb-20 pt-36 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-4xl">
         <a
-          href="/artikel"
+          href={localizedPath('/artikel', locale)}
           class="text-sm font-bold uppercase tracking-[0.18em] text-garda-forest transition hover:text-garda-ink"
         >
-          Kembali ke Artikel
+          {messages.artikel.backToArticles}
         </a>
 
         <header class="mt-8">
@@ -62,7 +76,7 @@ const publishedDate = resolvedArticle.publishedAt
               )
             }
           </div>
-          <h1 class="mt-5 text-5xl tracking-tight text-garda-ink sm:text-6xl">
+          <h1 class="font-serif mt-5 text-5xl tracking-tight text-garda-ink sm:text-6xl">
             {resolvedArticle.title}
           </h1>
           {

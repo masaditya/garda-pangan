@@ -28,20 +28,12 @@ export function ImpactSection({
   impactImage,
 }: ImpactSectionProps) {
   const formatNumber = (val?: string | null) => {
-    if (!val) return '0'
+    if (!val) return ''
     const cleanVal = val.replace(/[^\d.]/g, '')
     const num = parseFloat(cleanVal)
     if (isNaN(num)) return val
     return num.toLocaleString('en-US') + (val.includes('+') ? '+' : '')
   }
-
-  console.log(title,
-    portionsRescued,
-    co2Reduced,
-    foodLossPotential,
-    foodScrap,
-    stats,
-    impactImage)
 
   const defaultMetrics = [
     {

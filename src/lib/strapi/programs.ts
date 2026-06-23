@@ -1,4 +1,7 @@
 import { fetchAllStrapiPages, normalizeStrapiMediaUrl } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
+import type { Locale } from '#/lib/i18n/locales'
+import { localizedPath } from '#/lib/i18n/routing'
 
 import type { StrapiCollectionResponse, StrapiEntry, StrapiImage } from './types'
 
@@ -51,8 +54,12 @@ export function getProgramThumbnailUrl(thumbnail?: StrapiImage | null) {
   return normalizeStrapiMediaUrl(preferredUrl)
 }
 
-export function mapProgramToDetailButtons(program: Program): ProgramDetailButton[] {
+export function mapProgramToDetailButtons(
+  program: Program,
+  locale: Locale = 'id',
+): ProgramDetailButton[] {
   const buttons: ProgramDetailButton[] = []
+  const partnerCta = locale === 'en' ? 'Become a Partner' : 'Jadi Mitra'
 
   if (program.ctaLabel && program.ctaLink) {
     const isMoreLink = program.ctaLabel.toLowerCase().includes('selengkapnya')
@@ -65,25 +72,31 @@ export function mapProgramToDetailButtons(program: Program): ProgramDetailButton
   }
 
   buttons.push({
-    text: 'Jadi Mitra',
-    href: '/kontak',
+    text: partnerCta,
+    href: localizedPath('/kontak', locale),
     variant: 'primary',
   })
 
   return buttons
 }
 
-type GetProgramsOptions = {
+type GetProgramsOptions = StrapiLocaleOptions & {
   fetcher?: typeof fetch
 }
 
-export async function getPrograms(options: GetProgramsOptions = {}) {
+export async function getPrograms({
+  locale = 'id',
+  fetcher,
+}: GetProgramsOptions = {}) {
   return fetchAllStrapiPages<Program>(
     '/api/programs',
-    {
-      populate: '*',
-      sort: 'publishedAt:asc',
-    },
-    options,
+    withStrapiLocale(
+      {
+        populate: '*',
+        sort: 'publishedAt:asc',
+      },
+      locale,
+    ),
+    { fetcher },
   )
 }

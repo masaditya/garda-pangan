@@ -29,8 +29,22 @@ describe('MerchandiseCatalog', () => {
     { name: 'Totebag', count: 1 },
   ]
 
+  const filterLabels = {
+    filterTitle: 'Opsi Filter',
+    appliedCategoriesLabel: 'Kategori yang diterapkan',
+    categoryListLabel: 'Daftar Kategori',
+    emptyCategories: 'Belum ada',
+  }
+
   it('renders filter list and product cards from API data', () => {
-    render(<MerchandiseCatalog products={products} categories={categories} />)
+    render(
+      <MerchandiseCatalog
+        products={products}
+        categories={categories}
+        filterLabels={filterLabels}
+        emptyProductsMessage="Belum ada merchandise untuk kategori yang dipilih."
+      />,
+    )
 
     expect(screen.getByText('Opsi Filter')).toBeTruthy()
     expect(screen.getByText('Totebag Senja')).toBeTruthy()
@@ -38,7 +52,14 @@ describe('MerchandiseCatalog', () => {
   })
 
   it('filters products by selected category', () => {
-    render(<MerchandiseCatalog products={products} categories={categories} />)
+    render(
+      <MerchandiseCatalog
+        products={products}
+        categories={categories}
+        filterLabels={filterLabels}
+        emptyProductsMessage="Belum ada merchandise untuk kategori yang dipilih."
+      />,
+    )
 
     fireEvent.click(screen.getByLabelText('Kaos'))
 

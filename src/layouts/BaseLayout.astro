@@ -2,20 +2,28 @@
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import '../styles.css'
+import { DEFAULT_LOCALE, getMessages, resolveLocale, type Locale } from '#/lib/i18n'
 
 type Props = {
   title?: string
   description?: string
   canonicalPath?: string
   ogImage?: string
+  locale?: Locale
 }
 
 const {
-  title = 'Garda Pangan',
-  description = 'Garda Pangan menyelamatkan surplus makanan dan menghubungkannya dengan masyarakat yang membutuhkan.',
+  title,
+  description,
   canonicalPath,
   ogImage,
+  locale: localeProp,
 } = Astro.props
+
+const locale = localeProp ?? resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const pageTitle = title ?? messages.meta.defaultTitle
+const pageDescription = description ?? messages.meta.defaultDescription
 
 const currentPath = Astro.url.pathname
 const canonicalUrl =
@@ -24,23 +32,23 @@ const themeInitScript = `(function(){try{var stored=window.localStorage.getItem(
 ---
 
 <!doctype html>
-<html lang="id" suppressHydrationWarning>
+<html lang={locale} suppressHydrationWarning>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl.toString()} />}
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
     {ogImage && <meta property="og:image" content={ogImage} />}
     <script is:inline set:html={themeInitScript}></script>
   </head>
   <body class="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
-    <Header currentPath={currentPath} client:load />
+    <Header currentPath={currentPath} locale={locale} client:load />
     <slot />
-    <Footer currentPath={currentPath} />
+    <Footer currentPath={currentPath} locale={locale} />
   </body>
 </html>

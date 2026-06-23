@@ -1,3 +1,5 @@
+import { stripLocaleFromPath } from '#/lib/i18n/routing'
+
 export type NavItem = {
   href: string
   label: string
@@ -11,11 +13,11 @@ export function normalizePath(path: string) {
 }
 
 export function isNavItemActive(item: NavItem, currentPath: string) {
-  const current = normalizePath(currentPath)
+  const current = normalizePath(stripLocaleFromPath(currentPath))
   const paths = item.matchPaths ?? [item.href]
 
   return paths.some((path) => {
-    const target = normalizePath(path)
+    const target = normalizePath(stripLocaleFromPath(path))
 
     if (target === '/') {
       return current === '/'

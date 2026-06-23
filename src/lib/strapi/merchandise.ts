@@ -1,4 +1,7 @@
 import { fetchAllStrapiPages, normalizeStrapiMediaUrl } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
+import type { Locale } from '#/lib/i18n/locales'
+import { getIntlLocale } from '#/lib/i18n/locales'
 
 import type { MerchandiseItem } from '../../components/merchandise-card'
 import type { CategoryCount } from '../../components/merchandise-filter'
@@ -41,20 +44,23 @@ function getMerchandiseImageUrl(images?: StrapiImage[] | null) {
   return normalizeStrapiMediaUrl(preferredUrl)
 }
 
-export function formatMerchandiseDate(releaseDate: string) {
-  return new Intl.DateTimeFormat('id-ID', {
+export function formatMerchandiseDate(releaseDate: string, locale: Locale = 'id') {
+  return new Intl.DateTimeFormat(getIntlLocale(locale), {
     month: 'short',
     year: 'numeric',
   }).format(new Date(releaseDate))
 }
 
-export function mapMerchandiseToItem(merchandise: Merchandise): MerchandiseItem {
+export function mapMerchandiseToItem(
+  merchandise: Merchandise,
+  locale: Locale = 'id',
+): MerchandiseItem {
   return {
     id: merchandise.id,
     title: merchandise.title,
     category: merchandise.category?.name ?? '',
     date: merchandise.releaseDate
-      ? formatMerchandiseDate(merchandise.releaseDate)
+      ? formatMerchandiseDate(merchandise.releaseDate, locale)
       : '',
     description: merchandise.description ?? '',
     platforms: (merchandise.storeLinks ?? []).map((link) => link.platformName),
@@ -83,18 +89,31 @@ export function buildMerchandiseCategoryCounts(
   }))
 }
 
-export async function getMerchandises() {
-  return fetchAllStrapiPages<Merchandise>('/api/merchandises', {
-    populate: '*',
-    sort: 'releaseDate:desc',
-  })
+export async function getMerchandises({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchAllStrapiPages<Merchandise>(
+    '/api/merchandises',
+    withStrapiLocale(
+      {
+        populate: '*',
+        sort: 'releaseDate:desc',
+      },
+      locale,
+    ),
+  )
 }
 
-export async function getMerchandiseCategories() {
+export async function getMerchandiseCategories({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
   return fetchAllStrapiPages<MerchandiseCategory>(
     '/api/merchandise-categories',
-    {
-      sort: 'name:asc',
-    },
+    withStrapiLocale(
+      {
+        sort: 'name:asc',
+      },
+      locale,
+    ),
   )
 }

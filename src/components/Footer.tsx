@@ -1,29 +1,15 @@
 import { Youtube, Instagram, Linkedin, Facebook } from 'lucide-react'
 
 import { SiteContainer } from './site-container'
-import { isNavItemActive, type NavItem } from '#/lib/nav-active'
+import {
+  DEFAULT_LOCALE,
+  getFooterNavItems,
+  getFooterSecondaryLinks,
+  getMessages,
+  type Locale,
+} from '#/lib/i18n'
+import { isNavItemActive } from '#/lib/nav-active'
 import { cn } from '#/lib/utils'
-
-const footerNavItems: NavItem[] = [
-  { href: '/', label: 'Beranda' },
-  {
-    href: '/knowledge',
-    label: 'Knowledge',
-    matchPaths: ['/knowledge', '/artikel'],
-  },
-  { href: '/tentang-kami', label: 'About' },
-  { href: '/mitra', label: 'Mitra' },
-  { href: '/penerima', label: 'Penerima' },
-]
-
-const secondaryLinks = [
-  { label: 'Tentang Kami', href: '/tentang-kami' },
-  { label: 'Terms', href: '#' },
-  { label: 'Privacy', href: '#' },
-  { label: 'Cookies', href: '#' },
-  { label: 'Legal', href: '#' },
-  { label: 'Recalls', href: '#' },
-]
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -78,7 +64,16 @@ function FooterWatermark() {
   )
 }
 
-function FooterNavBar({ currentPath }: { currentPath: string }) {
+function FooterNavBar({
+  currentPath,
+  locale,
+}: {
+  currentPath: string
+  locale: Locale
+}) {
+  const messages = getMessages(locale)
+  const footerNavItems = getFooterNavItems(locale, messages)
+
   return (
     <SiteContainer className="flex flex-col gap-8 pb-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
       <nav
@@ -118,7 +113,10 @@ function FooterNavBar({ currentPath }: { currentPath: string }) {
   )
 }
 
-function FooterMiddle() {
+function FooterMiddle({ locale }: { locale: Locale }) {
+  const messages = getMessages(locale)
+  const secondaryLinks = getFooterSecondaryLinks(locale, messages)
+
   return (
     <SiteContainer className="flex flex-col gap-10 py-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12 lg:py-10">
       <div className="flex max-w-md flex-col gap-5">
@@ -157,14 +155,15 @@ function FooterMiddle() {
   )
 }
 
-function FooterBottom() {
+function FooterBottom({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear()
+  const messages = getMessages(locale)
 
   return (
     <SiteContainer className="pb-10 pt-4">
       <div className="flex flex-col items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm font-medium text-white/75">
-          &copy; {year} Copyright By gardapangan.org
+          &copy; {year} {messages.footer.copyright}
         </p>
 
         <SocialLinks />
@@ -175,15 +174,19 @@ function FooterBottom() {
 
 type FooterProps = {
   currentPath?: string
+  locale?: Locale
 }
 
-export default function Footer({ currentPath = '/' }: FooterProps) {
+export default function Footer({
+  currentPath = '/',
+  locale = DEFAULT_LOCALE,
+}: FooterProps) {
   return (
     <footer className="overflow-hidden bg-[#042918] text-white">
       <FooterWatermark />
-      <FooterNavBar currentPath={currentPath} />
-      <FooterMiddle />
-      <FooterBottom />
+      <FooterNavBar currentPath={currentPath} locale={locale} />
+      <FooterMiddle locale={locale} />
+      <FooterBottom locale={locale} />
     </footer>
   )
 }

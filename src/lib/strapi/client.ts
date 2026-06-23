@@ -135,6 +135,17 @@ export async function fetchStrapiSingle<T>(
   return strapiFetch<StrapiSingleResponse<T>>(path, query, options)
 }
 
+function shouldRetryWithoutLocale(
+  query: Record<string, StrapiQueryValue>,
+  error: unknown,
+) {
+  return (
+    query.locale === 'id' &&
+    error instanceof Error &&
+    error.message.includes('404')
+  )
+}
+
 export async function fetchStrapiSingleSafe<T>(
   path: string,
   query: Record<string, StrapiQueryValue> = {},
@@ -143,6 +154,17 @@ export async function fetchStrapiSingleSafe<T>(
   try {
     return await fetchStrapiSingle<T>(path, query, options)
   } catch (error) {
+    if (shouldRetryWithoutLocale(query, error)) {
+      const { locale: _locale, ...fallbackQuery } = query
+
+      try {
+        return await fetchStrapiSingle<T>(path, fallbackQuery, options)
+      } catch (fallbackError) {
+        console.warn(`Strapi fetch skipped for ${path}:`, fallbackError)
+        return { data: null } satisfies StrapiSingleResponse<T>
+      }
+    }
+
     console.warn(`Strapi fetch skipped for ${path}:`, error)
     return { data: null } satisfies StrapiSingleResponse<T>
   }
@@ -187,6 +209,17 @@ export async function fetchAllStrapiPagesSafe<T>(
   try {
     return await fetchAllStrapiPages<T>(path, query, options)
   } catch (error) {
+    if (shouldRetryWithoutLocale(query, error)) {
+      const { locale: _locale, ...fallbackQuery } = query
+
+      try {
+        return await fetchAllStrapiPages<T>(path, fallbackQuery, options)
+      } catch (fallbackError) {
+        console.warn(`Strapi fetch skipped for ${path}:`, fallbackError)
+        return []
+      }
+    }
+
     console.warn(`Strapi fetch skipped for ${path}:`, error)
     return []
   }

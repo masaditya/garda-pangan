@@ -2,6 +2,12 @@
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { KnowledgeDetail } from '#/components/knowledge-detail'
 import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+import {
   getArticleSlugsForPaths,
   getKnowledgeArticleBySlug,
 } from '#/lib/strapi/articles'
@@ -13,47 +19,63 @@ import {
 import { marked } from 'marked'
 
 export async function getStaticPaths() {
-  const slugs = await getArticleSlugsForPaths()
+  const [idSlugs, enSlugs] = await Promise.all([
+    getArticleSlugsForPaths({ locale: 'id' }),
+    getArticleSlugsForPaths({ locale: 'en' }),
+  ])
 
-  return slugs.map((slug) => ({
-    params: { slug },
-  }))
+  return [
+    ...idSlugs.map((slug) => ({ params: { lang: 'id', slug } })),
+    ...enSlugs.map((slug) => ({ params: { lang: 'en', slug } })),
+  ]
 }
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
 
 const resolvedArticle = await getKnowledgeArticleBySlug(
   Astro.params.slug ?? '',
+  { locale },
 ).catch(() => null)
 
 if (!resolvedArticle) {
-  return Astro.redirect('/404')
+  return Astro.redirect(localizedPath('/knowledge', locale))
 }
 
 const images = getArticleCarouselImages(resolvedArticle)
 const formattedDate = formatKnowledgeArticleDate(
   resolvedArticle.publishedAt ?? resolvedArticle.createdAt,
+  locale,
 )
 const parsedContent = resolvedArticle.content
   ? await marked.parse(resolvedArticle.content)
   : resolvedArticle.description
     ? `<p>${resolvedArticle.description}</p>`
     : ''
-const articleUrl = `${Astro.url.origin}/knowledge/${resolvedArticle.slug}`
+const articleUrl = new URL(
+  localizedPath(`/knowledge/${resolvedArticle.slug}`, locale),
+  Astro.url.origin,
+).toString()
 const tags = resolvedArticle.category?.name ? [resolvedArticle.category.name] : []
-const caption = getArticleImageCaption(resolvedArticle)
+const caption = getArticleImageCaption(
+  resolvedArticle,
+  messages.common.imageCourtesy,
+)
 const coverUrl = images[0]
 ---
 
 <BaseLayout
-  title={`${resolvedArticle.title} | Garda Pangan`}
-  description={resolvedArticle.description ?? 'Knowledge & Insights Garda Pangan'}
-  canonicalPath={`/knowledge/${resolvedArticle.slug}`}
+  locale={locale}
+  title={`${resolvedArticle.title} | ${messages.meta.titleSuffix}`}
+  description={resolvedArticle.description ?? messages.knowledge.pageDescription}
+  canonicalPath={localizedPath(`/knowledge/${resolvedArticle.slug}`, locale)}
   ogImage={coverUrl}
 >
   <main class="min-h-screen bg-white">
     <KnowledgeDetail
       client:load
       title={resolvedArticle.title}
-      authorName={resolvedArticle.author?.name ?? 'Garda Pangan'}
+      authorName={resolvedArticle.author?.name ?? messages.meta.titleSuffix}
       date={formattedDate}
       images={images}
       tags={tags}

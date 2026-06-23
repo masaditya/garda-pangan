@@ -1,26 +1,32 @@
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import type { Locale } from '#/lib/i18n/locales'
+import { getIntlLocale } from '#/lib/i18n/locales'
+import { getMessages } from '#/lib/i18n/messages'
+import { localizedPath } from '#/lib/i18n/routing'
 
 import type { Article } from '#/lib/strapi/articles'
 
 type ArticleCardProps = {
   article: Article
+  locale?: Locale
 }
 
-function formatDate(date?: string | null) {
+function formatDate(date: string | null | undefined, locale: Locale) {
   if (!date) {
     return null
   }
 
-  return new Intl.DateTimeFormat('id-ID', {
+  return new Intl.DateTimeFormat(getIntlLocale(locale), {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   }).format(new Date(date))
 }
 
-export function ArticleCard({ article }: ArticleCardProps) {
+export function ArticleCard({ article, locale = 'id' }: ArticleCardProps) {
+  const messages = getMessages(locale)
   const coverUrl = normalizeStrapiMediaUrl(article.cover?.url)
-  const publishedDate = formatDate(article.publishedAt)
+  const publishedDate = formatDate(article.publishedAt, locale)
 
   return (
     <article className="group overflow-hidden rounded-[2rem] border border-garda-border bg-white shadow-[0_24px_60px_rgba(13,42,22,0.08)]">
@@ -43,11 +49,11 @@ export function ArticleCard({ article }: ArticleCardProps) {
               {publishedDate}
             </time>
           )}
-          {article.isFeatured && <span>Featured</span>}
+          {article.isFeatured && <span>{messages.common.featured}</span>}
         </div>
         <h2 className="text-2xl tracking-tight text-garda-ink">
           <a
-            href={`/artikel/${article.slug}`}
+            href={localizedPath(`/artikel/${article.slug}`, locale)}
             className="transition hover:text-garda-forest"
           >
             {article.title}

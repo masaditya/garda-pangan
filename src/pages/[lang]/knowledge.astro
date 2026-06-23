@@ -1,0 +1,80 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { EventHero } from '#/components/event-hero'
+import { KnowledgeList } from '#/components/knowledge-list'
+import type { KnowledgeListLabels } from '#/components/knowledge-list'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+import { getCategories } from '#/lib/strapi/categories'
+import { getKnowledgePage } from '#/lib/strapi/knowledge-page'
+import { getArticlesForKnowledge } from '#/lib/strapi/articles'
+import { mapArticleToKnowledgeItem } from '#/lib/strapi/knowledge'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+
+const [pageResponse, categories, articles] = await Promise.all([
+  getKnowledgePage({ locale }).catch(() => ({ data: null })),
+  getCategories({ locale }).catch(() => []),
+  getArticlesForKnowledge({ locale }).catch(() => []),
+])
+
+const pageData = pageResponse.data
+
+const labels: KnowledgeListLabels = {
+  searchPlaceholder:
+    pageData?.searchPlaceholder ?? messages.knowledge.searchPlaceholder,
+  categoryFilterLabel:
+    pageData?.categoryFilterLabel ?? messages.knowledge.categoryFilterLabel,
+  filterAllLabel: pageData?.filterAllLabel ?? messages.knowledge.filterAllLabel,
+  sortNewestLabel: pageData?.sortNewestLabel ?? messages.knowledge.sortNewestLabel,
+  sortOldestLabel: messages.knowledge.sortOldestLabel,
+  searchSubmitLabel: pageData?.searchSubmitLabel ?? messages.common.search,
+  paginationPrevLabel: pageData?.paginationPrevLabel ?? messages.common.previous,
+  paginationNextLabel: pageData?.paginationNextLabel ?? messages.common.next,
+  emptyListMessage:
+    pageData?.emptyListMessage ?? messages.knowledge.emptyListMessage,
+}
+
+const knowledgeItems = articles.map(mapArticleToKnowledgeItem)
+const heroBackground = normalizeStrapiMediaUrl(pageData?.heroBackground?.url)
+const heroTitle = pageData?.heroTitle ?? messages.knowledge.heroTitle
+const heroDescription = pageData?.heroSubtitle ?? messages.knowledge.heroDescription
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${heroTitle} - ${messages.meta.titleSuffix}`}
+  description={pageData?.heroSubtitle ?? messages.knowledge.pageDescription}
+  canonicalPath={localizedPath('/knowledge', locale)}
+>
+  <main class="garda-main !bg-[#f4fbf6] overflow-hidden">
+    <EventHero
+      client:load
+      serifTitle
+      title={heroTitle}
+      description={heroDescription}
+      backgroundImage={heroBackground}
+    />
+
+    <KnowledgeList
+      client:load
+      locale={locale}
+      initialKnowledges={knowledgeItems}
+      categories={categories.map((category) => ({
+        name: category.name,
+        slug: category.slug,
+      }))}
+      labels={labels}
+    />
+  </main>
+</BaseLayout>

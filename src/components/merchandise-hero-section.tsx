@@ -1,14 +1,16 @@
 import type { MerchandisePage } from '#/lib/strapi/pages'
+import { getMessages, type Locale } from '#/lib/i18n'
 
 export function MerchandiseHeroSection({
   data,
+  locale = 'id',
 }: {
   data?: MerchandisePage | null
+  locale?: Locale
 }) {
-  const title = data?.heroTitle || 'Merchandise'
-  const desc =
-    data?.heroDescription ||
-    'Yuk jadi bagian dari gaya hidup bebas sampah, sekaligus membantu kami mengirimkan semakin banyak makanan untuk masyarakat pra-sejahtera di kantong-kantong kemiskinan. Setiap pembelian menunjukkan komitmenmu mengurangi sampah makanan sekaligus membantu saudara kita yang mengalami kerawanan pangan.'
+  const messages = getMessages(locale)
+  const title = data?.heroTitle || messages.merchandise.heroTitle
+  const desc = data?.heroDescription || messages.merchandise.heroDescription
 
   return (
     <section className="relative z-10 flex min-h-screen flex-col justify-center gap-8 px-6 pb-28 pt-32 text-center sm:px-10 sm:pt-36 md:gap-10 lg:px-8 lg:pb-32 lg:pt-40">

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { ContactSection } from '#/components/contact-section'
+import {
+  buildContactCategories,
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const contactCategories = buildContactCategories(messages)
+const bgImage =
+  'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop'
+---
+
+<BaseLayout
+  locale={locale}
+  title={messages.contact.pageTitle}
+  description={messages.contact.pageDescription}
+  canonicalPath={localizedPath('/kontak', locale)}
+>
+  <main class="relative isolate min-h-screen">
+    <div
+      class="absolute inset-0 -z-20 bg-cover bg-fixed bg-center"
+      style={`background-image: url(${bgImage})`}
+    >
+    </div>
+    <div class="absolute inset-0 -z-10 bg-[#0C381E]/75 mix-blend-multiply"></div>
+    <div
+      class="absolute inset-x-0 top-0 -z-10 h-[50vh] bg-linear-to-b from-[#0C381E]/60 to-transparent"
+    >
+    </div>
+
+    <div class="relative z-10 w-full">
+      <ContactSection
+        client:load
+        titleLine1={messages.contact.heroTitleLine1}
+        titleLine2={messages.contact.heroTitleLine2}
+        description={messages.contact.heroDescription}
+        illustrationLabel={messages.contact.illustrationLabel}
+        categories={contactCategories}
+      />
+    </div>
+  </main>
+</BaseLayout>

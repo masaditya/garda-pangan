@@ -1,28 +1,41 @@
 ---
-import { ArticleCard } from '../../components/article-card'
-import { getPublishedArticles } from '../../lib/strapi/articles'
-import BaseLayout from '../../layouts/BaseLayout.astro'
+import { ArticleCard } from '#/components/article-card'
+import { getPublishedArticles } from '#/lib/strapi/articles'
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
 
-const articles = await getPublishedArticles()
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const articles = await getPublishedArticles({ locale })
 ---
 
 <BaseLayout
-  title="Artikel | Garda Pangan"
-  description="Cerita, pengetahuan, dan pembaruan dari gerakan penyelamatan makanan Garda Pangan."
-  canonicalPath="/artikel"
+  locale={locale}
+  title={messages.artikel.pageTitle}
+  description={messages.artikel.pageDescription}
+  canonicalPath={localizedPath('/artikel', locale)}
 >
   <main class="bg-garda-paper">
     <section class="px-4 pb-16 pt-36 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-[1240px]">
         <div class="max-w-3xl">
           <p class="text-sm font-bold uppercase tracking-[0.18em] text-garda-forest">
-            Artikel
+            {messages.artikel.heroTitle}
           </p>
           <h1 class="font-serif mt-4 text-5xl tracking-tight text-garda-ink sm:text-6xl">
-            Cerita Penyelamatan Makanan
+            {messages.artikel.heroDescription}
           </h1>
           <p class="mt-6 text-lg leading-relaxed text-garda-ink-soft">
-            Baca kabar terbaru, panduan, dan cerita dampak dari Garda Pangan.
+            {messages.artikel.heroSubtitle}
           </p>
         </div>
 
@@ -30,12 +43,12 @@ const articles = await getPublishedArticles()
           articles.length > 0 ? (
             <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {articles.map((article) => (
-                <ArticleCard article={article} />
+                <ArticleCard article={article} locale={locale} />
               ))}
             </div>
           ) : (
             <div class="mt-12 rounded-[2rem] bg-white p-8 text-garda-ink-soft">
-              Belum ada artikel yang dipublikasikan.
+              {messages.artikel.emptyState}
             </div>
           )
         }

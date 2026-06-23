@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Play, X } from 'lucide-react'
 
+import { getMessages, type Locale } from '#/lib/i18n'
+
 function getYoutubeId(url: string) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
   const match = url.match(regExp)
@@ -60,12 +62,24 @@ const testimonials: Testimonial[] = [
   }
 ]
 
-export function BeneficiarySection({ data }: { data?: any }) {
+export function BeneficiarySection({
+  data,
+  locale = 'id',
+}: {
+  data?: any
+  locale?: Locale
+}) {
   const [isPlaying, setIsPlaying] = useState(false)
+  const messages = getMessages(locale)
 
-  const title = data?.heroTitle || 'Penerima Bantuan'
-  const description = data?.heroDescription || 'Penerima manfaat (beneficiaries) utama dari distribusi makanan Garda Pangan adalah masyarakat pra-sejahtera di Surabaya, yang telah dipilih dengan cermat serta disurvei agar bantuan yang diberikan tepat sasaran. Kategori penerima diantaranya berasal dari kaum dhuafa, yatim piatu, janda, lansia, difabel, pengungsi, dan anak jalanan.'
-  const buttonLabel = data?.testimonialButtonLabel || 'Tonton Testimoni'
+  const title = data?.heroTitle || (locale === 'en' ? 'Beneficiaries' : 'Penerima Bantuan')
+  const description =
+    data?.heroDescription ||
+    (locale === 'en'
+      ? 'Primary beneficiaries of Garda Pangan food distribution are underserved communities in Surabaya, carefully selected and surveyed so aid reaches the right people.'
+      : 'Penerima manfaat (beneficiaries) utama dari distribusi makanan Garda Pangan adalah masyarakat pra-sejahtera di Surabaya, yang telah dipilih dengan cermat serta disurvei agar bantuan yang diberikan tepat sasaran. Kategori penerima diantaranya berasal dari kaum dhuafa, yatim piatu, janda, lansia, difabel, pengungsi, dan anak jalanan.')
+  const buttonLabel =
+    data?.testimonialButtonLabel || messages.penerima.watchTestimonial
   const videoUrl = data?.heroVideoUrl || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   const videoId = getYoutubeId(videoUrl)
 

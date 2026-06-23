@@ -1,0 +1,39 @@
+---
+import { AboutHeroSection } from '#/components/about-hero-section'
+import { AboutHistorySection } from '#/components/about-history-section'
+import { AboutLegalitySection } from '#/components/about-legality-section'
+import { AboutTargetAudienceSection } from '#/components/about-target-audience-section'
+import { AboutVisionMissionSection } from '#/components/about-vision-mission-section'
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+import { getAboutPage } from '#/lib/strapi/pages'
+
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+const payload = await getAboutPage({ locale })
+const data = payload.data
+---
+
+<BaseLayout
+  locale={locale}
+  title={messages.about.pageTitle}
+  description={messages.about.pageDescription}
+  canonicalPath={localizedPath('/tentang-kami', locale)}
+>
+  <main>
+    <AboutHeroSection data={data} />
+    <AboutHistorySection data={data} />
+    <AboutVisionMissionSection data={data} />
+    <AboutTargetAudienceSection locale={locale} />
+    <AboutLegalitySection data={data} />
+  </main>
+</BaseLayout>

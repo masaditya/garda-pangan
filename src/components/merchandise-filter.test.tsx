@@ -10,12 +10,20 @@ describe('MerchandiseFilter', () => {
     { name: 'Totebag', count: 104 },
   ]
 
+  const labels = {
+    filterTitle: 'Opsi Filter',
+    appliedCategoriesLabel: 'Kategori yang diterapkan',
+    categoryListLabel: 'Daftar Kategori',
+    emptyCategories: 'Belum ada',
+  }
+
   it('renders filter options and counts', () => {
     render(
       <MerchandiseFilter
         categories={categories}
         selected={[]}
         onChange={() => {}}
+        labels={labels}
       />,
     )
     expect(screen.getByText('Kaos')).toBeTruthy()
@@ -29,6 +37,7 @@ describe('MerchandiseFilter', () => {
         categories={categories}
         selected={['Pupuk']}
         onChange={handleChange}
+        labels={labels}
       />,
     )
 

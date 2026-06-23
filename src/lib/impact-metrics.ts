@@ -4,7 +4,7 @@ export type ImpactMetric = {
 }
 
 export function formatImpactNumber(val?: string | null) {
-  if (!val) return '0'
+  if (!val) return ''
   const cleanVal = val.replace(/[^\d.]/g, '')
   const num = parseFloat(cleanVal)
   if (Number.isNaN(num)) return val

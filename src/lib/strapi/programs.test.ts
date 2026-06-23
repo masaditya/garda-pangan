@@ -72,7 +72,7 @@ describe('programs helpers', () => {
   it('maps CTA fields into program detail buttons', () => {
     expect(mapProgramToDetailButtons(sampleProgram)).toEqual([
       { text: 'Selengkapnya', href: '/mitra', variant: 'subtle' },
-      { text: 'Jadi Mitra', href: '/kontak', variant: 'primary' },
+      { text: 'Jadi Mitra', href: '/id/kontak', variant: 'primary' },
     ])
   })
 
@@ -100,5 +100,6 @@ describe('programs helpers', () => {
     expect(requestUrl).toContain('/api/programs')
     expect(requestUrl).toContain('populate=*')
     expect(requestUrl).toContain('sort=publishedAt:asc')
+    expect(requestUrl).toContain('locale=id')
   })
 })

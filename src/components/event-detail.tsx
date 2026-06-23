@@ -8,6 +8,7 @@ export type EventDetailProps = {
   parsedContent: string
   eventUrl: string
   caption?: string
+  authorLabel?: string
 }
 
 export function EventDetail({
@@ -18,6 +19,7 @@ export function EventDetail({
   parsedContent,
   eventUrl,
   caption,
+  authorLabel = 'Admin',
 }: EventDetailProps) {
   return (
     <>
@@ -38,7 +40,7 @@ export function EventDetail({
               </svg>
             </div>
             <div className="flex flex-col justify-center text-left">
-              <p className="mb-1 text-sm font-semibold leading-none">Admin</p>
+              <p className="mb-1 text-sm font-semibold leading-none">{authorLabel}</p>
               <p className="text-xs leading-none text-white/60">{date}</p>
             </div>
           </div>

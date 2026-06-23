@@ -157,7 +157,7 @@ describe('KnowledgeList', () => {
     )
 
     expect(screen.getByRole('link', { name: /First Insight/i }).getAttribute('href')).toBe(
-      '/knowledge/first-insight',
+      '/id/knowledge/first-insight',
     )
   })
 })

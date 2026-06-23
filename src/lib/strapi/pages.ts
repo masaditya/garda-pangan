@@ -1,4 +1,5 @@
 import { fetchStrapiSingle, fetchStrapiSingleSafe } from './client'
+import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type { StrapiEntry, StrapiMedia } from './types'
 
@@ -129,66 +130,100 @@ export type Homepage = StrapiEntry & {
   statsFoodScrap?: string | null
 }
 
-export async function getAboutPage() {
-  return fetchStrapiSingleSafe<AboutPage>('/api/about', {
-    populate: {
-      heroBackground: true,
-      historyImages: true,
-    },
-  })
+export async function getAboutPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<AboutPage>(
+    '/api/about',
+    withStrapiLocale(
+      {
+        populate: {
+          heroBackground: true,
+          historyImages: true,
+        },
+      },
+      locale,
+    ),
+  )
 }
 
-export async function getMitraPage() {
-  return fetchStrapiSingleSafe<MitraPage>('/api/mitra', {
-    populate: {
-      heroBackgroundMedia: true,
-      heroInfoCards: true,
-      flowSteps: {
+export async function getMitraPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<MitraPage>(
+    '/api/mitra',
+    withStrapiLocale(
+      {
+        populate: {
+          heroBackgroundMedia: true,
+          heroInfoCards: true,
+          flowSteps: {
+            populate: '*',
+          },
+        },
+      },
+      locale,
+    ),
+  )
+}
+
+export async function getMerchandisePage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<MerchandisePage>(
+    '/api/merchandise-page',
+    withStrapiLocale(
+      {
+        populate: {
+          heroBackground: true,
+        },
+      },
+      locale,
+    ),
+  )
+}
+
+export async function getPenerimaPage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<PenerimaPage>(
+    '/api/penerima-page',
+    withStrapiLocale(
+      {
         populate: '*',
       },
-    },
-  })
+      locale,
+    ),
+  )
 }
 
-export async function getMerchandisePage() {
-  return fetchStrapiSingleSafe<MerchandisePage>('/api/merchandise-page', {
-    populate: {
-      heroBackground: true,
-    },
-  })
-}
-
-export async function getPenerimaPage() {
-  return fetchStrapiSingleSafe<PenerimaPage>('/api/penerima-page', {
-    populate: '*',
-  })
-}
-
-export async function getHomepage() {
-  return fetchStrapiSingleSafe<Homepage>('/api/homepage', {
-    populate: {
-      heroBackground: true,
-      didYouKnow: true,
-      impactImage: true,
-      impactStats: {
-        populate: ['image'],
+export async function getHomepage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<Homepage>(
+    '/api/homepage',
+    withStrapiLocale(
+      {
+        populate: {
+          heroBackground: true,
+          didYouKnow: true,
+          impactImage: true,
+          impactStats: {
+            populate: ['image'],
+          },
+          featuredBy: {
+            populate: ['logos'],
+          },
+          agenPerubahanCards: {
+            populate: ['image'],
+          },
+          awardCards: {
+            populate: ['images'],
+          },
+          instagramCards: {
+            populate: ['image'],
+          },
+          supporterCards: {
+            populate: ['image'],
+          },
+        },
       },
-      featuredBy: {
-        populate: ['logos'],
-      },
-      agenPerubahanCards: {
-        populate: ['image'],
-      },
-      awardCards: {
-        populate: ['images'],
-      },
-      instagramCards: {
-        populate: ['image'],
-      },
-      supporterCards: {
-        populate: ['image'],
-      },
-    },
-  })
+      locale,
+    ),
+  )
 }
 

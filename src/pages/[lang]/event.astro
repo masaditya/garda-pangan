@@ -2,35 +2,59 @@
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { EventHero } from '#/components/event-hero'
 import { EventList } from '#/components/event-list'
+import {
+  getLangStaticPaths,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import { getEventPage } from '#/lib/strapi/event-page'
 import { getEvents } from '#/lib/strapi/events'
 
 import type { EventItem } from '#/components/event-list'
 
-const pageResponse = await getEventPage()
+export function getStaticPaths() {
+  return getLangStaticPaths()
+}
+
+const locale = resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+
+const pageResponse = await getEventPage({ locale })
 const pageData = pageResponse.data ?? {
-  heroTitle: 'Our Events',
-  heroDescription:
-    'Garda Pangan bermula dari pergerakan komunitas kecil yang berkembang jadi sesuatu yang memberikan manfaat lebih.',
+  heroTitle: messages.event.heroTitle,
+  heroDescription: messages.event.heroDescription,
   heroBackground: null,
 }
 
-const eventsData = await getEvents()
+const eventsData = await getEvents({ locale })
 
 eventsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
-const heroTitle = pageData.heroTitle ?? 'Our Events'
+const heroTitle = pageData.heroTitle ?? messages.event.heroTitle
 const heroDescription =
-  pageData.heroDescription ??
-  'Garda Pangan bermula dari pergerakan komunitas kecil yang berkembang jadi sesuatu yang memberikan manfaat lebih.'
+  pageData.heroDescription ?? messages.event.heroDescription
 const heroBackground = normalizeStrapiMediaUrl(pageData.heroBackground?.url)
+
+const eventLabels = {
+  searchPlaceholder: messages.event.searchPlaceholder,
+  yearFilter: messages.event.yearFilter,
+  allYears: messages.event.allYears,
+  search: messages.common.search,
+  defaultTag: messages.event.defaultTag,
+  shareLabel: messages.event.shareLabel,
+  linkCopied: messages.common.linkCopied,
+  emptyTitle: messages.event.emptyTitle,
+  emptyDescription: messages.event.emptyDescription,
+}
 ---
 
 <BaseLayout
-  title={`${heroTitle} - Garda Pangan`}
+  locale={locale}
+  title={`${heroTitle} - ${messages.meta.titleSuffix}`}
   description={heroDescription}
-  canonicalPath="/event"
+  canonicalPath={localizedPath('/event', locale)}
 >
   <main class="garda-main !bg-[#f4fbf6] overflow-hidden">
     <EventHero
@@ -42,6 +66,8 @@ const heroBackground = normalizeStrapiMediaUrl(pageData.heroBackground?.url)
 
     <EventList
       client:load
+      locale={locale}
+      labels={eventLabels}
       initialEvents={eventsData.map(
         (event): EventItem => ({
           id: event.id,

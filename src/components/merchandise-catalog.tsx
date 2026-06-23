@@ -3,16 +3,20 @@ import { SectionShell } from './section-shell'
 import { MerchandiseFilter } from './merchandise-filter'
 import { MerchandiseCard } from './merchandise-card'
 import type { MerchandiseItem } from './merchandise-card'
-import type { CategoryCount } from './merchandise-filter'
+import type { CategoryCount, MerchandiseFilterLabels } from './merchandise-filter'
 
 type MerchandiseCatalogProps = {
   products: MerchandiseItem[]
   categories: CategoryCount[]
+  filterLabels: MerchandiseFilterLabels
+  emptyProductsMessage: string
 }
 
 export function MerchandiseCatalog({
   products,
   categories,
+  filterLabels,
+  emptyProductsMessage,
 }: MerchandiseCatalogProps) {
   const [selectedCats, setSelectedCats] = useState<string[]>([])
 
@@ -37,6 +41,7 @@ export function MerchandiseCatalog({
                 categories={categories}
                 selected={selectedCats}
                 onChange={handleToggle}
+                labels={filterLabels}
               />
             </div>
           </div>
@@ -50,7 +55,7 @@ export function MerchandiseCatalog({
               </div>
             ) : (
               <p className="rounded-2xl bg-white px-6 py-12 text-center text-garda-ink-soft shadow-sm ring-1 ring-garda-neutral/5">
-                Belum ada merchandise untuk kategori yang dipilih.
+                {emptyProductsMessage}
               </p>
             )}
           </div>

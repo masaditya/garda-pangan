@@ -1,0 +1,85 @@
+---
+import BaseLayout from '#/layouts/BaseLayout.astro'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { getEvents } from '#/lib/strapi/events'
+import { marked } from 'marked'
+import { EventDetail } from '#/components/event-detail'
+import {
+  getIntlLocale,
+  getMessages,
+  localizedPath,
+  resolveLocale,
+} from '#/lib/i18n'
+
+import type { Event } from '#/lib/strapi/events'
+
+export async function getStaticPaths() {
+  const [idEvents, enEvents] = await Promise.all([
+    getEvents({ locale: 'id' }),
+    getEvents({ locale: 'en' }),
+  ])
+
+  return [
+    ...idEvents.map((event) => ({
+      params: { lang: 'id', slug: event.slug },
+      props: { event, locale: 'id' as const },
+    })),
+    ...enEvents.map((event) => ({
+      params: { lang: 'en', slug: event.slug },
+      props: { event, locale: 'en' as const },
+    })),
+  ]
+}
+
+const { event, locale: pageLocale } = Astro.props as {
+  event: Event
+  locale: 'id' | 'en'
+}
+const locale = pageLocale ?? resolveLocale(Astro.params.lang)
+const messages = getMessages(locale)
+
+if (!event) {
+  return Astro.redirect(localizedPath('/event', locale))
+}
+
+const imageUrl =
+  normalizeStrapiMediaUrl(event?.coverImage?.url) ||
+  'https://placehold.co/1200x600'
+const formattedDate = new Intl.DateTimeFormat(getIntlLocale(locale), {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+}).format(new Date(event.date))
+
+const parsedContent = event?.content ? await marked.parse(event?.content) : ''
+const eventUrl = new URL(
+  localizedPath(`/event/${event.slug}`, locale),
+  Astro.url.origin,
+).toString()
+
+const tags = event?.eventTag
+  ? event?.eventTag.split(',').map((t: string) => t.trim())
+  : ['EVENT']
+const caption = event.coverImage?.caption || messages.common.imageCourtesy
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${event.title} | ${messages.meta.titleSuffix}`}
+  description={event.summary}
+  canonicalPath={localizedPath(`/event/${event.slug}`, locale)}
+>
+  <main class="bg-white min-h-screen">
+    <EventDetail
+      client:load
+      title={event.title}
+      date={formattedDate}
+      imageUrl={imageUrl}
+      tags={tags}
+      parsedContent={parsedContent}
+      eventUrl={eventUrl}
+      caption={caption}
+      authorLabel={messages.common.admin}
+    />
+  </main>
+</BaseLayout>
