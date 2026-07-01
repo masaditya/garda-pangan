@@ -109,10 +109,17 @@
   --sidebar-ring: oklch(0.65 0.152 145.2);
 }
 
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 @theme inline {
   --font-sans: 'Satoshi', 'Avenir Next', 'Segoe UI', sans-serif;
   --font-serif: 'Hedvig Letters Serif', Georgia, 'Times New Roman', serif;
   --font-display: 'Hedvig Letters Serif', 'Geist', 'Darker Grotesque', var(--font-sans);
+
+  --animate-marquee: marquee-scroll 28s linear infinite;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

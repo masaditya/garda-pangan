@@ -146,13 +146,13 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
       aria-labelledby="awards-recognition-heading"
       spacing="default"
       tone="transparent"
-      innerClassName="max-w-none px-0"
+      className='bg-[#FCF9E0]'
     >
       <div className="relative w-full">
         <div className="mb-8 flex justify-center text-center">
           <h2
             id="awards-recognition-heading"
-            className="garda-section-heading text-[clamp(2rem,5vw,3.5rem)] capitalize"
+            className="font-serif text-[clamp(2rem,5vw,3.5rem)] font-normal leading-tight tracking-tight text-garda-forest-deep capitalize"
           >
             {title ? (
               <span
@@ -174,7 +174,7 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
             {displayAwards.map((award) => (
               <CarouselItem
                 key={award.id}
-                className="basis-[260px] pl-4 sm:basis-[300px] lg:basis-[320px]"
+                className="basis-[150px] pl-4 sm:basis-[200px] lg:basis-[240px]"
               >
                 <AwardCard {...award} />
               </CarouselItem>

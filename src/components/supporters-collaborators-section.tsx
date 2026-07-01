@@ -1,45 +1,38 @@
+import { ActionCard } from './action-card'
+import { GardaButton } from './garda-button'
 import { SectionShell } from './section-shell'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
-const defaultSupporters = Array.from({ length: 16 }, (_, index) => ({
-  id: `supporter-${index + 1}`,
-  name: 'Badan Pangan Nasional',
-  logoSrc: '/brands/badan-pangan-nasional.svg',
-  alt: 'Badan Pangan Nasional',
-}))
-
-function SupporterCard({
-  name,
-  logoSrc,
-  alt,
-}: {
-  name: string
-  logoSrc: string
-  alt: string
-}) {
-  return (
-    <article className="flex min-h-36 flex-col items-center justify-center rounded-2xl bg-white px-3 py-5 shadow-sm">
-      <div className="flex flex-1 items-center justify-center p-2">
-        <img
-          className="h-14 w-14 object-contain"
-          src={logoSrc}
-          alt={alt}
-          loading="lazy"
-        />
-      </div>
-      <p className="mt-3 text-center text-[0.65rem] font-bold leading-tight text-garda-forest uppercase">
-        {name}
-      </p>
-    </article>
-  )
-}
+const defaultAgentCards = [
+  {
+    title: 'Donasi Makanan',
+    description: 'Methodical Data Collection and Meaningful Organization',
+    iconSrc: '/figma/agent-food.png',
+  },
+  {
+    title: 'Donasi Tunai',
+    description: 'Methodical Data Collection and Meaningful Organization',
+    iconSrc: '/figma/agent-cash.png',
+  },
+  {
+    title: 'Usul Penerima',
+    description: 'Methodical Data Collection and Meaningful Organization',
+    iconSrc: '/figma/agent-suggest.png',
+  },
+  {
+    title: 'Jadi Relawan',
+    description: 'Methodical Data Collection and Meaningful Organization',
+    iconSrc: '/figma/agent-volunteer.png',
+  },
+]
 
 type SupportersCollaboratorsSectionProps = {
   title?: string | null
   subtitle?: string | null
-  supporters?: {
+  cards?: {
     id: number
     title: string
+    description: string
     image?: { url: string } | null
   }[]
 }
@@ -47,46 +40,60 @@ type SupportersCollaboratorsSectionProps = {
 export function SupportersCollaboratorsSection({
   title,
   subtitle,
-  supporters,
+  cards,
 }: SupportersCollaboratorsSectionProps) {
-  const displaySupporters =
-    supporters && supporters.length > 0
-      ? supporters.map((s) => ({
-          id: String(s.id),
-          name: s.title,
-          logoSrc:
-            normalizeStrapiMediaUrl(s.image?.url) ||
-            '/brands/badan-pangan-nasional.svg',
-          alt: s.title,
+  const displayCards =
+    cards && cards.length > 0
+      ? cards.map((card, index) => ({
+          title: card.title,
+          description: card.description,
+          iconSrc:
+            normalizeStrapiMediaUrl(card.image?.url) ||
+            defaultAgentCards[index % defaultAgentCards.length].iconSrc,
         }))
-      : defaultSupporters
+      : defaultAgentCards
 
   return (
     <SectionShell
-      aria-labelledby="supporters-collaborators-heading"
+      id="agent-change"
+      aria-labelledby="agent-change-cards-heading"
       spacing="default"
       tone="transparent"
+      className="bg-[#FCF9E0]"
     >
-      <div className="relative grid gap-12">
-        <div className="relative z-10 flex flex-col items-center text-center">
+      <div className="mx-auto flex w-full flex-col gap-12">
+        <div className="flex flex-col items-center gap-4 text-center">
           <h2
-            id="supporters-collaborators-heading"
-            className="garda-section-heading text-[clamp(2rem,5vw,3.5rem)] capitalize"
+            id="agent-change-cards-heading"
+            className="font-serif text-[clamp(2rem,5vw,3.5rem)] font-normal leading-tight tracking-tight text-garda-forest-deep capitalize"
           >
-            {title || 'Supporter & Collaborators'}
+            {title || 'Ayo Jadi agen perubahan'}
           </h2>
-          <p className="mt-6 max-w-3xl text-base font-medium text-white/75 sm:text-lg">
+          <p className="max-w-xl text-balance text-base leading-normal text-garda-ink-soft sm:text-lg">
             {subtitle ||
-              'Since 2021, we have partnered with these companies to create impact for the future. Will your logo be next here?'}
+              'Melalui Garda Pangan kamu bisa berpartisipasi dalam menuntaskan kerawanan pangan di Indonesia.'}
           </p>
         </div>
 
         <div
-          data-testid="supporters-grid"
-          className="grid grid-cols-2 justify-center gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:[grid-template-columns:repeat(8,minmax(9.375rem,9.375rem))]"
+          data-testid="agent-change-grid"
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
         >
-          {displaySupporters.map((supporter) => (
-            <SupporterCard key={supporter.id} {...supporter} />
+          {displayCards.map((card) => (
+            <ActionCard
+              key={card.title}
+              title={card.title}
+              description={card.description}
+              iconSrc={card.iconSrc}
+              className="rounded-lg!"
+              action={
+                <div className="flex">
+                  <GardaButton href="#" variant="impact" className="w-full">
+                    MULAI
+                  </GardaButton>
+                </div>
+              }
+            />
           ))}
         </div>
       </div>

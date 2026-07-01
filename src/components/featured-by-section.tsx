@@ -82,6 +82,8 @@ export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
       ? logos.map((l) => ({ id: l.id, url: l.url, label: l.name }))
       : featuredLogos
 
+  const track = [...items, ...items]
+
   return (
     <SectionShell
       id="featured-by"
@@ -99,19 +101,32 @@ export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
           </h2>
         </div>
 
+        {/* Marquee strip */}
         <div
-          data-testid="featured-grid"
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
+          data-testid="featured-marquee"
+          className="relative overflow-hidden"
+          aria-label="Featured by media"
         >
-          {items.map((logo) => (
-            <LogoCard
-              key={logo.id}
-              data-testid={`featured-card-${logo.id}`}
-              className="rounded-[0.75rem] border-transparent bg-white shadow-none"
-            >
-              <FeaturedLogoContent logo={logo} />
-            </LogoCard>
-          ))}
+          {/* Left fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-(--color-bg,#0c2b1a) to-transparent" />
+          {/* Right fade */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-(--color-bg,#0c2b1a) to-transparent" />
+
+          <div
+            className="flex animate-marquee gap-4"
+            style={{ width: 'max-content' }}
+          >
+            {track.map((logo, i) => (
+              <LogoCard
+                key={`${logo.id}-${i}`}
+                data-testid={`featured-card-${logo.id}-${i}`}
+                className="h-28 w-[160px] shrink-0 rounded-[0.75rem] border-transparent bg-white shadow-none *:data-[slot=card-content]:flex *:data-[slot=card-content]:h-full *:data-[slot=card-content]:min-h-0 *:data-[slot=card-content]:items-center *:data-[slot=card-content]:justify-center *:data-[slot=card-content]:p-4"
+                aria-hidden={i >= items.length}
+              >
+                <FeaturedLogoContent logo={logo} />
+              </LogoCard>
+            ))}
+          </div>
         </div>
       </div>
     </SectionShell>

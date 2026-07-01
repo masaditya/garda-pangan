@@ -1,9 +1,11 @@
 ---
-import { AgentChangeSection } from '#/components/agent-change-section'
+
+import { AgentChangeBanner } from '#/components/agent-change-banner'
 import { AwardsInstagramSection } from '#/components/awards-instagram-section'
 import { FeaturedBySection } from '#/components/featured-by-section'
 import { HeroScrollSequence } from '#/components/hero-scroll-sequence'
 import { SupportersCollaboratorsSection } from '#/components/supporters-collaborators-section'
+import { SupportersGridSection } from '#/components/supporters-grid-section'
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import {
   getLangStaticPaths,
@@ -48,16 +50,21 @@ const homepage = homepageResponse?.data
       }))}
       client:visible
     />
-    <AgentChangeSection
+    <SupportersCollaboratorsSection
       title={homepage?.agenPerubahanTitle}
       subtitle={homepage?.agenPerubahanSubtitle}
       cards={homepage?.agenPerubahanCards}
     />
-    <SupportersCollaboratorsSection
+    <AgentChangeBanner
+      title={homepage?.agenPerubahanTitle}
+      subtitle={homepage?.agenPerubahanSubtitle}
+    />
+    <SupportersGridSection
       title={homepage?.supporterTitle}
       subtitle={homepage?.supporterSubtitle}
       supporters={homepage?.supporterCards}
     />
+    
     <AwardsInstagramSection
       awardTitle={homepage?.awardTitle}
       awards={homepage?.awardCards}

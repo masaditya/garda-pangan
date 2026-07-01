@@ -19,7 +19,6 @@ export function AgentChangeSection({
   subtitle,
   cards,
 }: AgentChangeSectionProps) {
-  console.log(cards?.length);
 
   const defaultCards = [
     {
@@ -47,12 +46,12 @@ export function AgentChangeSection({
   const displayCards =
     cards && cards.length > 0
       ? cards.map((card, index) => ({
-          title: card.title,
-          description: card.description,
-          iconSrc:
-            normalizeStrapiMediaUrl(card.image?.url) ||
-            defaultCards[index % defaultCards.length].iconSrc,
-        }))
+        title: card.title,
+        description: card.description,
+        iconSrc:
+          normalizeStrapiMediaUrl(card.image?.url) ||
+          defaultCards[index % defaultCards.length].iconSrc,
+      }))
       : defaultCards
 
   return (
