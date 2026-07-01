@@ -1,8 +1,17 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
+import Autoplay from 'embla-carousel-autoplay'
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '#/components/ui/carousel'
+import type { CarouselApi } from '#/components/ui/carousel'
 
 import { DidYouKnowSection } from './did-you-know-section'
 import { GardaButton } from './garda-button'
+import { GardaLogo } from './garda-logo'
 import { HeroTitle } from './hero-title'
 import { ensureGsapPlugins, gsap, ScrollTrigger } from '#/lib/gsap-client'
 import { buildImpactMetrics } from '#/lib/impact-metrics'
@@ -190,6 +199,53 @@ function HeroScrollSequenceStatic({
   )
 }
 
+function DidYouKnowCarouselInternal({
+  slides,
+}: {
+  slides?: { id: number | string; content: string }[]
+}) {
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }))
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>()
+  const items = slides && slides.length > 0 ? slides : [
+    { id: 'default', content: '“Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”' }
+  ]
+
+  return (
+    <Carousel
+      opts={{ align: 'start', loop: true }}
+      plugins={[plugin.current]}
+      setApi={setCarouselApi}
+      className="w-full static"
+    >
+      <CarouselContent>
+        {items.map((slide) => (
+          <CarouselItem key={slide.id}>
+            <p className="text-white text-lg md:text-xl font-medium leading-relaxed text-right pb-20">
+              {slide.content}
+            </p>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <div className="absolute bottom-0 right-0 flex justify-end gap-4 z-20">
+        <button
+          onClick={() => carouselApi?.scrollPrev()}
+          className="w-14 h-14 rounded-full bg-garda-sun text-[#0d2b14] flex items-center justify-center transition-transform hover:scale-105"
+          aria-label="Previous fact"
+        >
+          <ChevronLeft className="size-6 stroke-2" />
+        </button>
+        <button
+          onClick={() => carouselApi?.scrollNext()}
+          className="w-14 h-14 rounded-full bg-garda-sun text-[#0d2b14] flex items-center justify-center transition-transform hover:scale-105"
+          aria-label="Next fact"
+        >
+          <ChevronRight className="size-6 stroke-2" />
+        </button>
+      </div>
+    </Carousel>
+  )
+}
+
 export function HeroScrollSequence(props: HeroScrollSequenceProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(readMotionPreference)
   const [isScrollReady, setIsScrollReady] = useState(false)
@@ -243,7 +299,6 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
     const heroMask = heroMaskRef.current
     const impactOverlay = impactOverlayRef.current
     const heroContent = heroContentRef.current
-    const stats = statsRef.current
     const facts = factsRef.current
 
     if (
@@ -254,7 +309,6 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       !heroMask ||
       !impactOverlay ||
       !heroContent ||
-      !stats ||
       !facts
     ) {
       return
@@ -298,8 +352,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
     const maxRadius = getMaxCircleRadius(portal, pin)
     paintRevealCircle(initialRadius)
 
-    gsap.set([stats, facts, impactOverlay], { opacity: 0 })
-    gsap.set(stats, { y: 28 })
+    gsap.set([facts, impactOverlay], { opacity: 0 })
     gsap.set(facts, { y: 24 })
 
     const revealState = { radius: initialRadius, maxRadius }
@@ -355,17 +408,25 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
         0.52,
       )
 
-      timeline.to(
-        facts,
-        { opacity: 0, y: -16, duration: 0.16, ease: 'power1.in' },
-        0.78,
-      )
+      const numberEls = pin.querySelectorAll('.impact-number')
+      numberEls.forEach((el) => {
+        const targetVal = parseFloat(el.getAttribute('data-value') || '0')
+        const obj = { val: 0 }
+        timeline.to(
+          obj,
+          {
+            val: targetVal,
+            duration: 0.25,
+            ease: 'power1.out',
+            onUpdate: () => {
+              el.innerHTML = Math.round(obj.val).toLocaleString('en-US')
+            }
+          },
+          0.52
+        )
+      })
 
-      timeline.to(
-        stats,
-        { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' },
-        0.84,
-      )
+      // Note: Removed facts fade out and stats fade in to keep the combined layout visible
     }, wrapper)
 
     const refreshScroll = () => {
@@ -493,34 +554,63 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
         </div>
 
         <div
-          ref={statsRef}
-          data-testid="hero-impact-stats"
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-20 pt-10 opacity-0 sm:px-12 md:px-16 lg:px-24"
-        >
-          <div className="mx-auto grid w-full max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {metrics.map((metric) => (
-              <div key={metric.label} className="text-center">
-                <p className="font-serif text-[clamp(2rem,4vw,3.25rem)] leading-none text-garda-sun">
-                  {metric.value}
-                </p>
-                <p className="mt-3 text-xs uppercase tracking-[0.12em] text-white/90 sm:text-sm">
-                  {metric.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div
           ref={factsRef}
           className="pointer-events-none absolute inset-0 z-30 flex items-center opacity-0"
         >
-          <div className="pointer-events-auto w-full">
-            <DidYouKnowSection
-              slides={props.didYouKnowSlides}
-              variant="immersive"
-              autoPlay
-            />
+          <div className="pointer-events-auto w-full px-6 sm:px-12 md:px-16 lg:px-24">
+            <div className="relative mx-auto max-w-6xl mt-20">
+              {/* Top Card */}
+              <div className="relative bg-[#0d2b14] rounded-[2rem] p-8 md:p-14 overflow-hidden shadow-2xl">
+                {/* Watermark Logo Placeholder */}
+                <div className="absolute -bottom-16 -left-16 text-white/5 opacity-20 pointer-events-none">
+                  <svg width="400" height="400" viewBox="0 0 100 100" fill="currentColor">
+                    <path d="M50 0 C22.4 0 0 22.4 0 50 C0 77.6 22.4 100 50 100 C77.6 100 100 77.6 100 50 C100 22.4 77.6 0 50 0 Z M50 90 C27.9 90 10 72.1 10 50 C10 27.9 27.9 10 50 10 C72.1 10 90 27.9 90 50 C90 72.1 72.1 90 50 90 Z" />
+                  </svg>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-8 relative z-10">
+                  <div>
+                    <h2 className="text-garda-sun font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1]">
+                      Tahukah<br/>Kamu?
+                    </h2>
+                    <GardaLogo className="mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-150 origin-top-left" />
+                  </div>
+                  <div className="flex flex-col justify-between items-end w-full max-w-md ml-auto">
+                    <DidYouKnowCarouselInternal slides={props.didYouKnowSlides} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Person Image */}
+              <div className="absolute left-1/2 -translate-x-1/2 top-[10%] md:top-[8%] z-10 w-[280px] md:w-[380px] pointer-events-none">
+                <img src="/hero-facts.png" alt="Volunteer" className="w-full h-auto drop-shadow-2xl" />
+              </div>
+
+              {/* Bottom Card */}
+              <div className="relative bg-[#0d2b14] rounded-[2rem] p-8 md:p-12 mt-24 md:mt-32 z-20 shadow-2xl">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                  {metrics.map((metric) => {
+                    const numMatch = metric.value.match(/[\d,.]+/);
+                    const numStr = numMatch ? numMatch[0] : '';
+                    const suffix = metric.value.replace(numStr, '').trim();
+
+                    return (
+                      <div key={metric.label}>
+                        <div className="flex items-baseline gap-2 text-garda-sun mb-2 flex-wrap">
+                          <span className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight">
+                            {numStr ? <span className="impact-number" data-value={numStr.replace(/,/g, '')}>0</span> : metric.value}
+                          </span>
+                          {suffix && <span className="text-lg md:text-xl">{suffix}</span>}
+                        </div>
+                        <p className="text-white/90 text-xs md:text-sm uppercase tracking-wider max-w-[200px]">
+                          {metric.label}
+                        </p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
