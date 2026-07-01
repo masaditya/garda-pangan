@@ -90,10 +90,10 @@ function FooterNavBar({
                 href={item.href}
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
-                  'whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition',
+                  'whitespace-nowrap rounded-full px-5 py-2 text-sm font-medium transition duration-200',
                   isActive
-                    ? 'bg-garda-sun text-[#252525]'
-                    : 'text-white hover:text-white/90',
+                    ? 'bg-linear-to-b from-[#fffeba] to-[#ffe602] text-[#0e2316]'
+                    : 'text-white hover:text-white/80',
                 )}
               >
                 {item.label}

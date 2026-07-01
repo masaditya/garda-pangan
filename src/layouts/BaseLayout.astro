@@ -28,7 +28,7 @@ const pageDescription = description ?? messages.meta.defaultDescription
 const currentPath = Astro.url.pathname
 const canonicalUrl =
   canonicalPath && Astro.site ? new URL(canonicalPath, Astro.site) : undefined
-const themeInitScript = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`
+const themeInitScript = `(function(){try{var stored=window.localStorage.getItem('theme');var mode=(stored==='light'||stored==='dark'||stored==='auto')?stored:'auto';var prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;var resolved=mode==='auto'?(prefersDark?'dark':'light'):mode;var root=document.documentElement;root.classList.remove('light','dark');root.classList.add(resolved);root.classList.add('js');if(mode==='auto'){root.removeAttribute('data-theme')}else{root.setAttribute('data-theme',mode)}root.style.colorScheme=resolved;}catch(e){}})();`
 ---
 
 <!doctype html>
@@ -50,5 +50,32 @@ const themeInitScript = `(function(){try{var stored=window.localStorage.getItem(
     <Header currentPath={currentPath} locale={locale} client:load />
     <slot />
     <Footer currentPath={currentPath} locale={locale} />
+    <script>
+      function initScrollReveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.05,
+            rootMargin: '0px 0px -40px 0px',
+          }
+        );
+
+        reveals.forEach((el) => {
+          observer.observe(el);
+        });
+      }
+
+      initScrollReveal();
+      document.addEventListener('astro:page-load', initScrollReveal);
+      document.addEventListener('astro:after-swap', initScrollReveal);
+    </script>
   </body>
 </html>

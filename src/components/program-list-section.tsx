@@ -34,8 +34,6 @@ export function ProgramListSection({
   programs,
   moreLabel,
 }: ProgramListSectionProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [previewTop, setPreviewTop] = useState<number | null>(null)
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const listContainerRef = useRef<HTMLDivElement>(null)
 
@@ -43,24 +41,6 @@ export function ProgramListSection({
     normalizeStrapiMediaUrl(backgroundImage) ||
     '/images/hero-program-fallback.jpg'
   const titleLines = title.split(/<br\s*\/?>|\\n|\n/i)
-  const hoveredProgram =
-    hoveredIndex !== null ? programs[hoveredIndex] : null
-
-  const updatePreviewPosition = (element: HTMLElement) => {
-    const container = listContainerRef.current
-    if (!container) {
-      return
-    }
-
-    const itemRect = element.getBoundingClientRect()
-    const containerRect = container.getBoundingClientRect()
-    setPreviewTop(itemRect.top - containerRect.top + itemRect.height / 2)
-  }
-
-  const clearHover = () => {
-    setHoveredIndex(null)
-    setPreviewTop(null)
-  }
 
   return (
     <>
@@ -103,27 +83,8 @@ export function ProgramListSection({
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 sm:px-8 md:px-12 lg:px-8 lg:pb-20">
           <div ref={listContainerRef} className="relative">
-            {hoveredProgram && previewTop !== null ? (
-              <div
-                data-testid="program-hover-preview"
-                style={{ top: previewTop }}
-                className="pointer-events-none absolute right-0 z-20 hidden w-[min(42vw,320px)] -translate-y-1/2 opacity-100 transition-[opacity,top] duration-300 lg:block xl:right-[8%] xl:w-[360px]"
-                aria-hidden="true"
-              >
-                <div className="rotate-[12deg] overflow-hidden rounded-2xl border-4 border-white shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
-                  <img
-                    src={getImageUrl(hoveredProgram.image)}
-                    alt=""
-                    className="aspect-4/3 w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ) : null}
-
             <ul className="flex flex-col" role="list">
               {programs.map((program, index) => {
-                const isHovered = hoveredIndex === index
                 const isExpanded = expandedIndex === index
                 const modalButtons = program.buttons?.filter((button) => !isMoreDetailsButton(button)) || []
                 const imageUrl = getImageUrl(program.image)
@@ -133,34 +94,18 @@ export function ProgramListSection({
                     <button
                       type="button"
                       onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                      onMouseEnter={(event) => {
-                        setHoveredIndex(index)
-                        updatePreviewPosition(event.currentTarget)
-                      }}
-                      onMouseLeave={clearHover}
-                      onFocus={(event) => {
-                        setHoveredIndex(index)
-                        updatePreviewPosition(event.currentTarget)
-                      }}
-                      onBlur={clearHover}
                       className={`group relative flex w-full items-center justify-between gap-4 border-b border-white/10 px-2 py-4 text-left transition-colors duration-300 sm:gap-6 sm:px-4 sm:py-5 md:py-6 ${isExpanded ? 'bg-white/5' : ''}`}
                     >
                       <span
                         className={`absolute inset-y-0 left-0 w-1 bg-garda-sun transition-transform duration-300 ${
-                          isHovered || isExpanded ? 'scale-y-100' : 'scale-y-0'
-                        }`}
-                        aria-hidden="true"
-                      />
-                      <span
-                        className={`absolute inset-0 bg-garda-forest/70 transition-opacity duration-300 ${
-                          isHovered && !isExpanded ? 'opacity-100' : 'opacity-0'
+                          isExpanded ? 'scale-y-100' : 'scale-y-0'
                         }`}
                         aria-hidden="true"
                       />
 
                       <span
                         className={`relative z-10 font-serif text-[clamp(1.125rem,3.5vw,2.25rem)] uppercase leading-[1.15] tracking-[-0.02em] transition-colors duration-300 ${
-                          isHovered || isExpanded ? 'text-garda-sun' : 'text-white'
+                          isExpanded ? 'text-garda-sun' : 'text-white'
                         }`}
                       >
                         {program.title}
@@ -168,7 +113,7 @@ export function ProgramListSection({
 
                       <span
                         className={`relative z-10 flex shrink-0 items-center gap-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em] transition-colors duration-300 sm:gap-2 sm:text-xs ${
-                          isHovered || isExpanded ? 'text-garda-sun' : 'text-garda-sun/80'
+                          isExpanded ? 'text-garda-sun' : 'text-garda-sun/80'
                         }`}
                       >
                         <span className="hidden sm:inline">{moreLabel}</span>

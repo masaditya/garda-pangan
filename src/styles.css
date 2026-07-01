@@ -264,3 +264,48 @@ pre code {
   letter-spacing: -0.02em;
   color: var(--sun-400);
 }
+
+/* Page enter transition */
+@keyframes page-enter-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main:not(.no-page-transition) {
+  animation: page-enter-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Varied scroll-reveal transitions */
+html.js .reveal {
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+html.js .reveal.reveal-fade-up {
+  transform: translateY(32px);
+}
+
+html.js .reveal.reveal-slide-left {
+  transform: translateX(-40px);
+}
+
+html.js .reveal.reveal-slide-right {
+  transform: translateX(40px);
+}
+
+html.js .reveal.reveal-zoom-in {
+  transform: scale(0.96);
+}
+
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+

@@ -26,7 +26,7 @@ const homepage = homepageResponse?.data
 ---
 
 <BaseLayout locale={locale} canonicalPath={localizedPath('/', locale)}>
-  <main class="garda-main">
+  <main class="garda-main no-page-transition">
     <HeroScrollSequence
       title={homepage?.heroTitle}
       subtitle={homepage?.heroSubtitle}
@@ -41,36 +41,45 @@ const homepage = homepageResponse?.data
       impactStats={homepage?.impactStats}
       client:load
     />
-    <FeaturedBySection
-      title={homepage?.featuredBy?.title}
-      logos={homepage?.featuredBy?.logos?.map((l) => ({
-        id: l.id,
-        url: l.url,
-        name: l.name,
-      }))}
-      client:visible
-    />
-    <SupportersCollaboratorsSection
-      title={homepage?.agenPerubahanTitle}
-      subtitle={homepage?.agenPerubahanSubtitle}
-      cards={homepage?.agenPerubahanCards}
-    />
-    <AgentChangeBanner
-      title={homepage?.agenPerubahanTitle}
-      subtitle={homepage?.agenPerubahanSubtitle}
-    />
-    <SupportersGridSection
-      title={homepage?.supporterTitle}
-      subtitle={homepage?.supporterSubtitle}
-      supporters={homepage?.supporterCards}
-    />
-    
-    <AwardsInstagramSection
-      awardTitle={homepage?.awardTitle}
-      awards={homepage?.awardCards}
-      instagramTitle={homepage?.instagramTitle}
-      posts={homepage?.instagramCards}
-      client:visible
-    />
+    <div class="reveal reveal-zoom-in">
+      <FeaturedBySection
+        title={homepage?.featuredBy?.title}
+        logos={homepage?.featuredBy?.logos?.map((l) => ({
+          id: l.id,
+          url: l.url,
+          name: l.name,
+        }))}
+        client:visible
+      />
+    </div>
+    <div class="reveal reveal-slide-left">
+      <SupportersCollaboratorsSection
+        title={homepage?.agenPerubahanTitle}
+        subtitle={homepage?.agenPerubahanSubtitle}
+        cards={homepage?.agenPerubahanCards}
+      />
+    </div>
+    <div class="reveal reveal-fade-up">
+      <AgentChangeBanner
+        title={homepage?.agenPerubahanTitle}
+        subtitle={homepage?.agenPerubahanSubtitle}
+      />
+    </div>
+    <div class="reveal reveal-slide-right">
+      <SupportersGridSection
+        title={homepage?.supporterTitle}
+        subtitle={homepage?.supporterSubtitle}
+        supporters={homepage?.supporterCards}
+      />
+    </div>
+    <div class="reveal reveal-fade-up">
+      <AwardsInstagramSection
+        awardTitle={homepage?.awardTitle}
+        awards={homepage?.awardCards}
+        instagramTitle={homepage?.instagramTitle}
+        posts={homepage?.instagramCards}
+        client:visible
+      />
+    </div>
   </main>
 </BaseLayout>

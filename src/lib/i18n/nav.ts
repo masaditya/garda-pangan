@@ -24,6 +24,8 @@ export function getHeaderNavItems(locale: Locale, messages: Messages): NavItem[]
 export function getFooterNavItems(locale: Locale, messages: Messages): NavItem[] {
   return [
     { href: localizedPath('/', locale), label: messages.footer.home },
+    { href: localizedPath('/program', locale), label: messages.nav.program },
+    { href: localizedPath('/event', locale), label: 'Event' },
     {
       href: localizedPath('/knowledge', locale),
       label: messages.footer.knowledge,
@@ -32,15 +34,8 @@ export function getFooterNavItems(locale: Locale, messages: Messages): NavItem[]
         localizedPath('/artikel', locale),
       ],
     },
-    {
-      href: localizedPath('/tentang-kami', locale),
-      label: messages.footer.about,
-    },
-    { href: localizedPath('/mitra', locale), label: messages.footer.partners },
-    {
-      href: localizedPath('/penerima', locale),
-      label: messages.footer.beneficiaries,
-    },
+    { href: localizedPath('/merchandise', locale), label: locale === 'id' ? 'Produk' : 'Products' },
+    { href: localizedPath('/kontak', locale), label: messages.nav.contact },
   ]
 }
 
