@@ -78,9 +78,9 @@ function FooterNavBar({
     <SiteContainer className="flex flex-col gap-8 pb-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
       <nav
         aria-label="Footer navigation"
-        className="inline-flex max-w-full overflow-x-auto rounded-full bg-[#0a3d24] p-1.5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="inline-flex rounded-3xl lg:rounded-full bg-[#0a3d24] p-1.5"
       >
-        <div className="flex gap-1.5">
+        <div className="flex flex-wrap items-center justify-center gap-1.5">
           {footerNavItems.map((item) => {
             const isActive = isNavItemActive(item, currentPath)
 
@@ -105,7 +105,7 @@ function FooterNavBar({
 
       <a
         href="mailto:hello@gardapangan.org"
-        className="whitespace-nowrap text-[clamp(1.75rem,4.5vw,3.75rem)] font-medium tracking-[-0.03em] text-white transition hover:text-garda-sun"
+        className="whitespace-nowrap text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.03em] text-white transition hover:text-garda-sun"
       >
         hello@gardapangan.org
       </a>

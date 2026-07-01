@@ -420,23 +420,25 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
         0.52,
       )
 
-      const numberEls = pin.querySelectorAll('.impact-number')
-      numberEls.forEach((el) => {
-        const targetVal = parseFloat(el.getAttribute('data-value') || '0')
-        const obj = { val: 0 }
-        timeline.to(
-          obj,
-          {
+      let numbersAnimated = false
+      timeline.call(() => {
+        if (numbersAnimated) return
+        numbersAnimated = true
+        
+        const numberEls = pin.querySelectorAll('.impact-number')
+        numberEls.forEach((el) => {
+          const targetVal = parseFloat(el.getAttribute('data-value') || '0')
+          const obj = { val: 0 }
+          gsap.to(obj, {
             val: targetVal,
-            duration: 0.25,
-            ease: 'power1.out',
+            duration: 2,
+            ease: 'power2.out',
             onUpdate: () => {
               el.innerHTML = Math.round(obj.val).toLocaleString('en-US')
             }
-          },
-          0.52
-        )
-      })
+          })
+        })
+      }, [], 0.52)
 
       // Note: Removed facts fade out and stats fade in to keep the combined layout visible
     }, wrapper)
@@ -600,7 +602,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
               {/* Bottom Card */}
               <div className="relative bg-[#0d2b14] rounded-[2rem] p-8 md:p-12 mt-24 md:mt-32 z-20 shadow-2xl">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
                   {metrics.map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/);
                     const numStr = numMatch ? numMatch[0] : '';

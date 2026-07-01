@@ -34,7 +34,9 @@ export function getFooterNavItems(locale: Locale, messages: Messages): NavItem[]
         localizedPath('/artikel', locale),
       ],
     },
+    { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
     { href: localizedPath('/merchandise', locale), label: locale === 'id' ? 'Produk' : 'Products' },
+    { href: localizedPath('/support', locale), label: messages.nav.donate },
     { href: localizedPath('/kontak', locale), label: messages.nav.contact },
   ]
 }
