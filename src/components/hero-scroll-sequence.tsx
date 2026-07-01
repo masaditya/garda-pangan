@@ -180,16 +180,28 @@ function HeroScrollSequenceStatic({
             data-testid="hero-impact-stats"
             className="mx-auto grid w-full max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4"
           >
-            {metrics.map((metric) => (
-              <div key={metric.label} className="text-center">
-                <p className="font-serif text-[clamp(2rem,4vw,3.25rem)] leading-none text-garda-sun">
-                  {metric.value}
-                </p>
-                <p className="mt-3 text-xs uppercase tracking-[0.12em] text-white/90 sm:text-sm">
-                  {metric.label}
-                </p>
-              </div>
-            ))}
+            {metrics.map((metric) => {
+              const [unit, ...restLabel] = metric.label.split(' ')
+              const remainingLabel = restLabel.join(' ')
+
+              return (
+                <div key={metric.label} className="text-left flex flex-col">
+                  <div className="flex items-baseline gap-2 text-garda-sun">
+                    <span className="font-serif text-[clamp(2rem,4vw,3.25rem)] leading-none">
+                      {metric.value}
+                    </span>
+                    {unit && (
+                      <span className="text-sm font-medium uppercase tracking-widest sm:text-base">
+                        {unit}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-3 text-xs font-medium uppercase tracking-[0.12em] text-white/90 sm:text-sm">
+                    {remainingLabel}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -592,18 +604,19 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                   {metrics.map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/);
                     const numStr = numMatch ? numMatch[0] : '';
-                    const suffix = metric.value.replace(numStr, '').trim();
+                    const [unit, ...restLabel] = metric.label.split(' ');
+                    const remainingLabel = restLabel.join(' ');
 
                     return (
                       <div key={metric.label}>
-                        <div className="flex items-baseline gap-2 text-garda-sun mb-2 flex-wrap">
-                          <span className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight">
+                        <div className="flex items-baseline gap-1.5 text-garda-sun mb-2 flex-wrap xl:flex-nowrap">
+                          <span className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] tracking-tighter">
                             {numStr ? <span className="impact-number" data-value={numStr.replace(/,/g, '')}>0</span> : metric.value}
                           </span>
-                          {suffix && <span className="text-lg md:text-xl">{suffix}</span>}
+                          {unit && <span className="text-xs md:text-sm uppercase tracking-wider">{unit}</span>}
                         </div>
                         <p className="text-white/90 text-xs md:text-sm uppercase tracking-wider max-w-[200px]">
-                          {metric.label}
+                          {remainingLabel}
                         </p>
                       </div>
                     )
