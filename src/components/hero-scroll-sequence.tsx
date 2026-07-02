@@ -238,17 +238,17 @@ function DidYouKnowCarouselInternal({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute bottom-0 right-0 flex justify-end gap-4 z-20">
+      <div className="absolute bottom-0 right-0 flex justify-end md:gap-4 gap-2 z-20">
         <button
           onClick={() => carouselApi?.scrollPrev()}
-          className="w-14 h-14 rounded-full bg-garda-sun text-[#0d2b14] flex items-center justify-center transition-transform hover:scale-105"
+          className="md:w-14 md:h-14 w-10 h-10 rounded-full bg-garda-sun text-[#0d2b14] flex items-center justify-center transition-transform hover:scale-105"
           aria-label="Previous fact"
         >
           <ChevronLeft className="size-6 stroke-2" />
         </button>
         <button
           onClick={() => carouselApi?.scrollNext()}
-          className="w-14 h-14 rounded-full bg-garda-sun text-[#0d2b14] flex items-center justify-center transition-transform hover:scale-105"
+          className="md:w-14 md:h-14 w-10 h-10 rounded-full bg-garda-sun text-[#0d2b14] flex items-center justify-center transition-transform hover:scale-105"
           aria-label="Next fact"
         >
           <ChevronRight className="size-6 stroke-2" />
