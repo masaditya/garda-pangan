@@ -91,7 +91,7 @@ function AwardCard({
   return (
     <Card
       data-testid={id}
-      className="relative w-full overflow-hidden rounded-3xl border-white bg-white py-0 shadow-[0_14px_28px_rgba(17,17,17,0.045)]"
+      className="relative w-full overflow-hidden rounded-xl border-white bg-white py-0 shadow-[0_14px_28px_rgba(17,17,17,0.045)]"
     >
       <CardContent className="relative flex min-h-56 flex-col p-6 lg:min-h-72">
         <span className="text-sm font-bold leading-none tracking-tight text-[#6b7280] lg:text-base">
@@ -174,7 +174,7 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
             {displayAwards.map((award) => (
               <CarouselItem
                 key={award.id}
-                className="basis-[150px] pl-4 sm:basis-[200px] lg:basis-[240px]"
+                className="basis-[200px] pl-4 sm:basis-[200px] lg:basis-[240px]"
               >
                 <AwardCard {...award} />
               </CarouselItem>

@@ -38,7 +38,7 @@ export function AgentChangeBanner({
       <div className="relative mx-auto flex max-w-[1240px] items-center px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
         
         {/* Dark panel */}
-        <div className="flex w-full flex-col lg:flex-row items-center justify-between gap-6 rounded-2xl border border-white/10 bg-[#0e3822] px-8 sm:px-10 pl-0 sm:pl-0 lg:rounded-3xl relative overflow-hidden">
+        <div className="flex w-full flex-col lg:flex-row items-center justify-between gap-6 rounded-2xl border border-white/10 bg-[#0e3822] py-10 sm:py-0 px-8 sm:px-10 sm:pl-0 lg:rounded-3xl relative overflow-hidden">
           
           {/* Person image - now inside container */}
           <div className="relative hidden shrink-0 lg:block">

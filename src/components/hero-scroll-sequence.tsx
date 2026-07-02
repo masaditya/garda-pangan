@@ -596,7 +596,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               </div>
 
               {/* Person Image */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-[10%] md:top-[8%] z-10 w-[280px] md:w-[380px] pointer-events-none">
+              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[38%] md:top-[8%] z-10 w-[200px] md:w-[380px] pointer-events-none">
                 <img src="/hero-facts.png" alt="Volunteer" className="w-full h-auto drop-shadow-2xl" />
               </div>
 
