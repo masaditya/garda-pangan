@@ -5,18 +5,20 @@ import type { NavItem } from '#/lib/nav-active'
 
 export function getHeaderNavItems(locale: Locale, messages: Messages): NavItem[] {
   return [
-    { href: localizedPath('/', locale), label: messages.nav.home },
+    { href: localizedPath('/', locale), label: messages.footer.home },
     { href: localizedPath('/program', locale), label: messages.nav.program },
-    { href: localizedPath('/support', locale), label: messages.nav.donate },
-    { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
+    { href: localizedPath('/event', locale), label: 'Event' },
     {
       href: localizedPath('/knowledge', locale),
-      label: messages.nav.news,
+      label: messages.footer.knowledge,
       matchPaths: [
         localizedPath('/knowledge', locale),
         localizedPath('/artikel', locale),
       ],
     },
+    { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
+    { href: localizedPath('/merchandise', locale), label: locale === 'id' ? 'Produk' : 'Products' },
+    { href: localizedPath('/support', locale), label: messages.nav.donate },
     { href: localizedPath('/kontak', locale), label: messages.nav.contact },
   ]
 }
