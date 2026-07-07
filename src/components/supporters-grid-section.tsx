@@ -1,7 +1,7 @@
 import { SectionShell } from './section-shell'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
-const defaultSupporters = Array.from({ length: 16 }, (_, index) => ({
+const defaultSupporters = Array.from({ length: 12 }, (_, index) => ({
   id: `supporter-${index + 1}`,
   name: 'Badan Pangan Nasional',
   logoSrc: '/brands/badan-pangan-nasional.svg',
@@ -18,16 +18,16 @@ function SupporterCard({
   alt: string
 }) {
   return (
-    <article className="flex min-h-36 flex-col items-center justify-center rounded-2xl bg-white px-3 py-5 shadow-sm">
-      <div className="flex flex-1 items-center justify-center p-2">
+    <article className="flex h-28 w-36 shrink-0 flex-col items-center justify-center rounded-2xl bg-white px-3 py-4 shadow-sm">
+      <div className="flex flex-1 items-center justify-center p-1">
         <img
-          className="h-14 w-14 object-contain"
+          className="h-12 w-12 object-contain"
           src={logoSrc}
           alt={alt}
           loading="lazy"
         />
       </div>
-      <p className="mt-3 text-center text-[0.65rem] font-bold leading-tight text-garda-forest uppercase">
+      <p className="mt-2 text-center text-[0.6rem] font-bold leading-tight text-garda-forest uppercase">
         {name}
       </p>
     </article>
@@ -49,7 +49,7 @@ export function SupportersGridSection({
   subtitle,
   supporters,
 }: SupportersGridSectionProps) {
-  const displaySupporters =
+  const items =
     supporters && supporters.length > 0
       ? supporters.map((s) => ({
           id: String(s.id),
@@ -60,6 +60,9 @@ export function SupportersGridSection({
           alt: s.title,
         }))
       : defaultSupporters
+
+  // Duplicate for seamless infinite loop
+  const track = [...items, ...items]
 
   return (
     <SectionShell
@@ -83,15 +86,34 @@ export function SupportersGridSection({
           </p>
         </div>
 
+        {/* Marquee strip */}
         <div
           data-testid="supporters-grid"
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"
+          className="relative overflow-hidden"
+          aria-label="Daftar supporter dan kolaborator"
         >
-          {displaySupporters.map((supporter) => (
-            <SupporterCard key={supporter.id} {...supporter} />
-          ))}
+          {/* Left fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-(--color-bg,#0c2b1a) to-transparent" />
+          {/* Right fade */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-(--color-bg,#0c2b1a) to-transparent" />
+
+          <div
+            className="flex animate-marquee gap-4"
+            style={{ width: 'max-content' }}
+          >
+            {track.map((supporter, i) => (
+              <SupporterCard
+                key={`${supporter.id}-${i}`}
+                name={supporter.name}
+                logoSrc={supporter.logoSrc}
+                alt={supporter.alt}
+                aria-hidden={i >= items.length}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </SectionShell>
   )
 }
+

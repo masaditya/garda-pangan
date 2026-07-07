@@ -55,6 +55,7 @@ export function mapMerchandiseToItem(
   merchandise: Merchandise,
   locale: Locale = 'id',
 ): MerchandiseItem {
+  const storeLinks = merchandise.storeLinks ?? []
   return {
     id: merchandise.id,
     title: merchandise.title,
@@ -63,7 +64,11 @@ export function mapMerchandiseToItem(
       ? formatMerchandiseDate(merchandise.releaseDate, locale)
       : '',
     description: merchandise.description ?? '',
-    platforms: (merchandise.storeLinks ?? []).map((link) => link.platformName),
+    platforms: storeLinks.map((link) => link.platformName),
+    platformLinks: Object.fromEntries(
+      storeLinks.map((link) => [link.platformName, link.url]),
+    ),
+    shareUrl: null,
     imageUrl: getMerchandiseImageUrl(merchandise.images),
   }
 }
