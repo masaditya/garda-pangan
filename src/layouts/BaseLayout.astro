@@ -3,6 +3,8 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import '../styles.css'
 import { DEFAULT_LOCALE, getMessages, resolveLocale, type Locale } from '#/lib/i18n'
+import { getGlobal } from '#/lib/strapi/global'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 type Props = {
   title?: string
@@ -22,8 +24,14 @@ const {
 
 const locale = localeProp ?? resolveLocale(Astro.params.lang)
 const messages = getMessages(locale)
-const pageTitle = title ?? messages.meta.defaultTitle
-const pageDescription = description ?? messages.meta.defaultDescription
+
+const globalResponse = await getGlobal()
+const global = globalResponse?.data
+
+const pageTitle = title ?? global?.defaultSeo?.metaTitle ?? messages.meta.defaultTitle
+const pageDescription = description ?? global?.defaultSeo?.metaDescription ?? messages.meta.defaultDescription
+const pageOgImage = ogImage ?? normalizeStrapiMediaUrl(global?.defaultSeo?.shareImage?.url) ?? undefined
+const faviconUrl = normalizeStrapiMediaUrl(global?.favicon?.url)
 
 const currentPath = Astro.url.pathname
 const canonicalUrl =
@@ -38,18 +46,26 @@ const themeInitScript = `(function(){try{var stored=window.localStorage.getItem(
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {faviconUrl && <link rel="icon" type="image/png" href={faviconUrl} />}
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl.toString()} />}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    {pageOgImage && <meta property="og:image" content={pageOgImage} />}
     <script is:inline set:html={themeInitScript}></script>
   </head>
   <body class="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
     <Header currentPath={currentPath} locale={locale} client:load />
     <slot />
-    <Footer currentPath={currentPath} locale={locale} />
+    <Footer
+      currentPath={currentPath}
+      locale={locale}
+      address={global?.footerAddress}
+      phone={global?.footerPhone}
+      email={global?.footerEmail}
+      socialLinks={global?.footerSocialLinks}
+    />
     <script>
       function initScrollReveal() {
         const reveals = document.querySelectorAll('.reveal');

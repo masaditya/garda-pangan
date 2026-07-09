@@ -25,22 +25,42 @@ function TikTokIcon({ className }: { className?: string }) {
   )
 }
 
-const socialItems = [
-  { icon: Youtube, label: 'YouTube', href: '#' },
-  { icon: TikTokIcon, label: 'TikTok', href: '#' },
-  { icon: Linkedin, label: 'LinkedIn', href: '#' },
-  { icon: Instagram, label: 'Instagram', href: '#' },
-  { icon: Facebook, label: 'Facebook', href: '#' },
-]
+type SocialLinksProps = {
+  youtube?: string | null
+  tiktok?: string | null
+  linkedin?: string | null
+  instagram?: string | null
+  facebook?: string | null
+  className?: string
+}
 
-function SocialLinks({ className }: { className?: string }) {
+function SocialLinks({
+  youtube,
+  tiktok,
+  linkedin,
+  instagram,
+  facebook,
+  className,
+}: SocialLinksProps) {
+  const items = [
+    { icon: Youtube, label: 'YouTube', href: youtube },
+    { icon: TikTokIcon, label: 'TikTok', href: tiktok },
+    { icon: Linkedin, label: 'LinkedIn', href: linkedin },
+    { icon: Instagram, label: 'Instagram', href: instagram },
+    { icon: Facebook, label: 'Facebook', href: facebook },
+  ].filter((item) => Boolean(item.href))
+
+  if (items.length === 0) return null
+
   return (
     <div className={cn('flex flex-wrap items-center gap-3', className)}>
-      {socialItems.map(({ icon: Icon, label, href }) => (
+      {items.map(({ icon: Icon, label, href }) => (
         <a
           key={label}
-          href={href}
+          href={href!}
           aria-label={label}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex size-12 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
         >
           <Icon className="size-5" />
@@ -67,20 +87,23 @@ function FooterWatermark() {
 function FooterNavBar({
   currentPath,
   locale,
+  email,
 }: {
   currentPath: string
   locale: Locale
+  email?: string | null
 }) {
   const messages = getMessages(locale)
   const footerNavItems = getFooterNavItems(locale, messages)
+  const displayEmail = email || 'hello@gardapangan.org'
 
   return (
     <SiteContainer className="flex flex-col gap-8 pb-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
       <nav
         aria-label="Footer navigation"
-        className="inline-flex rounded-3xl lg:rounded-full bg-[#0a3d24] p-1.5"
+        className="inline-flex max-w-full rounded-3xl lg:rounded-full bg-[#0a3d24] p-1.5 sm:overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        <div className="flex flex-wrap items-center justify-center gap-1.5">
+        <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5">
           {footerNavItems.map((item) => {
             const isActive = isNavItemActive(item, currentPath)
 
@@ -104,16 +127,26 @@ function FooterNavBar({
       </nav>
 
       <a
-        href="mailto:hello@gardapangan.org"
+        href={`mailto:${displayEmail}`}
         className="whitespace-nowrap text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.03em] text-white transition hover:text-garda-sun"
       >
-        hello@gardapangan.org
+        {displayEmail}
       </a>
     </SiteContainer>
   )
 }
 
-function FooterMiddle({ locale }: { locale: Locale }) {
+function FooterMiddle({
+  locale,
+  address,
+  phone,
+  email,
+}: {
+  locale: Locale
+  address?: string | null
+  phone?: string | null
+  email?: string | null
+}) {
   const messages = getMessages(locale)
   const secondaryLinks = getFooterSecondaryLinks(locale, messages)
 
@@ -126,14 +159,16 @@ function FooterMiddle({ locale }: { locale: Locale }) {
           className="h-[42px] w-[90px] object-contain object-left"
         />
         <div className="space-y-1.5 text-sm font-medium leading-relaxed text-white/90 sm:text-base">
-          <p>Jl Semolowaru Indah I J4 Surabaya 60119</p>
-          <p>(+62) 895337847614</p>
-          <a
-            href="mailto:gardapanganid@gmail.com"
-            className="inline-block underline underline-offset-2 transition hover:text-garda-sun"
-          >
-            gardapanganid@gmail.com
-          </a>
+          {address && <p>{address}</p>}
+          {phone && <p>{phone}</p>}
+          {email && (
+            <a
+              href={`mailto:${email}`}
+              className="inline-block underline underline-offset-2 transition hover:text-garda-sun"
+            >
+              {email}
+            </a>
+          )}
         </div>
       </div>
 
@@ -155,7 +190,19 @@ function FooterMiddle({ locale }: { locale: Locale }) {
   )
 }
 
-function FooterBottom({ locale }: { locale: Locale }) {
+function FooterBottom({
+  locale,
+  socialLinks,
+}: {
+  locale: Locale
+  socialLinks?: {
+    youtube?: string | null
+    tiktok?: string | null
+    linkedin?: string | null
+    instagram?: string | null
+    facebook?: string | null
+  } | null
+}) {
   const year = new Date().getFullYear()
   const messages = getMessages(locale)
 
@@ -166,7 +213,13 @@ function FooterBottom({ locale }: { locale: Locale }) {
           &copy; {year} {messages.footer.copyright}
         </p>
 
-        <SocialLinks />
+        <SocialLinks
+          youtube={socialLinks?.youtube}
+          tiktok={socialLinks?.tiktok}
+          linkedin={socialLinks?.linkedin}
+          instagram={socialLinks?.instagram}
+          facebook={socialLinks?.facebook}
+        />
       </div>
     </SiteContainer>
   )
@@ -175,18 +228,32 @@ function FooterBottom({ locale }: { locale: Locale }) {
 type FooterProps = {
   currentPath?: string
   locale?: Locale
+  address?: string | null
+  phone?: string | null
+  email?: string | null
+  socialLinks?: {
+    youtube?: string | null
+    tiktok?: string | null
+    linkedin?: string | null
+    instagram?: string | null
+    facebook?: string | null
+  } | null
 }
 
 export default function Footer({
   currentPath = '/',
   locale = DEFAULT_LOCALE,
+  address,
+  phone,
+  email,
+  socialLinks,
 }: FooterProps) {
   return (
     <footer className="overflow-hidden bg-[#042918] text-white">
       <FooterWatermark />
-      <FooterNavBar currentPath={currentPath} locale={locale} />
-      <FooterMiddle locale={locale} />
-      <FooterBottom locale={locale} />
+      <FooterNavBar currentPath={currentPath} locale={locale} email={email} />
+      <FooterMiddle locale={locale} address={address} phone={phone} email={email} />
+      <FooterBottom locale={locale} socialLinks={socialLinks} />
     </footer>
   )
 }
