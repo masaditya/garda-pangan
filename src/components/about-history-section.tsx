@@ -1,39 +1,62 @@
 import { SectionShell } from './section-shell'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 export function AboutHistorySection({ data }: { data?: any }) {
   const title = data?.historyTitle || 'Sejarah Kami'
-  const content =
-    data?.historyContent ||
-    'Berawal dari pengalaman salah seorang founder, Dedhy Trasno, yang berlatar belakang pengusaha katering pernikahan, yang seringkali menghadapi masalah pembuangan makanan tiap pekannya.\n\nDari sudut pandang bisnis membuang makanan menjadi pilihan ideal karena cepat, murah, dan praktis untuk dilakukan.\n\nMelihat pembuangan makanan ini sebagai hal yang menyedihkan dan mengganggu, Dedhy Trasno dan Eva Bachtiar—seseorang yang juga mempunyai semangat yang sama untuk menyelesaikan isu pembuangan makanan—menginisiasi gerakan food rescue di Surabaya dengan nama Garda Pangan.'
-  const imageUrl = data?.historyImages?.[0]?.url
+  const content1 = data?.historyContent1 || ''
+  const content2 = data?.historyContent2 || ''
+  
+  const imageUrl1 = normalizeStrapiMediaUrl(data?.historyImage1?.url)
+  const imageUrl2 = normalizeStrapiMediaUrl(data?.historyImage2?.url)
+  const imageUrl3 = normalizeStrapiMediaUrl(data?.historyImage3?.url)
 
   return (
     <SectionShell tone="white">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5">
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-5 flex flex-col">
           <h2
-            className="text-4xl tracking-tight text-garda-forest sm:text-5xl lg:sticky lg:top-32"
+            className="text-5xl font-medium tracking-tight text-garda-forest lg:text-7xl"
             dangerouslySetInnerHTML={{
               __html: title.split(' ').join('<br class="hidden lg:block" /> '),
             }}
           />
-        </div>
-        <div className="space-y-8 text-lg leading-relaxed text-garda-ink-soft lg:col-span-7">
-          <div className="prose prose-lg text-garda-ink-soft whitespace-pre-wrap">
-            {content}
+          <div className="mt-8 lg:mt-20 space-y-6 text-xl leading-relaxed text-garda-ink-soft whitespace-pre-wrap">
+            {content2}
           </div>
-          {/* Decorative image placeholder to match mockup */}
-          <div className="relative mt-12 grid grid-cols-2 gap-4">
-            {imageUrl ? (
+        </div>
+        
+        <div className="lg:col-span-7 lg:pl-8">
+          <div className="text-xl leading-relaxed text-garda-ink-soft">
+            {imageUrl1 && (
               <img
-                src={imageUrl}
-                alt={title}
-                className="aspect-square rounded-2xl object-cover bg-garda-paper/50"
+                src={imageUrl1}
+                alt=""
+                className="float-left w-1/3 mr-6 mb-4 object-cover"
+              />
+            )}
+            <div className="whitespace-pre-wrap">{content1}</div>
+          </div>
+          
+          <div className="relative aspect-square sm:aspect-[4/3] w-full mt-16 sm:mt-24">
+            {imageUrl2 ? (
+              <img
+                src={imageUrl2}
+                alt=""
+                className="absolute left-0 top-0 w-[60%] h-[75%] object-cover rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl shadow-sm"
               />
             ) : (
-              <div className="aspect-square rounded-2xl bg-garda-paper/50" />
+              <div className="absolute left-0 top-0 w-[60%] h-[75%] rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl bg-garda-paper/50" />
             )}
-            <div className="aspect-square rounded-2xl bg-garda-paper/30 mt-12" />
+            
+            {imageUrl3 ? (
+              <img
+                src={imageUrl3}
+                alt=""
+                className="absolute right-0 bottom-0 w-[60%] h-[70%] object-cover border-8 border-white shadow-lg z-10"
+              />
+            ) : (
+              <div className="absolute right-0 bottom-0 w-[60%] h-[70%] border-8 border-white bg-garda-paper/50 shadow-lg z-10" />
+            )}
           </div>
         </div>
       </div>

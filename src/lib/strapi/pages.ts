@@ -3,15 +3,31 @@ import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type { StrapiEntry, StrapiMedia } from './types'
 
+export type TargetCard = {
+  id: number
+  title: string
+  icon?: StrapiMedia | null
+}
+
 export type AboutPage = StrapiEntry & {
   heroTitle?: string | null
   heroSubtitle?: string | null
   heroBackground?: StrapiMedia | null
   historyTitle?: string | null
-  historyContent?: string | null
-  historyImages?: StrapiMedia[]
+  historyContent1?: string | null
+  historyContent2?: string | null
+  historyImage1?: StrapiMedia | null
+  historyImage2?: StrapiMedia | null
+  historyImage3?: StrapiMedia | null
+  visionTitle?: string | null
   visionContent?: string | null
+  missionTitle?: string | null
   missionContent?: string | null
+  targetDonaturTitle?: string | null
+  targetDonaturCards?: TargetCard[]
+  targetPenerimaTitle?: string | null
+  targetPenerimaCards?: TargetCard[]
+  legalitasTitle?: string | null
   legalityContent?: string | null
 }
 
@@ -144,10 +160,7 @@ export async function getAboutPage({ locale = 'id' }: StrapiLocaleOptions = {}) 
     '/api/about',
     withStrapiLocale(
       {
-        populate: {
-          heroBackground: true,
-          historyImages: true,
-        },
+        pLevel: '',
       },
       locale,
     ),

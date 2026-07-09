@@ -1,5 +1,4 @@
 import { SectionShell } from './section-shell'
-import type { Locale } from '#/lib/i18n/locales'
 
 const TARGET_DONATUR = [
   'Industri Makanan',
@@ -22,18 +21,28 @@ const TARGET_PENERIMA = [
   'Warga Difabel',
 ]
 
-function AudienceCard({ title }: { title: string }) {
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+
+function AudienceCard({ title, icon }: { title: string; icon?: any }) {
+  const iconUrl = normalizeStrapiMediaUrl(icon?.url)
+
   return (
-    <div className="flex flex-col items-center gap-4 rounded-2xl bg-white p-6 text-center shadow-sm ring-1 ring-garda-neutral/10 transition-shadow hover:shadow-md">
-      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-garda-paper" />
-      <h3 className="leading-tight text-garda-ink">{title}</h3>
+    <div className="flex flex-col items-start gap-4 shadow rounded-2xl bg-white p-4 text-left font-serif">
+      {iconUrl && (
+        <div className="flex h-20 w-20 items-center justify-center">
+          <img src={iconUrl} alt="" className="h-full w-full object-contain" />
+        </div>
+      )}
+      <h3 className="leading-tight font-medium text-2xl text-garda-ink">{title}</h3>
     </div>
   )
 }
 
-export function AboutTargetAudienceSection({ locale = 'id' }: { locale?: Locale }) {
-  const donorTitle = locale === 'en' ? 'Donor Targets' : 'Target Donatur'
-  const recipientTitle = locale === 'en' ? 'Beneficiary Targets' : 'Target Penerima'
+export function AboutTargetAudienceSection({ data }: { data?: any }) {
+  const donorTitle = data?.targetDonaturTitle || 'Target Donatur'
+  const recipientTitle = data?.targetPenerimaTitle || 'Target Penerima'
+  const donaturCards = data?.targetDonaturCards || TARGET_DONATUR.map((t, i) => ({ id: i, title: t }))
+  const penerimaCards = data?.targetPenerimaCards || TARGET_PENERIMA.map((t, i) => ({ id: i, title: t }))
 
   return (
     <SectionShell tone="white">
@@ -43,8 +52,8 @@ export function AboutTargetAudienceSection({ locale = 'id' }: { locale?: Locale 
             {donorTitle}
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-            {TARGET_DONATUR.map((target) => (
-              <AudienceCard key={target} title={target} />
+            {donaturCards.map((target: any) => (
+              <AudienceCard key={target.id} title={target.title} icon={target.icon} />
             ))}
           </div>
         </div>
@@ -54,8 +63,8 @@ export function AboutTargetAudienceSection({ locale = 'id' }: { locale?: Locale 
             {recipientTitle}
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-            {TARGET_PENERIMA.map((target) => (
-              <AudienceCard key={target} title={target} />
+            {penerimaCards.map((target: any) => (
+              <AudienceCard key={target.id} title={target.title} icon={target.icon} />
             ))}
           </div>
         </div>

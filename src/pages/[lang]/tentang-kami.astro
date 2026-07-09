@@ -29,11 +29,11 @@ const data = payload.data
   description={messages.about.pageDescription}
   canonicalPath={localizedPath('/tentang-kami', locale)}
 >
-  <main>
+  <main class="font-serif">
     <AboutHeroSection data={data} />
     <AboutHistorySection data={data} />
     <AboutVisionMissionSection data={data} />
-    <AboutTargetAudienceSection locale={locale} />
+    <AboutTargetAudienceSection data={data} />
     <AboutLegalitySection data={data} />
   </main>
 </BaseLayout>
