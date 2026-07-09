@@ -74,26 +74,22 @@ const defaultInstagramPosts = [
 function AwardCard({
   year,
   title,
-  source,
+  awardByLogo,
   id,
   image,
 }: {
   year: string
   title: string
-  source: string
+  awardByLogo?: string | null
   id: string
   image?: string
 }) {
-  const parts = source.split('.')
-  const sourceLead = parts[0] || source
-  const sourceSuffix = parts.slice(1).join('.')
-
   return (
     <Card
       data-testid={id}
       className="relative w-full overflow-hidden rounded-xl border-white bg-white py-0 shadow-[0_14px_28px_rgba(17,17,17,0.045)]"
     >
-      <CardContent className="relative flex min-h-56 flex-col p-6 lg:min-h-72">
+      <CardContent className="relative flex min-h-56 flex-col p-4 lg:min-h-72">
         <span className="text-sm font-bold leading-none tracking-tight text-[#6b7280] lg:text-base">
           {year}
         </span>
@@ -102,17 +98,24 @@ function AwardCard({
         </h3>
         <div className="mt-auto text-xs leading-none lg:text-sm">
           <span className="block font-medium text-[#6b7280]">Oleh</span>
-          <span className="mt-1 block font-bold tracking-tight text-[#e45d51] uppercase">
-            {sourceLead}
-            {sourceSuffix ? `.${sourceSuffix}` : ''}
-          </span>
+          {awardByLogo ? (
+            <img
+              src={awardByLogo}
+              alt="Award by"
+              className="mt-2 h-14 max-w-[120px] object-contain"
+            />
+          ) : (
+            <span className="mt-1 block font-bold tracking-tight text-[#e45d51] uppercase">
+              Garda Pangan
+            </span>
+          )}
         </div>
 
         <img
           src={image || '/figma/award-medal.svg'}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute right-2 bottom-2 h-auto w-24 object-contain lg:w-32"
+          className="pointer-events-none absolute -right-10 -bottom-5 h-auto w-24 object-contain lg:w-32"
         />
       </CardContent>
     </Card>
@@ -125,20 +128,24 @@ type AwardsSectionProps = {
     id: number
     title: string
     year: string
-    images?: { url: string }[] | null
+    images?: { url: string }[] | { url: string } | null
+    awardByLogo?: { url: string } | null
   }[]
 }
 
 export function AwardsSection({ title, awards }: AwardsSectionProps) {
   const displayAwards =
     awards && awards.length > 0
-      ? awards.map((a) => ({
-          id: `award-${a.id}`,
-          year: a.year,
-          title: a.title,
-          source: 'Garda Pangan',
-          image: normalizeStrapiMediaUrl(a.images?.[0]?.url) || undefined,
-        }))
+      ? awards.map((a) => {
+          const imageUrl = Array.isArray(a.images) ? a.images[0]?.url : a.images?.url;
+          return {
+            id: `award-${a.id}`,
+            year: a.year,
+            title: a.title,
+            awardByLogo: normalizeStrapiMediaUrl(a.awardByLogo?.url) || undefined,
+            image: normalizeStrapiMediaUrl(imageUrl) || undefined,
+          }
+        })
       : defaultAwards
 
   return (
@@ -200,6 +207,7 @@ type InstagramSectionProps = {
     id: number
     title?: string | null
     image?: { url: string } | null
+    instagramLink?: string | null
   }[]
 }
 
@@ -212,8 +220,9 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
             normalizeStrapiMediaUrl(p.image?.url) ||
             '/figma/instagram/post-1.png',
           alt: p.title || 'Instagram post',
+          href: p.instagramLink || null,
         }))
-      : defaultInstagramPosts
+      : defaultInstagramPosts.map(p => ({ ...p, href: null }))
 
   return (
     <SectionShell
@@ -236,9 +245,12 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 lg:gap-6"
         >
           {displayPosts.map((post) => (
-            <figure
+            <a
               key={post.id}
-              className="aspect-square overflow-hidden rounded-xl bg-[#d7ddd7]"
+              href={post.href ?? undefined}
+              target={post.href ? '_blank' : undefined}
+              rel={post.href ? 'noopener noreferrer' : undefined}
+              className="block aspect-square overflow-hidden rounded-xl bg-[#d7ddd7]"
             >
               <img
                 src={post.src}
@@ -246,7 +258,7 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 loading="lazy"
               />
-            </figure>
+            </a>
           ))}
         </div>
       </div>

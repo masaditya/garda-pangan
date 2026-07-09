@@ -18,7 +18,6 @@ import { buildImpactMetrics } from '#/lib/impact-metrics'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 const SCROLL_DISTANCE_VH = 420
-const IMPACT_BACKGROUND_IMAGE = '/garda-hero-reference.png'
 
 function resolveHeroBackground(backgroundImage?: string | null) {
   return normalizeStrapiMediaUrl(backgroundImage)
@@ -36,6 +35,7 @@ type HeroScrollSequenceProps = {
   foodLossPotential?: string | null
   foodScrap?: string | null
   impactStats?: { id: number; label: string; value: string }[]
+  impactBackgroundImage?: string | null
 }
 
 type PortalMetrics = {
@@ -111,8 +111,10 @@ function HeroScrollSequenceStatic({
   foodLossPotential,
   foodScrap,
   impactStats,
+  impactBackgroundImage,
 }: HeroScrollSequenceProps) {
   const heroBgUrl = resolveHeroBackground(backgroundImage)
+  const impactBgUrl = normalizeStrapiMediaUrl(impactBackgroundImage) || '/garda-hero-reference.png'
   const metrics = buildImpactMetrics({
     portionsRescued,
     co2Reduced,
@@ -144,7 +146,7 @@ function HeroScrollSequenceStatic({
               aria-label={headingLabel}
               className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
             >
-              <HeroTitle />
+              <HeroTitle impactBackgroundImage={impactBgUrl} />
             </h1>
             {subtitle ? (
               <p className="max-w-[600px] text-lg font-medium text-white/85 sm:text-xl">
@@ -168,7 +170,7 @@ function HeroScrollSequenceStatic({
         className="relative min-h-screen overflow-hidden bg-garda-forest-deep"
       >
         <img
-          src={IMPACT_BACKGROUND_IMAGE}
+          src={impactBgUrl}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -285,6 +287,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
   const headingLabel =
     props.title || 'ONE STOP FOOD LOSS & WASTE SOLUTION'
 
+  const impactBgUrl = normalizeStrapiMediaUrl(props.impactBackgroundImage) || '/garda-hero-reference.png'
+
   useLayoutEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     const update = () => setPrefersReducedMotion(media.matches)
@@ -295,8 +299,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
   useLayoutEffect(() => {
     const preload = new Image()
-    preload.src = IMPACT_BACKGROUND_IMAGE
-  }, [])
+    preload.src = impactBgUrl
+  }, [impactBgUrl])
 
   useLayoutEffect(() => {
     if (prefersReducedMotion) {
@@ -514,7 +518,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
         >
           <img
             ref={revealImageRef}
-            src={IMPACT_BACKGROUND_IMAGE}
+            src={impactBgUrl}
             alt=""
             aria-hidden="true"
             draggable={false}
@@ -541,7 +545,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               aria-label={headingLabel}
               className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
             >
-              <HeroTitle oPortalRef={oPortalRef} />
+              <HeroTitle oPortalRef={oPortalRef} impactBackgroundImage={impactBgUrl} />
             </h1>
             {/* {props.subtitle ? (
               <p className="max-w-[600px] text-lg font-medium text-white/85 sm:text-xl">

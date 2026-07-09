@@ -5,7 +5,7 @@ type AgentChangeBannerProps = {
   subtitle?: string | null
   ctaText?: string | null
   ctaLink?: string | null
-  personImage?: string | null
+  personImage?: any
 }
 
 export function AgentChangeBanner({
@@ -15,6 +15,7 @@ export function AgentChangeBanner({
   ctaLink = '/relawan',
   personImage,
 }: AgentChangeBannerProps) {
+
   return (
     <section
       aria-labelledby="agent-banner-heading"

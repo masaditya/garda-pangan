@@ -1,12 +1,12 @@
 import type { RefObject } from 'react'
 
-const IMPACT_BACKGROUND_IMAGE = '/garda-hero-reference.png'
-
 type HeroTitleProps = {
   oPortalRef?: RefObject<HTMLSpanElement | null>
+  impactBackgroundImage?: string | null
 }
 
-export function HeroTitle({ oPortalRef }: HeroTitleProps) {
+export function HeroTitle({ oPortalRef, impactBackgroundImage }: HeroTitleProps) {
+  const portalImage = impactBackgroundImage || '/garda-hero-reference.png'
   return (
     <>
       <span className="relative block text-garda-sun">
@@ -20,7 +20,7 @@ export function HeroTitle({ oPortalRef }: HeroTitleProps) {
             aria-hidden="true"
           >
             <img
-              src={IMPACT_BACKGROUND_IMAGE}
+              src={portalImage}
               alt=""
               className="h-full w-full object-cover"
             />

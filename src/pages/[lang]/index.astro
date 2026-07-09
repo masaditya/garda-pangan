@@ -1,5 +1,4 @@
 ---
-
 import { AgentChangeBanner } from '#/components/agent-change-banner'
 import { AwardsInstagramSection } from '#/components/awards-instagram-section'
 import { FeaturedBySection } from '#/components/featured-by-section'
@@ -33,6 +32,7 @@ const homepage = homepageResponse?.data
       ctaText={homepage?.heroCtaText ?? messages.common.learnMore}
       ctaLink={homepage?.heroCtaLink}
       backgroundImage={homepage?.heroBackground?.url}
+      impactBackgroundImage={homepage?.aboutBackground?.url}
       didYouKnowSlides={homepage?.didYouKnow}
       portionsRescued={homepage?.statsPortionsRescued}
       co2Reduced={homepage?.statsCo2Reduced}
@@ -61,8 +61,11 @@ const homepage = homepageResponse?.data
     </div>
     <div class="reveal reveal-fade-up">
       <AgentChangeBanner
-        title={homepage?.agenPerubahanTitle}
-        subtitle={homepage?.agenPerubahanSubtitle}
+        title={homepage?.agenPerubahanBannerTitle}
+        subtitle={homepage?.agenPerubahanBannerSubtitle}
+        ctaText={homepage?.agenPerubahanBannerCtaText}
+        ctaLink={homepage?.agenPerubahanBannerCtaLink}
+        personImage={homepage?.agenPerubahanBannerThumbnail?.url}
       />
     </div>
     <div class="reveal reveal-slide-right">

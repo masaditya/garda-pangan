@@ -18,10 +18,10 @@ function SupporterCard({
   alt: string
 }) {
   return (
-    <article className="flex h-28 w-36 shrink-0 flex-col items-center justify-center rounded-2xl bg-white px-3 py-4 shadow-sm">
+    <article className="flex h-42 w-36 shrink-0 flex-col items-center justify-center rounded-2xl bg-white px-3 py-4 shadow-sm">
       <div className="flex flex-1 items-center justify-center p-1">
         <img
-          className="h-12 w-12 object-contain"
+          className="h-20 w-20 object-contain"
           src={logoSrc}
           alt={alt}
           loading="lazy"

@@ -34,6 +34,8 @@ type SupportersCollaboratorsSectionProps = {
     title: string
     description: string
     image?: { url: string } | null
+    ctaText?: string | null
+    ctaLink?: string | null
   }[]
 }
 
@@ -50,8 +52,14 @@ export function SupportersCollaboratorsSection({
           iconSrc:
             normalizeStrapiMediaUrl(card.image?.url) ||
             defaultAgentCards[index % defaultAgentCards.length].iconSrc,
+          ctaText: card.ctaText || 'MULAI',
+          ctaLink: card.ctaLink || '#',
         }))
-      : defaultAgentCards
+      : defaultAgentCards.map(c => ({
+          ...c,
+          ctaText: 'MULAI',
+          ctaLink: '#',
+        }))
 
   return (
     <SectionShell
@@ -88,8 +96,8 @@ export function SupportersCollaboratorsSection({
               className="rounded-lg!"
               action={
                 <div className="flex">
-                  <GardaButton href="#" variant="impact" className="w-full">
-                    MULAI
+                  <GardaButton href={card.ctaLink} variant="impact" className="w-full">
+                    {card.ctaText}
                   </GardaButton>
                 </div>
               }

@@ -1,4 +1,4 @@
-import { fetchStrapiSingle, fetchStrapiSingleSafe } from './client'
+import { fetchStrapiSingleSafe } from './client'
 import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
 import type { StrapiEntry, StrapiMedia } from './types'
@@ -79,13 +79,16 @@ export type AgentChangeCard = {
   title: string
   description: string
   image?: StrapiMedia | null
+  ctaText?: string | null
+  ctaLink?: string | null
 }
 
 export type AwardCard = {
   id: number
   title: string
   year: string
-  images?: StrapiMedia[] | null
+  images?: StrapiMedia | StrapiMedia[] | null
+  awardByLogo?: StrapiMedia | null
 }
 
 export type InstagramCard = {
@@ -111,11 +114,17 @@ export type Homepage = StrapiEntry & {
   didYouKnow?: DidYouKnowItem[]
   impactTitle?: string | null
   impactImage?: StrapiMedia | null
+  aboutBackground?: StrapiMedia | null
   impactStats?: ImpactStat[]
   featuredBy?: FeaturedBy | null
   agenPerubahanTitle?: string | null
   agenPerubahanSubtitle?: string | null
   agenPerubahanCards?: AgentChangeCard[]
+  agenPerubahanBannerTitle?: string | null
+  agenPerubahanBannerSubtitle?: string | null
+  agenPerubahanBannerCtaText?: string | null
+  agenPerubahanBannerCtaLink?: string | null
+  agenPerubahanBannerThumbnail?: StrapiMedia | null
   awardTitle?: string | null
   awardCards?: AwardCard[]
   instagramTitle?: string | null
@@ -198,29 +207,7 @@ export async function getHomepage({ locale = 'id' }: StrapiLocaleOptions = {}) {
     '/api/homepage',
     withStrapiLocale(
       {
-        populate: {
-          heroBackground: true,
-          didYouKnow: true,
-          impactImage: true,
-          impactStats: {
-            populate: ['image'],
-          },
-          featuredBy: {
-            populate: ['logos'],
-          },
-          agenPerubahanCards: {
-            populate: ['image'],
-          },
-          awardCards: {
-            populate: ['images'],
-          },
-          instagramCards: {
-            populate: ['image'],
-          },
-          supporterCards: {
-            populate: ['image'],
-          },
-        },
+        pLevel: '',
       },
       locale,
     ),
