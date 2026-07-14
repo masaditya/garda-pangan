@@ -43,7 +43,7 @@ export function PartnerFlowSection({ data }: { data?: MitraData }) {
   return (
     <SectionShell tone="white">
       {/* Intro block */}
-      <div className="mb-24 grid gap-8 lg:grid-cols-12 lg:gap-16">
+      <div className="mb-24 grid gap-8 lg:grid-cols-12 lg:gap-16 font-serif">
         <div className="lg:col-span-5">
           <h2 className="text-4xl tracking-tight text-garda-ink sm:text-5xl">
             {flowTitle}
@@ -55,7 +55,7 @@ export function PartnerFlowSection({ data }: { data?: MitraData }) {
       </div>
 
       {/* Timeline flow */}
-      <div className="relative mx-auto max-w-4xl pt-8">
+      <div className="relative mx-auto max-w-4xl pt-8 font-serif">
         <div className="absolute bottom-0 left-[24px] top-6 w-[2px] bg-garda-ink md:left-1/2 md:-ml-[1px]" />
 
         <div className="space-y-12 md:space-y-8">

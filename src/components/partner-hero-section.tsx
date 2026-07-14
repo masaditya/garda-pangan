@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Play, X } from 'lucide-react'
 
 import type { MitraPage as MitraData } from '#/lib/strapi/pages'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 function getYoutubeId(url: string) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
@@ -14,14 +15,15 @@ function getYoutubeId(url: string) {
 export function PartnerHeroSection({ data }: { data?: MitraData }) {
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const bgImage = data?.heroBackgroundMedia?.url || '/garda-hero-reference.png'
+  const bgImage = normalizeStrapiMediaUrl(data?.heroBackgroundMedia?.url) || '/garda-hero-reference.png'
   const title = data?.heroTitle || 'Jadi \n Mitra'
   const videoId = data?.heroVideoUrl ? getYoutubeId(data.heroVideoUrl) : null
+  
 
   return (
     <section
       role="banner"
-      className="relative isolate min-h-screen overflow-hidden bg-garda-forest text-white"
+      className="relative font-serif isolate min-h-screen overflow-hidden bg-garda-forest text-white"
     >
       {/* Background Image or Video */}
       {!isPlaying ? (
@@ -89,7 +91,7 @@ export function PartnerHeroSection({ data }: { data?: MitraData }) {
         <div className="mx-auto w-full max-w-[1240px]">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-end">
             <div>
-              <h1 className="text-5xl tracking-tight text-white mb-6 sm:text-6xl lg:text-7xl whitespace-pre-line">
+              <h1 className="text-5xl font-serif tracking-tight text-white mb-6 sm:text-6xl lg:text-7xl whitespace-pre-line">
                 {title}
               </h1>
             </div>

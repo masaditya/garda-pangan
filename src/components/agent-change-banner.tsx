@@ -1,11 +1,12 @@
 import { GardaButton } from './garda-button'
+import { normalizeStrapiMediaUrl } from '../lib/strapi/client'
 
 type AgentChangeBannerProps = {
   title?: string | null
   subtitle?: string | null
   ctaText?: string | null
   ctaLink?: string | null
-  personImage?: any
+  personImage?: string | null
 }
 
 export function AgentChangeBanner({
@@ -15,7 +16,7 @@ export function AgentChangeBanner({
   ctaLink = '/relawan',
   personImage,
 }: AgentChangeBannerProps) {
-
+  console.log(personImage)
   return (
     <section
       aria-labelledby="agent-banner-heading"
@@ -27,7 +28,7 @@ export function AgentChangeBanner({
         {/* Left: full-bleed photo */}
         <div className="relative w-full lg:w-1/2 min-h-[280px] lg:min-h-[360px]">
           <img
-            src={personImage || '/figma/agent-person.jpg'}
+            src={normalizeStrapiMediaUrl(personImage) || '/figma/agent-person.jpg'}
             alt="Relawan Garda Pangan"
             className="absolute inset-0 h-full w-full object-cover object-center"
           />

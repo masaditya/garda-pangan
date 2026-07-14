@@ -227,3 +227,32 @@ export async function getHomepage({ locale = 'id' }: StrapiLocaleOptions = {}) {
   )
 }
 
+export type ContactActionCard = {
+  id: number
+  title: string
+  description: string
+  ctaLabel?: string | null
+  ctaLink?: string | null
+  thumbnail?: StrapiMedia | null
+}
+
+export type ContactPage = StrapiEntry & {
+  heroTitleLine1?: string | null
+  heroTitleLine2?: string | null
+  heroIntro?: string | null
+  heroBackground?: StrapiMedia | null
+  actionCards?: ContactActionCard[]
+}
+
+export async function getContactPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<ContactPage>(
+    '/api/contact-page',
+    withStrapiLocale(
+      {
+        pLevel: '',
+      },
+      locale,
+    ),
+  )
+}
+

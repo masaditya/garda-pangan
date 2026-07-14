@@ -1,4 +1,4 @@
-import type { ContactCategory } from './contact'
+
 
 const illustrationUrls = [
   '/illustrations/donation.svg',
@@ -21,11 +21,12 @@ export type ContactCategory = {
   buttonLabel: string
   buttonLink: string
   illustrationUrl: string
+  thumbnail?: { url: string } | null
 }
 
 export function buildContactCategories(messages: {
   common: { contactUs: string }
-  contact: { categories: Array<{ title: string; description: string }> }
+  contact: { categories: Array<{ title: string; description: string; thumbnail?: { url: string } }> }
 }): ContactCategory[] {
   return messages.contact.categories.map((category, index) => ({
     id: String(index + 1),
@@ -34,5 +35,6 @@ export function buildContactCategories(messages: {
     buttonLabel: messages.common.contactUs,
     buttonLink: '#',
     illustrationUrl: illustrationUrls[index] ?? '/illustrations/other.svg',
+    thumbnail: category.thumbnail,
   }))
 }

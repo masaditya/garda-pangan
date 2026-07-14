@@ -16,7 +16,7 @@ export function PartnerCurrentSection({ data }: { data?: MitraData }) {
 
   return (
     <SectionShell tone="white">
-      <div className="space-y-12">
+      <div className="space-y-12 font-serif">
         <h2 className="text-3xl tracking-tight text-garda-forest sm:text-4xl">
           {sectionTitle}
         </h2>

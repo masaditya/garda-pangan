@@ -70,17 +70,19 @@ export function SupportersGridSection({
       aria-labelledby="supporters-collaborators-heading"
       spacing="default"
       tone="transparent"
-      className="bg-(--forest-950)"
+      className="bg-[#FCF9E0]"
+      // tone="transparent"
+      // className="bg-(--forest-950)"
     >
       <div className="mx-auto flex w-full flex-col gap-10">
         <div className="flex flex-col items-center gap-4 text-center">
           <h2
             id="supporters-collaborators-heading"
-            className="garda-section-heading text-[clamp(1.75rem,4vw,3rem)] capitalize"
+            className="text-garda-forest-deep font-serif text-[clamp(1.75rem,4vw,3rem)] capitalize"
           >
             {title || 'Supporter & Collaborators'}
           </h2>
-          <p className="max-w-3xl text-base font-medium text-white/70 sm:text-lg">
+          <p className="max-w-3xl text-base font-medium text-gray-600 sm:text-lg">
             {subtitle ||
               'Since 2021, we have partnered with these companies to create impact for the future. Will your logo be next here?'}
           </p>
@@ -93,9 +95,9 @@ export function SupportersGridSection({
           aria-label="Daftar supporter dan kolaborator"
         >
           {/* Left fade */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-(--color-bg,#0c2b1a) to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-linear-to-r from-[#FCF9E0] to-transparent" />
           {/* Right fade */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-(--color-bg,#0c2b1a) to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-linear-to-l from-[#FCF9E0] to-transparent" />
 
           <div
             className="flex animate-marquee gap-4"

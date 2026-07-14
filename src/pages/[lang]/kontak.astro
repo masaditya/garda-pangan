@@ -8,6 +8,8 @@ import {
   localizedPath,
   resolveLocale,
 } from '#/lib/i18n'
+import { getContactPage } from '#/lib/strapi/pages'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 export function getStaticPaths() {
   return getLangStaticPaths()
@@ -15,9 +17,26 @@ export function getStaticPaths() {
 
 const locale = resolveLocale(Astro.params.lang)
 const messages = getMessages(locale)
-const contactCategories = buildContactCategories(messages)
-const bgImage =
-  'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop'
+
+const contactPageDataResponse = await getContactPage({ locale })
+const contactPageData = contactPageDataResponse?.data
+
+const contactCategories = contactPageData?.actionCards && contactPageData.actionCards.length > 0
+  ? contactPageData.actionCards.map((card, index) => ({
+      id: String(card.id || index + 1),
+      title: card.title,
+      description: card.description,
+      buttonLabel: card.ctaLabel || messages.common.contactUs,
+      buttonLink: card.ctaLink || '#',
+      illustrationUrl: '/illustrations/other.svg',
+      thumbnail: card.thumbnail
+    }))
+  : buildContactCategories(messages)
+
+const bgImage = normalizeStrapiMediaUrl(contactPageData?.heroBackground?.url) || 'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop'
+const titleLine1 = contactPageData?.heroTitleLine1 || messages.contact.heroTitleLine1
+const titleLine2 = contactPageData?.heroTitleLine2 || messages.contact.heroTitleLine2
+const heroIntro = contactPageData?.heroIntro || messages.contact.heroDescription
 ---
 
 <BaseLayout
@@ -28,7 +47,7 @@ const bgImage =
 >
   <main class="relative isolate min-h-screen">
     <div
-      class="absolute inset-0 -z-20 bg-cover bg-fixed bg-center"
+      class="absolute inset-0 -z-20 bg-cover bg-fixed bg-top"
       style={`background-image: url(${bgImage})`}
     >
     </div>
@@ -41,9 +60,9 @@ const bgImage =
     <div class="relative z-10 w-full">
       <ContactSection
         client:load
-        titleLine1={messages.contact.heroTitleLine1}
-        titleLine2={messages.contact.heroTitleLine2}
-        description={messages.contact.heroDescription}
+        titleLine1={titleLine1}
+        titleLine2={titleLine2}
+        description={heroIntro}
         illustrationLabel={messages.contact.illustrationLabel}
         categories={contactCategories}
       />

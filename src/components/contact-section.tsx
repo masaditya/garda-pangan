@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 import type { ContactCategory } from '#/lib/i18n/contact'
 
@@ -17,6 +18,7 @@ export function ContactSection({
   illustrationLabel,
   categories,
 }: ContactSectionProps) {
+  console.log(categories)
   return (
     <div className="relative w-full">
       <section className="relative flex min-h-[85vh] flex-col items-start justify-center px-6 text-left">
@@ -41,12 +43,20 @@ export function ContactSection({
                 className="flex h-full flex-col items-start rounded-3xl bg-white p-8 shadow-[0_12px_40px_rgba(0,0,0,0.04)] ring-1 ring-garda-border/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)]"
               >
                 <div className="mb-8 flex aspect-video w-full items-center justify-center rounded-2xl bg-garda-mint-soft/30 overflow-hidden">
-                  <div className="flex flex-col items-center gap-2 opacity-40">
-                    <div className="size-16 rounded-full border-2 border-dashed border-garda-forest" />
-                    <span className="text-sm font-bold uppercase tracking-widest text-garda-forest">
-                      {illustrationLabel}
-                    </span>
-                  </div>
+                  {cat.thumbnail?.url ? (
+                    <img
+                      src={normalizeStrapiMediaUrl(cat.thumbnail.url) ?? undefined}
+                      alt={cat.title}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 opacity-40">
+                      <div className="size-16 rounded-full border-2 border-dashed border-garda-forest" />
+                      <span className="text-sm font-bold uppercase tracking-widest text-garda-forest">
+                        {illustrationLabel}
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <h3 className="mb-4 font-sans text-xl leading-tight tracking-wider text-black/80 uppercase">

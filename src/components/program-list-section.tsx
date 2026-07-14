@@ -37,9 +37,11 @@ export function ProgramListSection({
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const listContainerRef = useRef<HTMLDivElement>(null)
 
-  const bgUrl =
-    normalizeStrapiMediaUrl(backgroundImage) ||
-    '/images/hero-program-fallback.jpg'
+  const bgUrl = backgroundImage
+    ? (backgroundImage.startsWith('/uploads')
+        ? normalizeStrapiMediaUrl(backgroundImage) ?? backgroundImage
+        : backgroundImage)
+    : '/images/hero-program-fallback.jpg'
   const titleLines = title.split(/<br\s*\/?>|\\n|\n/i)
 
   return (

@@ -1,4 +1,4 @@
-const DEFAULT_STRAPI_URL = 'https://promising-freedom-82afaec97e.strapiapp.com'
+const DEFAULT_STRAPI_URL = 'http://43.156.236.252:1337'
 
 export function getStrapiBaseUrl() {
   const env = import.meta.env ?? {}
