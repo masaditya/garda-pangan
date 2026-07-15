@@ -1,0 +1,25 @@
+---
+import '../styles.css'
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Garda Pangan</title>
+  </head>
+  <body class="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 font-sans">
+    <div class="flex flex-col items-center gap-4">
+      <div class="h-10 w-10 animate-spin rounded-full border-4 border-zinc-200 border-t-emerald-600 dark:border-zinc-800 dark:border-t-emerald-500"></div>
+      <p class="text-sm font-medium text-zinc-600 dark:text-zinc-400 animate-pulse">Memuat halaman...</p>
+    </div>
+
+    <script is:inline>
+      // Redirect singkat ke halaman /id
+      setTimeout(() => {
+        window.location.replace('/id');
+      }, 800);
+    </script>
+  </body>
+</html>

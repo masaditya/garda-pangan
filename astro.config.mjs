@@ -4,9 +4,6 @@ import { defineConfig } from 'astro/config'
 
 export default defineConfig({
   output: 'static',
-  redirects: {
-    '/': '/id',
-  },
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
