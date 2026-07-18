@@ -101,7 +101,7 @@ export function SupportersGridSection({
 
           <div
             className="flex animate-marquee gap-4"
-            style={{ width: 'max-content', animationDuration: '100s' }}
+            style={{ width: 'max-content', animationDuration: '50s' }}
           >
             {track.map((supporter, i) => (
               <SupporterCard
