@@ -143,7 +143,7 @@ export default function Header({
                 <Button
                   variant="outline"
                   size="icon"
-                  className="size-11 rounded-full border-garda-border bg-white/90 text-garda-forest shadow-[0_12px_24px_rgba(13,42,22,0.08)] hover:bg-garda-mint-soft lg:hidden"
+                  className="size-11 rounded-full !border-garda-border !bg-white/90 text-garda-forest shadow-[0_12px_24px_rgba(13,42,22,0.08)] hover:bg-garda-mint-soft lg:hidden"
                   aria-label="Open menu"
                 >
                   <Menu className="size-5" />

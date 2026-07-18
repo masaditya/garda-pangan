@@ -49,10 +49,10 @@ export function getFooterSecondaryLinks(locale: Locale, messages: Messages) {
       label: messages.footer.aboutUs,
       href: localizedPath('/tentang-kami', locale),
     },
-    { label: messages.footer.terms, href: '#' },
-    { label: messages.footer.privacy, href: '#' },
-    { label: messages.footer.cookies, href: '#' },
-    { label: messages.footer.legal, href: '#' },
-    { label: messages.footer.recalls, href: '#' },
+    // { label: messages.footer.terms, href: '#' },
+    // { label: messages.footer.privacy, href: '#' },
+    // { label: messages.footer.cookies, href: '#' },
+    // { label: messages.footer.legal, href: '#' },
+    // { label: messages.footer.recalls, href: '#' },
   ]
 }

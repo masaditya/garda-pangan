@@ -114,7 +114,7 @@ export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
 
           <div
             className="flex animate-marquee gap-4"
-            style={{ width: 'max-content' }}
+            style={{ width: 'max-content', animationDuration: '100s' }}
           >
             {track.map((logo, i) => (
               <LogoCard

@@ -29,7 +29,7 @@ export function ActionCard({
             <img
               src={iconSrc}
               alt=""
-              className="h-auto w-[80%] object-contain"
+              className="h-auto w-[80%] aspect-square object-cover"
             />
           ) : (
             <div className="size-24 rounded-full bg-slate-100" />

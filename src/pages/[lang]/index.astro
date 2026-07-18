@@ -41,7 +41,7 @@ const homepage = homepageResponse?.data
       impactStats={homepage?.impactStats}
       client:load
     />
-    <div class="reveal reveal-zoom-in">
+    <div class="reveal reveal-zoom-in max-w-full overflow-hidden">
       <FeaturedBySection
         title={homepage?.featuredBy?.title}
         logos={homepage?.featuredBy?.logos?.map((l) => ({
@@ -68,7 +68,7 @@ const homepage = homepageResponse?.data
         personImage={homepage?.agenPerubahanBannerThumbnail?.url}
       />
     </div>
-    <div class="reveal reveal-slide-right">
+    <div class="max-w-full overflow-hidden">
       <SupportersGridSection
         title={homepage?.supporterTitle}
         subtitle={homepage?.supporterSubtitle}

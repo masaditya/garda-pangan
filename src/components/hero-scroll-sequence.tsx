@@ -576,9 +576,9 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
           className="pointer-events-none absolute inset-0 z-30 flex items-center opacity-0"
         >
           <div className="pointer-events-auto w-full px-6 sm:px-12 md:px-16 lg:px-24">
-            <div className="relative mx-auto max-w-6xl mt-20">
+            <div className="relative mx-auto max-w-5xl mt-12">
               {/* Top Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-8 md:p-14 overflow-hidden shadow-2xl">
+              <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-10 overflow-hidden shadow-2xl">
                 {/* Watermark Logo Placeholder */}
                 <div className="absolute -bottom-16 -left-16 text-white/5 opacity-20 pointer-events-none">
                   <svg width="400" height="400" viewBox="0 0 100 100" fill="currentColor">
@@ -588,7 +588,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                 
                 <div className="grid md:grid-cols-2 gap-8 relative z-10">
                   <div>
-                    <h2 className="text-garda-sun font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-[1.1]">
+                    <h2 className="text-garda-sun font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.1]">
                       Tahukah<br/>Kamu?
                     </h2>
                     <GardaLogo className="mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-150 origin-top-left" />
@@ -600,12 +600,12 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               </div>
 
               {/* Person Image */}
-              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[38%] md:top-[8%] z-10 w-[200px] md:w-[380px] pointer-events-none">
+              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[42%] md:top-[10%] z-10 w-[160px] md:w-[300px] pointer-events-none">
                 <img src="/hero-facts.png" alt="Volunteer" className="w-full h-auto drop-shadow-2xl" />
               </div>
 
               {/* Bottom Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-8 md:p-12 mt-24 md:mt-32 z-20 shadow-2xl">
+              <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-8 mt-16 md:mt-24 z-20 shadow-2xl">
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
                   {metrics.map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/);
@@ -616,7 +616,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                     return (
                       <div key={metric.label}>
                         <div className="flex items-baseline gap-1.5 text-garda-sun mb-2 flex-wrap xl:flex-nowrap">
-                          <span className="font-serif text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] tracking-tighter">
+                          <span className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem] tracking-tighter">
                             {numStr ? <span className="impact-number" data-value={numStr.replace(/,/g, '')}>0</span> : metric.value}
                           </span>
                           {unit && <span className="text-xs md:text-sm uppercase tracking-wider">{unit}</span>}
