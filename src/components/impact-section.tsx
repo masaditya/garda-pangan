@@ -134,6 +134,8 @@ export function ImpactSection({
                 <img
                   src={normalizeStrapiMediaUrl(impactImage) ?? undefined}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="size-16 object-contain md:size-20 lg:size-24"
                 />
               ) : (

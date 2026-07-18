@@ -112,6 +112,8 @@ export function PartnerFlowSection({ data }: { data?: MitraData }) {
                             <img
                               src={step.icon.url}
                               alt="Icon flow"
+                              loading="lazy"
+                              decoding="async"
                               className="h-[180px] w-auto object-contain"
                             />
                           ) : (

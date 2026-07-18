@@ -38,6 +38,8 @@ export function ArticleCard({ article, locale = 'id' }: ArticleCardProps) {
             article.cover?.name ||
             article.title
           }
+          loading="lazy"
+          decoding="async"
           className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
         />
       )}

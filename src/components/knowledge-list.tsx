@@ -242,6 +242,7 @@ export function KnowledgeList({
                   alt={item.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   loading="lazy"
+                  decoding="async"
                 />
 
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:via-black/50" />

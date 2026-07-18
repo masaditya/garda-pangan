@@ -58,6 +58,7 @@ export function ProgramDetail({
                   alt={title}
                   className="h-full w-full object-cover"
                   loading="lazy"
+                  decoding="async"
                   style={{ backgroundColor: '#e2e8f0' }}
                 />
               </div>

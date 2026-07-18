@@ -30,6 +30,8 @@ export function AgentChangeBanner({
           <img
             src={normalizeStrapiMediaUrl(personImage) || '/figma/agent-person.jpg'}
             alt="Relawan Garda Pangan"
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 h-full w-full object-cover object-center"
           />
         </div>

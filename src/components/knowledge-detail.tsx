@@ -84,6 +84,8 @@ export function KnowledgeDetail({
           <img
             src={currentImage}
             alt={title}
+            loading="lazy"
+            decoding="async"
             className="h-full w-full object-cover"
           />
 

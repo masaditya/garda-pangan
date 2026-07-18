@@ -25,6 +25,8 @@ function FeaturedLogoContent({ logo }: { logo: LogoItem }) {
       <img
         src={normalizeStrapiMediaUrl(logo.url) ?? undefined}
         alt={logo.label ?? ''}
+        loading="lazy"
+        decoding="async"
         className="h-20 w-auto object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
       />
     )

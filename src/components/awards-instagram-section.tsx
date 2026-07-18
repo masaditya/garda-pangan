@@ -102,6 +102,8 @@ function AwardCard({
             <img
               src={awardByLogo}
               alt="Award by"
+              loading="lazy"
+              decoding="async"
               className="mt-2 h-14 max-w-[120px] object-contain"
             />
           ) : (
@@ -115,6 +117,8 @@ function AwardCard({
           src={image || '/figma/award-medal.svg'}
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="pointer-events-none absolute -right-10 -bottom-5 h-auto w-24 object-contain lg:w-32"
         />
       </CardContent>
@@ -257,6 +261,7 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
                 alt={post.alt}
                 className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 loading="lazy"
+                decoding="async"
               />
             </a>
           ))}

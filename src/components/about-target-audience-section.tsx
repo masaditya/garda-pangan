@@ -30,7 +30,7 @@ function AudienceCard({ title, icon }: { title: string; icon?: any }) {
     <div className="flex flex-col items-start gap-4 shadow rounded-2xl bg-white p-4 text-left font-serif">
       {iconUrl && (
         <div className="flex h-20 w-20 items-center justify-center">
-          <img src={iconUrl} alt="" className="h-full w-full object-contain" />
+          <img src={iconUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
         </div>
       )}
       <h3 className="leading-tight font-medium text-2xl text-garda-ink">{title}</h3>

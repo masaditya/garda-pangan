@@ -88,6 +88,8 @@ export function MetricCard({
             src={imageSrc}
             alt=""
             aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             className={cn('h-auto max-w-full object-contain', art.image)}
           />
         </div>

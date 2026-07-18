@@ -25,6 +25,7 @@ function SupporterCard({
           src={logoSrc}
           alt={alt}
           loading="lazy"
+          decoding="async"
         />
       </div>
       <p className="mt-2 text-center text-[0.6rem] font-bold leading-tight text-garda-forest uppercase">

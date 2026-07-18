@@ -29,6 +29,8 @@ export function ActionCard({
             <img
               src={iconSrc}
               alt=""
+              loading="lazy"
+              decoding="async"
               className="h-auto w-[80%] aspect-square object-cover"
             />
           ) : (

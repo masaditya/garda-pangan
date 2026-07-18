@@ -62,6 +62,7 @@ export function MerchandiseCard({ product }: { product: MerchandiseItem }) {
             alt={product.title}
             className="h-full w-full object-cover"
             loading="lazy"
+            decoding="async"
           />
         ) : null}
       </div>

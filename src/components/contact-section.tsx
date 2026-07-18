@@ -47,6 +47,8 @@ export function ContactSection({
                     <img
                       src={normalizeStrapiMediaUrl(cat.thumbnail.url) ?? undefined}
                       alt={cat.title}
+                      loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-contain"
                     />
                   ) : (

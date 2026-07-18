@@ -86,11 +86,15 @@ export function ProgramDetailModal({
           <img
             src="/decorative-top.png"
             alt=""
+            loading="lazy"
+            decoding="async"
             className="pointer-events-none absolute left-0 top-0 z-0 w-48 object-contain opacity-90 sm:w-64 md:w-80"
           />
           <img
             src="/decorative-bottom.png"
             alt=""
+            loading="lazy"
+            decoding="async"
             className="pointer-events-none absolute bottom-0 right-0 z-0 w-48 object-contain opacity-90 sm:w-64 md:w-80"
           />
 
@@ -101,6 +105,7 @@ export function ProgramDetailModal({
                 alt={title}
                 className="h-full w-full object-cover"
                 loading="lazy"
+                decoding="async"
                 style={{ backgroundColor: '#e2e8f0' }}
               />
             </div>

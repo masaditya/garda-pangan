@@ -22,6 +22,8 @@ function MediaImage({ media }: { media: StrapiMedia }) {
     <img
       src={src}
       alt={getMediaAlt(media)}
+      loading="lazy"
+      decoding="async"
       className="w-full rounded-[2rem] object-cover shadow-[0_24px_60px_rgba(13,42,22,0.14)]"
     />
   )

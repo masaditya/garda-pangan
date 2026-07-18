@@ -31,6 +31,8 @@ export function AboutHistorySection({ data }: { data?: any }) {
               <img
                 src={imageUrl1}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className="float-left w-1/3 mr-6 mb-4 object-cover"
               />
             )}
@@ -42,6 +44,8 @@ export function AboutHistorySection({ data }: { data?: any }) {
               <img
                 src={imageUrl2}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className="absolute left-0 top-0 w-[60%] h-[75%] object-cover rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl shadow-sm"
               />
             ) : (
@@ -52,6 +56,8 @@ export function AboutHistorySection({ data }: { data?: any }) {
               <img
                 src={imageUrl3}
                 alt=""
+                loading="lazy"
+                decoding="async"
                 className="absolute right-0 bottom-0 w-[60%] h-[70%] object-cover border-8 border-white shadow-lg z-10"
               />
             ) : (

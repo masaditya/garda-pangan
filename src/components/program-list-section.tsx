@@ -142,6 +142,7 @@ export function ProgramListSection({
                                   alt={program.title}
                                   className="h-full w-full object-cover"
                                   loading="lazy"
+                                  decoding="async"
                                 />
                               </div>
                             </div>
