@@ -15,9 +15,7 @@ export function EventHero({
   serifTitle = false,
 }: EventHeroProps) {
   const bgUrl =
-    normalizeStrapiMediaUrl(backgroundImage) ||
-    'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop' // placeholder if none
-
+    normalizeStrapiMediaUrl(backgroundImage)
   return (
     <section
       role="banner"
