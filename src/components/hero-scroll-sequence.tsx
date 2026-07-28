@@ -606,8 +606,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
               {/* Bottom Card */}
               <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-8 mt-16 md:mt-24 z-20 shadow-2xl">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
-                  {metrics.map((metric) => {
+                <div className="grid grid-cols-2 gap-3 md:gap-5">
+                  {metrics.slice(0, 4).map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/);
                     const numStr = numMatch ? numMatch[0] : '';
                     const [unit, ...restLabel] = metric.label.split(' ');
@@ -621,7 +621,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                           </span>
                           {unit && <span className="text-xs md:text-sm uppercase tracking-wider">{unit}</span>}
                         </div>
-                        <p className="text-white/90 text-xs md:text-sm uppercase tracking-wider max-w-[200px]">
+                        <p className="text-white/90 text-xs md:text-sm uppercase tracking-wider">
                           {remainingLabel}
                         </p>
                       </div>

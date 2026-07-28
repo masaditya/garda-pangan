@@ -157,12 +157,13 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
       aria-labelledby="awards-recognition-heading"
       spacing="default"
       tone="transparent"
+      className='bg-[#FCF9E0]'
     >
       <div className="relative w-full">
         <div className="mb-8 flex justify-center text-center">
           <h2
             id="awards-recognition-heading"
-            className="garda-section-heading text-[clamp(2rem,5vw,3.5rem)] capitalize"
+            className="garda-section-heading !text-garda-forest-deep text-[clamp(2rem,5vw,3.5rem)] capitalize"
           >
             {title ? (
               <span
@@ -232,13 +233,13 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
       aria-labelledby="our-instagram-heading"
       spacing="compact"
       tone="transparent"
-      className='bg-[#FCF9E0]'
+      
     >
       <div className="mx-auto flex w-full flex-col gap-8">
         <div className="flex justify-center text-center">
           <h2
             id="our-instagram-heading"
-            className="font-serif text-[clamp(2rem,5vw,3rem)] font-normal leading-tight tracking-tight text-garda-forest-deep capitalize"
+            className="font-serif text-[clamp(2rem,5vw,3rem)] font-normal leading-tight tracking-tight text-garda-sun capitalize"
           >
             {title || 'Our Instagram'}
           </h2>

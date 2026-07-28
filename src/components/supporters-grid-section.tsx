@@ -18,7 +18,7 @@ function SupporterCard({
   alt: string
 }) {
   return (
-    <article className="flex h-42 w-36 shrink-0 flex-col items-center justify-center rounded-2xl bg-white px-3 py-4 shadow-sm">
+    <article className="flex h-42 w-36 shrink-0 flex-col items-center justify-center rounded-2xl bg-white px-3 py-4">
       <div className="flex flex-1 items-center justify-center p-1">
         <img
           className="h-20 w-20 object-contain"
@@ -71,19 +71,19 @@ export function SupportersGridSection({
       aria-labelledby="supporters-collaborators-heading"
       spacing="default"
       tone="transparent"
-      className="bg-[#FCF9E0]"
+      // className="bg-[#FCF9E0]"
     // tone="transparent"
-    // className="bg-(--forest-950)"
+    className="bg-(--forest-950)"
     >
       <div className="mx-auto flex w-full flex-col gap-10">
         <div className="flex flex-col items-center gap-4 text-center">
           <h2
             id="supporters-collaborators-heading"
-            className="text-garda-forest-deep font-serif text-[clamp(1.75rem,4vw,3rem)] capitalize"
+            className="text-[#ffe602] font-serif text-[clamp(1.75rem,4vw,3rem)] capitalize"
           >
             {title || 'Supporter & Collaborators'}
           </h2>
-          <p className="max-w-3xl text-base font-medium text-gray-600 sm:text-lg">
+          <p className="max-w-3xl text-base font-medium text-gray-200 sm:text-lg">
             {subtitle ||
               'Since 2021, we have partnered with these companies to create impact for the future. Will your logo be next here?'}
           </p>

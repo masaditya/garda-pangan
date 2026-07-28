@@ -4,6 +4,7 @@ import { AwardsInstagramSection } from '#/components/awards-instagram-section'
 import { FeaturedBySection } from '#/components/featured-by-section'
 import { HeroScrollSequence } from '#/components/hero-scroll-sequence'
 import { SupportersCollaboratorsSection } from '#/components/supporters-collaborators-section'
+import { PartnersGridSection } from '#/components/partners-grid-section'
 import { SupportersGridSection } from '#/components/supporters-grid-section'
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import {
@@ -67,6 +68,9 @@ const homepage = homepageResponse?.data
         ctaLink={homepage?.agenPerubahanBannerCtaLink}
         personImage={homepage?.agenPerubahanBannerThumbnail?.url}
       />
+    </div>
+    <div class="reveal reveal-fade-up">
+      <PartnersGridSection client:visible />
     </div>
     <div class="max-w-full overflow-hidden">
       <SupportersGridSection
