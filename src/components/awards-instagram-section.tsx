@@ -97,7 +97,7 @@ function AwardCard({
           {title}
         </h3>
         <div className="mt-auto text-xs leading-none lg:text-sm">
-          <span className="block font-medium text-[#6b7280]">Oleh</span>
+          {/* <span className="block font-medium text-[#6b7280]">Oleh</span> */}
           {awardByLogo ? (
             <img
               src={awardByLogo}
