@@ -9,7 +9,9 @@ export type EventPage = StrapiEntry & {
   heroBackground?: StrapiMedia | null
 }
 
-export async function getEventPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+export async function getEventPage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
   return fetchStrapiSingleSafe<EventPage>(
     '/api/event-page',
     withStrapiLocale(

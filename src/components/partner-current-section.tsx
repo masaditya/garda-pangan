@@ -28,9 +28,7 @@ export function PartnerCurrentSection({ data }: { data?: MitraData }) {
               className="flex items-center gap-4 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-garda-neutral/10 transition-shadow hover:shadow-md"
             >
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-garda-paper" />
-              <h3 className="leading-tight text-garda-ink">
-                {partner}
-              </h3>
+              <h3 className="leading-tight text-garda-ink">{partner}</h3>
             </div>
           ))}
         </div>

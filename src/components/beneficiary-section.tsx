@@ -20,46 +20,46 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    text: "Waktu suami saya kena PHK, kami benar-benar kesulitan makan. Garda Pangan datang dengan paket makanan yang cukup untuk seminggu. Anak-anak saya bisa makan dengan layak. Terima kasih dari lubuk hati kami.",
-    name: "Siti Rahayu",
-    location: "Semampir, Surabaya",
-    initials: "SR"
+    text: 'Waktu suami saya kena PHK, kami benar-benar kesulitan makan. Garda Pangan datang dengan paket makanan yang cukup untuk seminggu. Anak-anak saya bisa makan dengan layak. Terima kasih dari lubuk hati kami.',
+    name: 'Siti Rahayu',
+    location: 'Semampir, Surabaya',
+    initials: 'SR',
   },
   {
     id: 2,
-    text: "Saya ibu tunggal dengan tiga anak. Garda Pangan bantu kami saat beras di rumah habis dan gajian masih lama. Rasanya rapat dan petugasnya sangat ramah. Tidak ada yang bikin malu, mereka sangat menghormati kami.",
-    name: "Dewi Wahyuni",
-    location: "Tambak Rejo, Surabaya",
-    initials: "DW"
+    text: 'Saya ibu tunggal dengan tiga anak. Garda Pangan bantu kami saat beras di rumah habis dan gajian masih lama. Rasanya rapat dan petugasnya sangat ramah. Tidak ada yang bikin malu, mereka sangat menghormati kami.',
+    name: 'Dewi Wahyuni',
+    location: 'Tambak Rejo, Surabaya',
+    initials: 'DW',
   },
   {
     id: 3,
-    text: "Saya lansia, hidup sendiri, dan tidak punya penghasilan tetap. Tiap minggu relawan Garda Pangan antar makanan ke rumah. Mereka tidak hanya bawa makanan, tapi juga ngobrol dan peduli sama saya.",
-    name: "Bapak Ponimin",
-    location: "Wonokromo, Surabaya",
-    initials: "BP"
+    text: 'Saya lansia, hidup sendiri, dan tidak punya penghasilan tetap. Tiap minggu relawan Garda Pangan antar makanan ke rumah. Mereka tidak hanya bawa makanan, tapi juga ngobrol dan peduli sama saya.',
+    name: 'Bapak Ponimin',
+    location: 'Wonokromo, Surabaya',
+    initials: 'BP',
   },
   {
     id: 4,
-    text: "Waktu suami saya kena PHK, kami benar-benar kesulitan makan. Garda Pangan datang dengan paket makanan yang cukup untuk seminggu. Anak-anak saya bisa makan dengan layak. Terima kasih dari lubuk hati kami.",
-    name: "Siti Rahayu",
-    location: "Semampir, Surabaya",
-    initials: "SR"
+    text: 'Waktu suami saya kena PHK, kami benar-benar kesulitan makan. Garda Pangan datang dengan paket makanan yang cukup untuk seminggu. Anak-anak saya bisa makan dengan layak. Terima kasih dari lubuk hati kami.',
+    name: 'Siti Rahayu',
+    location: 'Semampir, Surabaya',
+    initials: 'SR',
   },
   {
     id: 5,
-    text: "Saya ibu tunggal dengan tiga anak. Garda Pangan bantu kami saat beras di rumah habis dan gajian masih lama. Rasanya rapat dan petugasnya sangat ramah. Tidak ada yang bikin malu, mereka sangat menghormati kami.",
-    name: "Dewi Wahyuni",
-    location: "Tambak Rejo, Surabaya",
-    initials: "DW"
+    text: 'Saya ibu tunggal dengan tiga anak. Garda Pangan bantu kami saat beras di rumah habis dan gajian masih lama. Rasanya rapat dan petugasnya sangat ramah. Tidak ada yang bikin malu, mereka sangat menghormati kami.',
+    name: 'Dewi Wahyuni',
+    location: 'Tambak Rejo, Surabaya',
+    initials: 'DW',
   },
   {
     id: 6,
-    text: "Waktu suami saya kena PHK, kami benar-benar kesulitan makan. Garda Pangan datang dengan paket makanan yang cukup untuk seminggu. Anak-anak saya bisa makan dengan layak. Terima kasih dari lubuk hati kami.",
-    name: "Siti Rahayu",
-    location: "Semampir, Surabaya",
-    initials: "SR"
-  }
+    text: 'Waktu suami saya kena PHK, kami benar-benar kesulitan makan. Garda Pangan datang dengan paket makanan yang cukup untuk seminggu. Anak-anak saya bisa makan dengan layak. Terima kasih dari lubuk hati kami.',
+    name: 'Siti Rahayu',
+    location: 'Semampir, Surabaya',
+    initials: 'SR',
+  },
 ]
 
 export function BeneficiarySection({
@@ -72,7 +72,8 @@ export function BeneficiarySection({
   const [isPlaying, setIsPlaying] = useState(false)
   const messages = getMessages(locale)
 
-  const title = data?.heroTitle || (locale === 'en' ? 'Beneficiaries' : 'Penerima Bantuan')
+  const title =
+    data?.heroTitle || (locale === 'en' ? 'Beneficiaries' : 'Penerima Bantuan')
   const description =
     data?.heroDescription ||
     (locale === 'en'
@@ -80,7 +81,9 @@ export function BeneficiarySection({
       : 'Penerima manfaat (beneficiaries) utama dari distribusi makanan Garda Pangan adalah masyarakat pra-sejahtera di Surabaya, yang telah dipilih dengan cermat serta disurvei agar bantuan yang diberikan tepat sasaran. Kategori penerima diantaranya berasal dari kaum dhuafa, yatim piatu, janda, lansia, difabel, pengungsi, dan anak jalanan.')
   const buttonLabel =
     data?.testimonialButtonLabel || messages.penerima.watchTestimonial
-  const videoUrl = data?.youtubeTestimonialsUrl || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  const videoUrl =
+    data?.youtubeTestimonialsUrl ||
+    'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   const videoId = getYoutubeId(videoUrl)
 
   return (
@@ -108,7 +111,9 @@ export function BeneficiarySection({
           </div>
         )}
 
-        <div className={`mx-auto max-w-4xl space-y-8 pt-20 transition-all duration-700 ${isPlaying ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+        <div
+          className={`mx-auto max-w-4xl space-y-8 pt-20 transition-all duration-700 ${isPlaying ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
+        >
           <h1 className="font-serif text-6xl tracking-tight text-white sm:text-7xl lg:text-8xl">
             {title.split(' ').map((word: string, i: number) => (
               <span key={i}>
@@ -141,23 +146,29 @@ export function BeneficiarySection({
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {/* Column 1 */}
             <div className="flex flex-col gap-8 lg:pt-24">
-              {testimonials.filter((_, i) => i % 3 === 0).map((t) => (
-                <TestimonialCard key={t.id} t={t} />
-              ))}
+              {testimonials
+                .filter((_, i) => i % 3 === 0)
+                .map((t) => (
+                  <TestimonialCard key={t.id} t={t} />
+                ))}
             </div>
 
             {/* Column 2 (Middle - Offset higher) */}
             <div className="flex flex-col gap-8">
-              {testimonials.filter((_, i) => i % 3 === 1).map((t) => (
-                <TestimonialCard key={t.id} t={t} />
-              ))}
+              {testimonials
+                .filter((_, i) => i % 3 === 1)
+                .map((t) => (
+                  <TestimonialCard key={t.id} t={t} />
+                ))}
             </div>
 
             {/* Column 3 */}
             <div className="flex flex-col gap-8 lg:pt-24">
-              {testimonials.filter((_, i) => i % 3 === 2).map((t) => (
-                <TestimonialCard key={t.id} t={t} />
-              ))}
+              {testimonials
+                .filter((_, i) => i % 3 === 2)
+                .map((t) => (
+                  <TestimonialCard key={t.id} t={t} />
+                ))}
             </div>
           </div>
         </div>
@@ -173,9 +184,7 @@ export function BeneficiarySection({
 
 function TestimonialCard({ t }: { t: Testimonial }) {
   return (
-    <div
-      className="break-inside-avoid rounded-3xl bg-white p-8 shadow-[0_12px_50px_rgba(0,0,0,0.06)] ring-1 ring-garda-border/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
-    >
+    <div className="break-inside-avoid rounded-3xl bg-white p-8 shadow-[0_12px_50px_rgba(0,0,0,0.06)] ring-1 ring-garda-border/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
       <p className="mb-10 text-base font-medium leading-relaxed text-garda-forest/80 italic">
         "{t.text}"
       </p>
@@ -184,8 +193,12 @@ function TestimonialCard({ t }: { t: Testimonial }) {
           {t.initials}
         </div>
         <div className="flex flex-col">
-          <span className="text-base font-black text-garda-forest">{t.name}</span>
-          <span className="text-xs font-semibold uppercase tracking-wider text-garda-forest/40">{t.location}</span>
+          <span className="text-base font-black text-garda-forest">
+            {t.name}
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-garda-forest/40">
+            {t.location}
+          </span>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ const dummyData = {
   heroTitle: 'Penerima Bantuan',
   heroDescription: 'Deskripsi dummy untuk testing.',
   testimonialButtonLabel: 'Tonton Testimoni',
-  testimonialButtonLink: '#testimoni'
+  testimonialButtonLink: '#testimoni',
 }
 
 describe('BeneficiarySection', () => {

@@ -141,12 +141,15 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
   const displayAwards =
     awards && awards.length > 0
       ? awards.map((a) => {
-          const imageUrl = Array.isArray(a.images) ? a.images[0]?.url : a.images?.url;
+          const imageUrl = Array.isArray(a.images)
+            ? a.images[0]?.url
+            : a.images?.url
           return {
             id: `award-${a.id}`,
             year: a.year,
             title: a.title,
-            awardByLogo: normalizeStrapiMediaUrl(a.awardByLogo?.url) || undefined,
+            awardByLogo:
+              normalizeStrapiMediaUrl(a.awardByLogo?.url) || undefined,
             image: normalizeStrapiMediaUrl(imageUrl) || undefined,
           }
         })
@@ -157,7 +160,7 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
       aria-labelledby="awards-recognition-heading"
       spacing="default"
       tone="transparent"
-      className='bg-[#FCF9E0]'
+      className="bg-[#FCF9E0]"
     >
       <div className="relative w-full">
         <div className="mb-8 flex justify-center text-center">
@@ -226,14 +229,13 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
           alt: p.title || 'Instagram post',
           href: p.instagramLink || null,
         }))
-      : defaultInstagramPosts.map(p => ({ ...p, href: null }))
+      : defaultInstagramPosts.map((p) => ({ ...p, href: null }))
 
   return (
     <SectionShell
       aria-labelledby="our-instagram-heading"
       spacing="compact"
       tone="transparent"
-      
     >
       <div className="mx-auto flex w-full flex-col gap-8">
         <div className="flex justify-center text-center">

@@ -114,7 +114,9 @@ function HeroScrollSequenceStatic({
   impactBackgroundImage,
 }: HeroScrollSequenceProps) {
   const heroBgUrl = resolveHeroBackground(backgroundImage)
-  const impactBgUrl = normalizeStrapiMediaUrl(impactBackgroundImage) || '/garda-hero-reference.png'
+  const impactBgUrl =
+    normalizeStrapiMediaUrl(impactBackgroundImage) ||
+    '/garda-hero-reference.png'
   const metrics = buildImpactMetrics({
     portionsRescued,
     co2Reduced,
@@ -122,8 +124,7 @@ function HeroScrollSequenceStatic({
     foodScrap,
     stats: impactStats,
   })
-  const headingLabel =
-    title || 'ONE STOP FOOD LOSS & WASTE SOLUTION'
+  const headingLabel = title || 'ONE STOP FOOD LOSS & WASTE SOLUTION'
 
   return (
     <div data-testid="hero-scroll-sequence-static">
@@ -208,7 +209,11 @@ function HeroScrollSequenceStatic({
         </div>
       </section>
 
-      <DidYouKnowSection slides={didYouKnowSlides} variant="immersive" autoPlay />
+      <DidYouKnowSection
+        slides={didYouKnowSlides}
+        variant="immersive"
+        autoPlay
+      />
     </div>
   )
 }
@@ -220,9 +225,16 @@ function DidYouKnowCarouselInternal({
 }) {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }))
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
-  const items = slides && slides.length > 0 ? slides : [
-    { id: 'default', content: '“Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”' }
-  ]
+  const items =
+    slides && slides.length > 0
+      ? slides
+      : [
+          {
+            id: 'default',
+            content:
+              '“Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”',
+          },
+        ]
 
   return (
     <Carousel
@@ -261,7 +273,8 @@ function DidYouKnowCarouselInternal({
 }
 
 export function HeroScrollSequence(props: HeroScrollSequenceProps) {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(readMotionPreference)
+  const [prefersReducedMotion, setPrefersReducedMotion] =
+    useState(readMotionPreference)
   const [isScrollReady, setIsScrollReady] = useState(false)
 
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -284,10 +297,11 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
     foodScrap: props.foodScrap,
     stats: props.impactStats,
   })
-  const headingLabel =
-    props.title || 'ONE STOP FOOD LOSS & WASTE SOLUTION'
+  const headingLabel = props.title || 'ONE STOP FOOD LOSS & WASTE SOLUTION'
 
-  const impactBgUrl = normalizeStrapiMediaUrl(props.impactBackgroundImage) || '/garda-hero-reference.png'
+  const impactBgUrl =
+    normalizeStrapiMediaUrl(props.impactBackgroundImage) ||
+    '/garda-hero-reference.png'
 
   useLayoutEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -425,24 +439,28 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       )
 
       let numbersAnimated = false
-      timeline.call(() => {
-        if (numbersAnimated) return
-        numbersAnimated = true
-        
-        const numberEls = pin.querySelectorAll('.impact-number')
-        numberEls.forEach((el) => {
-          const targetVal = parseFloat(el.getAttribute('data-value') || '0')
-          const obj = { val: 0 }
-          gsap.to(obj, {
-            val: targetVal,
-            duration: 2,
-            ease: 'power2.out',
-            onUpdate: () => {
-              el.innerHTML = Math.round(obj.val).toLocaleString('en-US')
-            }
+      timeline.call(
+        () => {
+          if (numbersAnimated) return
+          numbersAnimated = true
+
+          const numberEls = pin.querySelectorAll('.impact-number')
+          numberEls.forEach((el) => {
+            const targetVal = parseFloat(el.getAttribute('data-value') || '0')
+            const obj = { val: 0 }
+            gsap.to(obj, {
+              val: targetVal,
+              duration: 2,
+              ease: 'power2.out',
+              onUpdate: () => {
+                el.innerHTML = Math.round(obj.val).toLocaleString('en-US')
+              },
+            })
           })
-        })
-      }, [], 0.52)
+        },
+        [],
+        0.52,
+      )
 
       // Note: Removed facts fade out and stats fade in to keep the combined layout visible
     }, wrapper)
@@ -499,7 +517,10 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
             style={{ backgroundImage: `url('${heroBgUrl}')` }}
           />
         ) : (
-          <div ref={heroBgRef} className="absolute inset-0 z-0 bg-garda-forest-deep" />
+          <div
+            ref={heroBgRef}
+            className="absolute inset-0 z-0 bg-garda-forest-deep"
+          />
         )}
 
         <div
@@ -545,7 +566,10 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               aria-label={headingLabel}
               className="font-serif text-[clamp(2.75rem,7vw,5.5rem)] uppercase leading-[0.95] tracking-[-0.03em]"
             >
-              <HeroTitle oPortalRef={oPortalRef} impactBackgroundImage={impactBgUrl} />
+              <HeroTitle
+                oPortalRef={oPortalRef}
+                impactBackgroundImage={impactBgUrl}
+              />
             </h1>
             {/* {props.subtitle ? (
               <p className="max-w-[600px] text-lg font-medium text-white/85 sm:text-xl">
@@ -581,45 +605,73 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-10 overflow-hidden shadow-2xl">
                 {/* Watermark Logo Placeholder */}
                 <div className="absolute -bottom-16 -left-16 text-white/5 opacity-20 pointer-events-none">
-                  <svg width="400" height="400" viewBox="0 0 100 100" fill="currentColor">
+                  <svg
+                    width="400"
+                    height="400"
+                    viewBox="0 0 100 100"
+                    fill="currentColor"
+                  >
                     <path d="M50 0 C22.4 0 0 22.4 0 50 C0 77.6 22.4 100 50 100 C77.6 100 100 77.6 100 50 C100 22.4 77.6 0 50 0 Z M50 90 C27.9 90 10 72.1 10 50 C10 27.9 27.9 10 50 10 C72.1 10 90 27.9 90 50 C90 72.1 72.1 90 50 90 Z" />
                   </svg>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-8 relative z-10">
                   <div>
                     <h2 className="text-garda-sun font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.1]">
-                      Tahukah<br/>Kamu?
+                      Tahukah
+                      <br />
+                      Kamu?
                     </h2>
                     <GardaLogo className="mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-150 origin-top-left" />
                   </div>
                   <div className="flex flex-col justify-between items-end w-full max-w-md ml-auto">
-                    <DidYouKnowCarouselInternal slides={props.didYouKnowSlides} />
+                    <DidYouKnowCarouselInternal
+                      slides={props.didYouKnowSlides}
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Person Image */}
               <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[42%] md:top-[10%] z-10 w-[160px] md:w-[300px] pointer-events-none">
-                <img src="/hero-facts.png" alt="Volunteer" loading="lazy" decoding="async" className="w-full h-auto drop-shadow-2xl" />
+                <img
+                  src="/hero-facts.png"
+                  alt="Volunteer"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto drop-shadow-2xl"
+                />
               </div>
 
               {/* Bottom Card */}
               <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-8 mt-16 md:mt-24 z-20 shadow-2xl">
                 <div className="grid grid-cols-2 gap-3 md:gap-5">
                   {metrics.slice(0, 4).map((metric) => {
-                    const numMatch = metric.value.match(/[\d,.]+/);
-                    const numStr = numMatch ? numMatch[0] : '';
-                    const [unit, ...restLabel] = metric.label.split(' ');
-                    const remainingLabel = restLabel.join(' ');
+                    const numMatch = metric.value.match(/[\d,.]+/)
+                    const numStr = numMatch ? numMatch[0] : ''
+                    const [unit, ...restLabel] = metric.label.split(' ')
+                    const remainingLabel = restLabel.join(' ')
 
                     return (
                       <div key={metric.label}>
                         <div className="flex items-baseline gap-1.5 text-garda-sun mb-2 flex-wrap xl:flex-nowrap">
                           <span className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem] tracking-tighter">
-                            {numStr ? <span className="impact-number" data-value={numStr.replace(/,/g, '')}>0</span> : metric.value}
+                            {numStr ? (
+                              <span
+                                className="impact-number"
+                                data-value={numStr.replace(/,/g, '')}
+                              >
+                                0
+                              </span>
+                            ) : (
+                              metric.value
+                            )}
                           </span>
-                          {unit && <span className="text-xs md:text-sm uppercase tracking-wider">{unit}</span>}
+                          {unit && (
+                            <span className="text-xs md:text-sm uppercase tracking-wider">
+                              {unit}
+                            </span>
+                          )}
                         </div>
                         <p className="text-white/90 text-xs md:text-sm uppercase tracking-wider">
                           {remainingLabel}

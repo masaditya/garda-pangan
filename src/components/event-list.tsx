@@ -166,10 +166,13 @@ export function EventList({
             const imageUrl =
               event?.coverImage?.url || 'https://placehold.co/600x400'
             const dateObj = new Date(event.date)
-            const formattedDate = new Intl.DateTimeFormat(getIntlLocale(locale), {
-              month: 'short',
-              year: 'numeric',
-            }).format(dateObj)
+            const formattedDate = new Intl.DateTimeFormat(
+              getIntlLocale(locale),
+              {
+                month: 'short',
+                year: 'numeric',
+              },
+            ).format(dateObj)
             const eventUrl = localizedPath(`/event/${event.slug}`, locale)
 
             return (

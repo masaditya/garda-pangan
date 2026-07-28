@@ -44,7 +44,10 @@ function getMerchandiseImageUrl(images?: StrapiImage[] | null) {
   return normalizeStrapiMediaUrl(preferredUrl)
 }
 
-export function formatMerchandiseDate(releaseDate: string, locale: Locale = 'id') {
+export function formatMerchandiseDate(
+  releaseDate: string,
+  locale: Locale = 'id',
+) {
   return new Intl.DateTimeFormat(getIntlLocale(locale), {
     month: 'short',
     year: 'numeric',

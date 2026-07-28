@@ -15,11 +15,11 @@ describe('EventDetail Component', () => {
 
   it('renders the hero section correctly', () => {
     render(<EventDetail {...mockProps} />)
-    
+
     const title = screen.getByRole('heading', { level: 1 })
     expect(title.textContent).toContain('Test Event Title')
     expect(title.className).toContain('font-serif')
-    
+
     // Check author and date
     expect(screen.getByText('Admin')).toBeDefined()
     expect(screen.getByText('12 Okt 2024')).toBeDefined()
@@ -27,14 +27,14 @@ describe('EventDetail Component', () => {
 
   it('renders tags and badges correctly', () => {
     render(<EventDetail {...mockProps} />)
-    
+
     expect(screen.getByText('EVENT')).toBeDefined()
     expect(screen.getByText('TEST')).toBeDefined()
   })
 
   it('renders the image and caption', () => {
     render(<EventDetail {...mockProps} />)
-    
+
     const image = screen.getByAltText('Test Event Title')
     expect(image).toBeDefined()
     expect(image.getAttribute('src')).toBe(mockProps.imageUrl)
@@ -44,7 +44,7 @@ describe('EventDetail Component', () => {
 
   it('renders parsed markdown content', () => {
     render(<EventDetail {...mockProps} />)
-    
+
     expect(screen.getByText('This is a test content')).toBeDefined()
   })
 })

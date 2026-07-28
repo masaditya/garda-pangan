@@ -14,8 +14,7 @@ export function EventHero({
   backgroundImage,
   serifTitle = false,
 }: EventHeroProps) {
-  const bgUrl =
-    normalizeStrapiMediaUrl(backgroundImage)
+  const bgUrl = normalizeStrapiMediaUrl(backgroundImage)
   return (
     <section
       role="banner"

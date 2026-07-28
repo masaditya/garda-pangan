@@ -18,9 +18,5 @@ export {
   getFooterSecondaryLinks,
   getHeaderNavItems,
 } from './nav'
-export {
-  getLangStaticPaths,
-  getMessages,
-  type Messages,
-} from './messages'
+export { getLangStaticPaths, getMessages, type Messages } from './messages'
 export { buildContactCategories } from './contact'

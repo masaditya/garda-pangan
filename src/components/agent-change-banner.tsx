@@ -18,17 +18,15 @@ export function AgentChangeBanner({
 }: AgentChangeBannerProps) {
   console.log(personImage)
   return (
-    <section
-      aria-labelledby="agent-banner-heading"
-      className="overflow-hidden"
-    >
+    <section aria-labelledby="agent-banner-heading" className="overflow-hidden">
       {/* Split-screen: photo left, content right */}
       <div className="flex flex-col lg:flex-row min-h-[320px]">
-
         {/* Left: full-bleed photo */}
         <div className="relative w-full lg:w-1/2 min-h-[280px] lg:min-h-[360px]">
           <img
-            src={normalizeStrapiMediaUrl(personImage) || '/figma/agent-person.jpg'}
+            src={
+              normalizeStrapiMediaUrl(personImage) || '/figma/agent-person.jpg'
+            }
             alt="Relawan Garda Pangan"
             loading="lazy"
             decoding="async"
@@ -59,7 +57,6 @@ export function AgentChangeBanner({
             {ctaText || 'MULAI'}
           </GardaButton>
         </div>
-
       </div>
     </section>
   )

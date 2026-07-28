@@ -3,7 +3,11 @@ import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 import type { Locale } from '#/lib/i18n/locales'
 import { localizedPath } from '#/lib/i18n/routing'
 
-import type { StrapiCollectionResponse, StrapiEntry, StrapiImage } from './types'
+import type {
+  StrapiCollectionResponse,
+  StrapiEntry,
+  StrapiImage,
+} from './types'
 
 export type ProgramDetailButton = {
   text: string
@@ -38,8 +42,7 @@ export function formatProgramDescription(description: string) {
 
   return paragraphs
     .map(
-      (paragraph) =>
-        `<p>${escapeHtml(paragraph).replace(/\n/g, '<br />')}</p>`,
+      (paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br />')}</p>`,
     )
     .join('')
 }

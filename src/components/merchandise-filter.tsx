@@ -34,7 +34,9 @@ export function MerchandiseFilter({
           {labels.appliedCategoriesLabel}
         </h3>
         {selected.length === 0 ? (
-          <p className="text-sm text-garda-ink-soft/70">{labels.emptyCategories}</p>
+          <p className="text-sm text-garda-ink-soft/70">
+            {labels.emptyCategories}
+          </p>
         ) : (
           <div className="flex flex-wrap gap-2">
             {selected.map((s) => (

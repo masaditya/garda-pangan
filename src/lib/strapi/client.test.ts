@@ -113,9 +113,11 @@ describe('Strapi client', () => {
   })
 
   test('returns an empty array when safe fetch fails', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
-      new Response('Bad Request', { status: 400, statusText: 'Bad Request' }),
-    )
+    const fetcher = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(
+        new Response('Bad Request', { status: 400, statusText: 'Bad Request' }),
+      )
 
     const result = await fetchAllStrapiPagesSafe(
       '/api/events',

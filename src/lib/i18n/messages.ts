@@ -298,8 +298,7 @@ const id: Messages = {
     defaultTag: 'Event',
     shareLabel: 'Bagikan Event',
     emptyTitle: 'Tidak ada event ditemukan',
-    emptyDescription:
-      'Silakan coba kata kunci atau filter tahun yang berbeda.',
+    emptyDescription: 'Silakan coba kata kunci atau filter tahun yang berbeda.',
     pageDescription: 'Event dan kegiatan Garda Pangan',
   },
   merchandise: {
@@ -312,8 +311,7 @@ const id: Messages = {
     emptyCategories: 'Belum ada',
     emptyProducts: 'Belum ada merchandise untuk kategori yang dipilih.',
     pageTitle: 'Merchandise | Garda Pangan',
-    pageDescription:
-      'Dukung gerakan Garda Pangan melalui merchandise resmi.',
+    pageDescription: 'Dukung gerakan Garda Pangan melalui merchandise resmi.',
   },
   penerima: {
     pageTitle: 'Penerima Bantuan - Garda Pangan',
@@ -324,7 +322,8 @@ const id: Messages = {
   artikel: {
     heroTitle: 'Artikel',
     heroDescription: 'Cerita Penyelamatan Makanan',
-    heroSubtitle: 'Baca kabar terbaru, panduan, dan cerita dampak dari Garda Pangan.',
+    heroSubtitle:
+      'Baca kabar terbaru, panduan, dan cerita dampak dari Garda Pangan.',
     emptyState: 'Belum ada artikel yang dipublikasikan.',
     backToArticles: 'Kembali ke Artikel',
     pageTitle: 'Artikel - Garda Pangan',
@@ -478,8 +477,7 @@ const en: Messages = {
     moreLabel: 'Learn More',
     partnerCta: 'Become a Partner',
     pageTitle: 'Our Programs - Garda Pangan',
-    pageDescription:
-      'Garda Pangan programs for rescuing surplus food.',
+    pageDescription: 'Garda Pangan programs for rescuing surplus food.',
   },
   knowledge: {
     heroTitle: 'Knowledge & Insights',
@@ -516,18 +514,19 @@ const en: Messages = {
     emptyCategories: 'None yet',
     emptyProducts: 'No merchandise found for the selected categories.',
     pageTitle: 'Merchandise | Garda Pangan',
-    pageDescription: 'Support the Garda Pangan movement through official merchandise.',
+    pageDescription:
+      'Support the Garda Pangan movement through official merchandise.',
   },
   penerima: {
     pageTitle: 'Beneficiaries - Garda Pangan',
-    pageDescription:
-      'Primary beneficiaries of Garda Pangan food distribution.',
+    pageDescription: 'Primary beneficiaries of Garda Pangan food distribution.',
     watchTestimonial: 'Watch Testimonials',
   },
   artikel: {
     heroTitle: 'Articles',
     heroDescription: 'Food Rescue Stories',
-    heroSubtitle: 'Read the latest news, guides, and impact stories from Garda Pangan.',
+    heroSubtitle:
+      'Read the latest news, guides, and impact stories from Garda Pangan.',
     emptyState: 'No published articles yet.',
     backToArticles: 'Back to Articles',
     pageTitle: 'Articles - Garda Pangan',
@@ -540,8 +539,7 @@ const en: Messages = {
   },
   mitra: {
     pageTitle: 'Partners - Garda Pangan',
-    pageDescription:
-      'Join Garda Pangan as a partner in rescuing surplus food.',
+    pageDescription: 'Join Garda Pangan as a partner in rescuing surplus food.',
   },
 }
 

@@ -58,7 +58,9 @@ function FeaturedLogoContent({ logo }: { logo: LogoItem }) {
         </>
       ) : logo.variant === 'forbes' ? (
         <>
-          <span className="text-[1.6rem] font-black lg:text-[2rem]">Forbes</span>
+          <span className="text-[1.6rem] font-black lg:text-[2rem]">
+            Forbes
+          </span>
           <span className="ml-1 text-[0.5rem] font-semibold">Indonesia</span>
         </>
       ) : logo.variant === 'bbc' ? (

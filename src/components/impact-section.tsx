@@ -66,23 +66,18 @@ export function ImpactSection({
     },
   ]
 
-  const variants = [
-    'clipboard',
-    'megaphone',
-    'target',
-    'ecosystem',
-  ] as const
+  const variants = ['clipboard', 'megaphone', 'target', 'ecosystem'] as const
 
   const impactMetrics = stats
     ? stats.map((stat, index) => ({
-      value: stat.value,
-      label: stat.label,
-      imageSrc:
-        normalizeStrapiMediaUrl(stat.image?.url) ||
-        defaultMetrics[index % defaultMetrics.length].imageSrc,
-      variant: variants[index % variants.length],
-      testId: `impact-card-${index}`,
-    }))
+        value: stat.value,
+        label: stat.label,
+        imageSrc:
+          normalizeStrapiMediaUrl(stat.image?.url) ||
+          defaultMetrics[index % defaultMetrics.length].imageSrc,
+        variant: variants[index % variants.length],
+        testId: `impact-card-${index}`,
+      }))
     : defaultMetrics
 
   return (
@@ -103,10 +98,7 @@ export function ImpactSection({
           {/* Card 1: Top Left */}
           <div className="flex justify-center md:justify-start">
             {impactMetrics[0] && (
-              <MetricCard
-                {...impactMetrics[0]}
-                className="md:-rotate-2"
-              />
+              <MetricCard {...impactMetrics[0]} className="md:-rotate-2" />
             )}
           </div>
 
@@ -162,4 +154,3 @@ export function ImpactSection({
     </SectionShell>
   )
 }
-

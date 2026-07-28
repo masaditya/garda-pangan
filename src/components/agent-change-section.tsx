@@ -19,7 +19,6 @@ export function AgentChangeSection({
   subtitle,
   cards,
 }: AgentChangeSectionProps) {
-
   const defaultCards = [
     {
       title: 'Donasi Makanan',
@@ -46,12 +45,12 @@ export function AgentChangeSection({
   const displayCards =
     cards && cards.length > 0
       ? cards.map((card, index) => ({
-        title: card.title,
-        description: card.description,
-        iconSrc:
-          normalizeStrapiMediaUrl(card.image?.url) ||
-          defaultCards[index % defaultCards.length].iconSrc,
-      }))
+          title: card.title,
+          description: card.description,
+          iconSrc:
+            normalizeStrapiMediaUrl(card.image?.url) ||
+            defaultCards[index % defaultCards.length].iconSrc,
+        }))
       : defaultCards
 
   return (
@@ -83,7 +82,7 @@ export function AgentChangeSection({
             title={card.title}
             description={card.description}
             iconSrc={card.iconSrc}
-            className='rounded-lg!'
+            className="rounded-lg!"
             action={
               <div className="flex">
                 <GardaButton href="#" variant="impact" className="w-full">

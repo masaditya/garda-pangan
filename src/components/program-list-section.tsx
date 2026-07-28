@@ -38,9 +38,9 @@ export function ProgramListSection({
   const listContainerRef = useRef<HTMLDivElement>(null)
 
   const bgUrl = backgroundImage
-    ? (backgroundImage.startsWith('/uploads')
-        ? normalizeStrapiMediaUrl(backgroundImage) ?? backgroundImage
-        : backgroundImage)
+    ? backgroundImage.startsWith('/uploads')
+      ? (normalizeStrapiMediaUrl(backgroundImage) ?? backgroundImage)
+      : backgroundImage
     : '/images/hero-program-fallback.jpg'
   const titleLines = title.split(/<br\s*\/?>|\\n|\n/i)
 
@@ -88,14 +88,19 @@ export function ProgramListSection({
             <ul className="flex flex-col" role="list">
               {programs.map((program, index) => {
                 const isExpanded = expandedIndex === index
-                const modalButtons = program.buttons?.filter((button) => !isMoreDetailsButton(button)) || []
+                const modalButtons =
+                  program.buttons?.filter(
+                    (button) => !isMoreDetailsButton(button),
+                  ) || []
                 const imageUrl = getImageUrl(program.image)
 
                 return (
                   <li key={`${program.title}-${index}`}>
                     <button
                       type="button"
-                      onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                      onClick={() =>
+                        setExpandedIndex(isExpanded ? null : index)
+                      }
                       className={`group relative flex w-full items-center justify-between gap-4 border-b border-white/10 px-2 py-4 text-left transition-colors duration-300 sm:gap-6 sm:px-4 sm:py-5 md:py-6 ${isExpanded ? 'bg-white/5' : ''}`}
                     >
                       <span
@@ -129,7 +134,9 @@ export function ProgramListSection({
 
                     <div
                       className={`grid transition-all duration-300 ease-in-out ${
-                        isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                        isExpanded
+                          ? 'grid-rows-[1fr] opacity-100'
+                          : 'grid-rows-[0fr] opacity-0'
                       }`}
                     >
                       <div className="overflow-hidden">
@@ -149,7 +156,9 @@ export function ProgramListSection({
                             <div className="flex w-full flex-col justify-start">
                               <div
                                 className="prose prose-garda prose-sm sm:prose-base max-w-none text-garda-forest/80 mb-6"
-                                dangerouslySetInnerHTML={{ __html: program.description }}
+                                dangerouslySetInnerHTML={{
+                                  __html: program.description,
+                                }}
                               />
                               {modalButtons.length > 0 ? (
                                 <div className="flex flex-wrap items-center gap-4 mt-auto">
@@ -176,8 +185,6 @@ export function ProgramListSection({
           </div>
         </div>
       </section>
-
-
     </>
   )
 }

@@ -66,13 +66,21 @@ function LanguageSwitcher({
       }
     >
       <Globe className="size-4 text-garda-forest/70" aria-hidden="true" />
-      <span className={locale === 'id' ? 'text-garda-forest' : 'text-garda-forest/60'}>
+      <span
+        className={
+          locale === 'id' ? 'text-garda-forest' : 'text-garda-forest/60'
+        }
+      >
         ID
       </span>
       <span className="text-garda-forest/40" aria-hidden="true">
         |
       </span>
-      <span className={locale === 'en' ? 'text-garda-forest' : 'text-garda-forest/60'}>
+      <span
+        className={
+          locale === 'en' ? 'text-garda-forest' : 'text-garda-forest/60'
+        }
+      >
         EN
       </span>
     </a>

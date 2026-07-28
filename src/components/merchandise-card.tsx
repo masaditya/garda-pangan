@@ -98,13 +98,13 @@ export function MerchandiseCard({ product }: { product: MerchandiseItem }) {
                 className={`${chipClass} inline-flex items-center gap-1 hover:bg-garda-forest hover:text-white hover:border-garda-forest`}
               >
                 {platform}
-                <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
+                <ExternalLink
+                  className="h-3 w-3 opacity-60"
+                  aria-hidden="true"
+                />
               </a>
             ) : (
-              <span
-                key={platform}
-                className={chipClass}
-              >
+              <span key={platform} className={chipClass}>
                 {platform}
               </span>
             )

@@ -252,7 +252,12 @@ export default function Footer({
     <footer className="overflow-hidden bg-[#042918] text-white">
       <FooterWatermark />
       <FooterNavBar currentPath={currentPath} locale={locale} email={email} />
-      <FooterMiddle locale={locale} address={address} phone={phone} email={email} />
+      <FooterMiddle
+        locale={locale}
+        address={address}
+        phone={phone}
+        email={email}
+      />
       <FooterBottom locale={locale} socialLinks={socialLinks} />
     </footer>
   )

@@ -81,17 +81,15 @@ describe('HeroScrollSequence', () => {
     expect(screen.getByTestId('hero-o-portal')).toBeTruthy()
     expect(screen.getByTestId('hero-reveal-image')).toBeTruthy()
     expect(
-      (screen.getByTestId('hero-reveal-image') as HTMLImageElement).getAttribute(
-        'src',
-      ),
+      (
+        screen.getByTestId('hero-reveal-image') as HTMLImageElement
+      ).getAttribute('src'),
     ).toBe('/garda-hero-reference.png')
     expect(screen.getByText(/portions of food rescued/i)).toBeTruthy()
     expect(
       screen.getByRole('heading', { name: /tahukah kamu\?/i }),
     ).toBeTruthy()
-    expect(
-      screen.getByRole('link', { name: /scroll ke konten/i }),
-    ).toBeTruthy()
+    expect(screen.getByRole('link', { name: /scroll ke konten/i })).toBeTruthy()
     expect(gsap.timeline).toHaveBeenCalled()
   })
 
@@ -100,9 +98,7 @@ describe('HeroScrollSequence', () => {
     const { gsap } = await import('#/lib/gsap-client')
     vi.mocked(gsap.timeline).mockClear()
 
-    render(
-      <HeroScrollSequence title="ONE STOP FOOD LOSS & WASTE SOLUTION" />,
-    )
+    render(<HeroScrollSequence title="ONE STOP FOOD LOSS & WASTE SOLUTION" />)
 
     expect(screen.getByTestId('hero-o-portal')).toBeTruthy()
     expect(gsap.timeline).toHaveBeenCalled()

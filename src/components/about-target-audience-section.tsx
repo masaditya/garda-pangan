@@ -30,10 +30,18 @@ function AudienceCard({ title, icon }: { title: string; icon?: any }) {
     <div className="flex flex-col items-start gap-4 shadow rounded-2xl bg-white p-4 text-left font-serif">
       {iconUrl && (
         <div className="flex h-20 w-20 items-center justify-center">
-          <img src={iconUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
+          <img
+            src={iconUrl}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain"
+          />
         </div>
       )}
-      <h3 className="leading-tight font-medium text-2xl text-garda-ink">{title}</h3>
+      <h3 className="leading-tight font-medium text-2xl text-garda-ink">
+        {title}
+      </h3>
     </div>
   )
 }
@@ -41,8 +49,12 @@ function AudienceCard({ title, icon }: { title: string; icon?: any }) {
 export function AboutTargetAudienceSection({ data }: { data?: any }) {
   const donorTitle = data?.targetDonaturTitle || 'Target Donatur'
   const recipientTitle = data?.targetPenerimaTitle || 'Target Penerima'
-  const donaturCards = data?.targetDonaturCards || TARGET_DONATUR.map((t, i) => ({ id: i, title: t }))
-  const penerimaCards = data?.targetPenerimaCards || TARGET_PENERIMA.map((t, i) => ({ id: i, title: t }))
+  const donaturCards =
+    data?.targetDonaturCards ||
+    TARGET_DONATUR.map((t, i) => ({ id: i, title: t }))
+  const penerimaCards =
+    data?.targetPenerimaCards ||
+    TARGET_PENERIMA.map((t, i) => ({ id: i, title: t }))
 
   return (
     <SectionShell tone="white">
@@ -53,7 +65,11 @@ export function AboutTargetAudienceSection({ data }: { data?: any }) {
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
             {donaturCards.map((target: any) => (
-              <AudienceCard key={target.id} title={target.title} icon={target.icon} />
+              <AudienceCard
+                key={target.id}
+                title={target.title}
+                icon={target.icon}
+              />
             ))}
           </div>
         </div>
@@ -64,7 +80,11 @@ export function AboutTargetAudienceSection({ data }: { data?: any }) {
           </h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
             {penerimaCards.map((target: any) => (
-              <AudienceCard key={target.id} title={target.title} icon={target.icon} />
+              <AudienceCard
+                key={target.id}
+                title={target.title}
+                icon={target.icon}
+              />
             ))}
           </div>
         </div>

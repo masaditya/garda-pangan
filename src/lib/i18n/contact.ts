@@ -1,5 +1,3 @@
-
-
 const illustrationUrls = [
   '/illustrations/donation.svg',
   '/illustrations/organic.svg',
@@ -26,7 +24,13 @@ export type ContactCategory = {
 
 export function buildContactCategories(messages: {
   common: { contactUs: string }
-  contact: { categories: Array<{ title: string; description: string; thumbnail?: { url: string } }> }
+  contact: {
+    categories: Array<{
+      title: string
+      description: string
+      thumbnail?: { url: string }
+    }>
+  }
 }): ContactCategory[] {
   return messages.contact.categories.map((category, index) => ({
     id: String(index + 1),

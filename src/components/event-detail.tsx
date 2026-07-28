@@ -40,7 +40,9 @@ export function EventDetail({
               </svg>
             </div>
             <div className="flex flex-col justify-center text-left">
-              <p className="mb-1 text-sm font-semibold leading-none">{authorLabel}</p>
+              <p className="mb-1 text-sm font-semibold leading-none">
+                {authorLabel}
+              </p>
               <p className="text-xs leading-none text-white/60">{date}</p>
             </div>
           </div>
@@ -117,7 +119,6 @@ export function EventDetail({
       {/* Main Content Overlapping Hero */}
       <section className="relative z-10 mx-auto max-w-[1200px] px-4 pb-24 sm:px-6 lg:px-8">
         {/* Badges and Share Row */}
-
 
         {/* Hero Image / Carousel placeholder */}
         {/* Caption */}

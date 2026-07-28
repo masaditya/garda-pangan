@@ -51,9 +51,7 @@ function DidYouKnowCarousel({
 }) {
   const isImmersive = variant === 'immersive'
 
-  const plugin = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: true })
-  )
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }))
 
   return (
     <Carousel
@@ -65,9 +63,7 @@ function DidYouKnowCarousel({
       <div
         className={cn(
           'flex flex-col gap-12',
-          isImmersive
-            ? 'items-end'
-            : 'items-center',
+          isImmersive ? 'items-end' : 'items-center',
         )}
       >
         <CarouselContent className="w-full">
@@ -159,7 +155,10 @@ export function DidYouKnowSection({
 
   if (isImmersive) {
     return (
-      <section aria-labelledby="facts-heading" className="w-full px-6 sm:px-12 lg:px-24">
+      <section
+        aria-labelledby="facts-heading"
+        className="w-full px-6 sm:px-12 lg:px-24"
+      >
         <div
           data-testid="facts-frame"
           className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 py-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16"

@@ -1,7 +1,11 @@
 import { fetchAllStrapiPagesSafe } from './client'
 import { withStrapiLocale, type StrapiLocaleOptions } from './locale'
 
-import type { StrapiCollectionResponse, StrapiEntry, StrapiMedia } from './types'
+import type {
+  StrapiCollectionResponse,
+  StrapiEntry,
+  StrapiMedia,
+} from './types'
 
 export type Event = StrapiEntry & {
   title: string

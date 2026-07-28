@@ -19,7 +19,7 @@ export function AnimatedNumber({ value }: { value: string }) {
       ease: 'power2.out',
       onUpdate: () => {
         el.innerText = Math.round(target.val).toLocaleString('en-US')
-      }
+      },
     })
 
     return () => {

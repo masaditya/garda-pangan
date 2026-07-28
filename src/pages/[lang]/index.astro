@@ -14,6 +14,7 @@ import {
   resolveLocale,
 } from '#/lib/i18n'
 import { getHomepage } from '#/lib/strapi/pages'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 export function getStaticPaths() {
   return getLangStaticPaths()
@@ -70,7 +71,15 @@ const homepage = homepageResponse?.data
       />
     </div>
     <div class="reveal reveal-fade-up">
-      <PartnersGridSection client:visible />
+      <PartnersGridSection
+        title={homepage?.partnerTitle}
+        partners={homepage?.partnerLogos?.map((l: any) => ({
+          id: l.id,
+          name: l.name,
+          logoSrc: normalizeStrapiMediaUrl(l.url),
+        }))}
+        client:visible
+      />
     </div>
     <div class="max-w-full overflow-hidden">
       <SupportersGridSection

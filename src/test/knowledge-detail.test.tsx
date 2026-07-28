@@ -14,7 +14,8 @@ describe('KnowledgeDetail', () => {
     ],
     tags: ['Kesehatan Mental'],
     parsedContent: '<p>Konten artikel lengkap.</p>',
-    articleUrl: 'http://localhost:4321/knowledge/apresiasi-satu-indonesia-awards',
+    articleUrl:
+      'http://localhost:4321/knowledge/apresiasi-satu-indonesia-awards',
     caption: 'Foto dokumentasi kegiatan',
   }
 

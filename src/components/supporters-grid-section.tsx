@@ -53,13 +53,13 @@ export function SupportersGridSection({
   const items =
     supporters && supporters.length > 0
       ? supporters.map((s) => ({
-        id: String(s.id),
-        name: s.title,
-        logoSrc:
-          normalizeStrapiMediaUrl(s.image?.url) ||
-          '/brands/badan-pangan-nasional.svg',
-        alt: s.title,
-      }))
+          id: String(s.id),
+          name: s.title,
+          logoSrc:
+            normalizeStrapiMediaUrl(s.image?.url) ||
+            '/brands/badan-pangan-nasional.svg',
+          alt: s.title,
+        }))
       : defaultSupporters
 
   // Duplicate for seamless infinite loop
@@ -72,8 +72,8 @@ export function SupportersGridSection({
       spacing="default"
       tone="transparent"
       // className="bg-[#FCF9E0]"
-    // tone="transparent"
-    className="bg-(--forest-950)"
+      // tone="transparent"
+      className="bg-(--forest-950)"
     >
       <div className="mx-auto flex w-full flex-col gap-10">
         <div className="flex flex-col items-center gap-4 text-center">
@@ -119,4 +119,3 @@ export function SupportersGridSection({
     </SectionShell>
   )
 }
-

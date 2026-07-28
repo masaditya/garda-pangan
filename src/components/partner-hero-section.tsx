@@ -15,10 +15,11 @@ function getYoutubeId(url: string) {
 export function PartnerHeroSection({ data }: { data?: MitraData }) {
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const bgImage = normalizeStrapiMediaUrl(data?.heroBackgroundMedia?.url) || '/garda-hero-reference.png'
+  const bgImage =
+    normalizeStrapiMediaUrl(data?.heroBackgroundMedia?.url) ||
+    '/garda-hero-reference.png'
   const title = data?.heroTitle || 'Jadi \n Mitra'
   const videoId = data?.heroVideoUrl ? getYoutubeId(data.heroVideoUrl) : null
-  
 
   return (
     <section

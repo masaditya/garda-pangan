@@ -148,6 +148,8 @@ export type Homepage = StrapiEntry & {
   supporterTitle?: string | null
   supporterSubtitle?: string | null
   supporterCards?: SupporterCard[]
+  partnerTitle?: string | null
+  partnerLogos?: StrapiMedia[] | null
   // Legacy fields (optional)
   statsPortionsRescued?: string | null
   statsCo2Reduced?: string | null
@@ -155,7 +157,9 @@ export type Homepage = StrapiEntry & {
   statsFoodScrap?: string | null
 }
 
-export async function getAboutPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+export async function getAboutPage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
   return fetchStrapiSingleSafe<AboutPage>(
     '/api/about',
     withStrapiLocale(
@@ -167,7 +171,9 @@ export async function getAboutPage({ locale = 'id' }: StrapiLocaleOptions = {}) 
   )
 }
 
-export async function getMitraPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+export async function getMitraPage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
   return fetchStrapiSingleSafe<MitraPage>(
     '/api/mitra',
     withStrapiLocale(
@@ -244,7 +250,9 @@ export type ContactPage = StrapiEntry & {
   actionCards?: ContactActionCard[]
 }
 
-export async function getContactPage({ locale = 'id' }: StrapiLocaleOptions = {}) {
+export async function getContactPage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
   return fetchStrapiSingleSafe<ContactPage>(
     '/api/contact-page',
     withStrapiLocale(
@@ -255,4 +263,3 @@ export async function getContactPage({ locale = 'id' }: StrapiLocaleOptions = {}
     ),
   )
 }
-

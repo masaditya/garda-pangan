@@ -3,7 +3,10 @@ import { SectionShell } from './section-shell'
 import { MerchandiseFilter } from './merchandise-filter'
 import { MerchandiseCard } from './merchandise-card'
 import type { MerchandiseItem } from './merchandise-card'
-import type { CategoryCount, MerchandiseFilterLabels } from './merchandise-filter'
+import type {
+  CategoryCount,
+  MerchandiseFilterLabels,
+} from './merchandise-filter'
 
 type MerchandiseCatalogProps = {
   products: MerchandiseItem[]

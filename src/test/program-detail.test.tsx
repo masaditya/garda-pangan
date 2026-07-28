@@ -54,7 +54,9 @@ describe('ProgramDetail', () => {
     expect(dialog).toBeDefined()
     expect(within(dialog).getByText('Button Test')).toBeDefined()
     expect(within(dialog).getByText('Detail lengkap program.')).toBeDefined()
-    expect(within(dialog).getByRole('link', { name: /jadi mitra/i })).toBeDefined()
+    expect(
+      within(dialog).getByRole('link', { name: /jadi mitra/i }),
+    ).toBeDefined()
     expect(
       within(dialog).queryByRole('button', { name: /selengkapnya/i }),
     ).toBeNull()

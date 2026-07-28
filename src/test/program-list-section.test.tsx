@@ -85,8 +85,12 @@ describe('ProgramListSection', () => {
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeDefined()
-    expect(within(dialog).getByText('Food Rescue Dari Bisnis Makanan')).toBeDefined()
+    expect(
+      within(dialog).getByText('Food Rescue Dari Bisnis Makanan'),
+    ).toBeDefined()
     expect(within(dialog).getByText('Detail lengkap program.')).toBeDefined()
-    expect(within(dialog).getByRole('link', { name: /jadi mitra/i })).toBeDefined()
+    expect(
+      within(dialog).getByRole('link', { name: /jadi mitra/i }),
+    ).toBeDefined()
   })
 })

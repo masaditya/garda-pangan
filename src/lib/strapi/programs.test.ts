@@ -84,9 +84,9 @@ describe('programs helpers', () => {
       ),
     )
 
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(
-      new Response(JSON.stringify(exampleResponse)),
-    )
+    const fetcher = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(new Response(JSON.stringify(exampleResponse)))
 
     const programs = await getPrograms({ fetcher })
 

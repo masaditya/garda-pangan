@@ -55,7 +55,7 @@ export function SupportersCollaboratorsSection({
           ctaText: card.ctaText || 'MULAI',
           ctaLink: card.ctaLink || '#',
         }))
-      : defaultAgentCards.map(c => ({
+      : defaultAgentCards.map((c) => ({
           ...c,
           ctaText: 'MULAI',
           ctaLink: '#',
@@ -96,7 +96,11 @@ export function SupportersCollaboratorsSection({
               className="rounded-lg!"
               action={
                 <div className="flex">
-                  <GardaButton href={card.ctaLink} variant="impact" className="w-full">
+                  <GardaButton
+                    href={card.ctaLink}
+                    variant="impact"
+                    className="w-full"
+                  >
                     {card.ctaText}
                   </GardaButton>
                 </div>

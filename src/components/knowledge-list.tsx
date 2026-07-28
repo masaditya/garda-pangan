@@ -1,9 +1,5 @@
 import { useState, useMemo } from 'react'
-import {
-  FolderOpen,
-  Search,
-  ChevronDown,
-} from 'lucide-react'
+import { FolderOpen, Search, ChevronDown } from 'lucide-react'
 
 import type { KnowledgeItem } from '#/lib/strapi/knowledge'
 import type { Locale } from '#/lib/i18n/locales'
@@ -53,7 +49,10 @@ export function KnowledgeList({
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false)
 
   const displayCategoriesTabs = useMemo(
-    () => [labels.filterAllLabel, ...categories.map((category) => category.name)],
+    () => [
+      labels.filterAllLabel,
+      ...categories.map((category) => category.name),
+    ],
     [categories, labels.filterAllLabel],
   )
 
@@ -83,7 +82,9 @@ export function KnowledgeList({
       .sort((a, b) => {
         const timeA = new Date(a.date || 0).getTime()
         const timeB = new Date(b.date || 0).getTime()
-        return sortOrder === labels.sortNewestLabel ? timeB - timeA : timeA - timeB
+        return sortOrder === labels.sortNewestLabel
+          ? timeB - timeA
+          : timeA - timeB
       })
   }, [
     initialKnowledges,
@@ -202,23 +203,25 @@ export function KnowledgeList({
 
           {isSortDropdownOpen && (
             <div className="absolute right-0 top-full mt-2 w-40 overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-black/5 z-30 animate-in fade-in slide-in-from-top-2">
-              {[labels.sortNewestLabel, labels.sortOldestLabel].map((option) => (
-                <button
-                  key={option}
-                  type="button"
-                  className={`w-full px-5 py-3 text-left text-sm font-bold transition-colors ${
-                    sortOrder === option
-                      ? 'bg-garda-mint-soft text-garda-forest'
-                      : 'text-garda-forest/60 hover:bg-garda-mint-soft/50'
-                  }`}
-                  onClick={() => {
-                    setSortOrder(option)
-                    setIsSortDropdownOpen(false)
-                  }}
-                >
-                  {option}
-                </button>
-              ))}
+              {[labels.sortNewestLabel, labels.sortOldestLabel].map(
+                (option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    className={`w-full px-5 py-3 text-left text-sm font-bold transition-colors ${
+                      sortOrder === option
+                        ? 'bg-garda-mint-soft text-garda-forest'
+                        : 'text-garda-forest/60 hover:bg-garda-mint-soft/50'
+                    }`}
+                    onClick={() => {
+                      setSortOrder(option)
+                      setIsSortDropdownOpen(false)
+                    }}
+                  >
+                    {option}
+                  </button>
+                ),
+              )}
             </div>
           )}
         </div>

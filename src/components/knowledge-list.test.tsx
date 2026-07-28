@@ -61,7 +61,9 @@ describe('KnowledgeList', () => {
       />,
     )
 
-    expect(screen.getByPlaceholderText(/Cari Knowledge & Insights/i)).toBeTruthy()
+    expect(
+      screen.getByPlaceholderText(/Cari Knowledge & Insights/i),
+    ).toBeTruthy()
     expect(screen.getByText('Tampilkan Semua')).toBeTruthy()
     expect(screen.getAllByText('Kategori A').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Kategori B').length).toBeGreaterThan(0)
@@ -83,7 +85,11 @@ describe('KnowledgeList', () => {
 
   test('shows empty message when no articles match filters', () => {
     render(
-      <KnowledgeList initialKnowledges={[]} categories={[]} labels={defaultLabels} />,
+      <KnowledgeList
+        initialKnowledges={[]}
+        categories={[]}
+        labels={defaultLabels}
+      />,
     )
 
     expect(screen.getByText(defaultLabels.emptyListMessage)).toBeTruthy()
@@ -99,7 +105,9 @@ describe('KnowledgeList', () => {
       />,
     )
 
-    const searchInput = screen.getByPlaceholderText(/Cari Knowledge & Insights/i)
+    const searchInput = screen.getByPlaceholderText(
+      /Cari Knowledge & Insights/i,
+    )
     fireEvent.change(searchInput, { target: { value: 'Second' } })
 
     expect(screen.getByText('Second Knowledge')).toBeTruthy()
@@ -156,8 +164,8 @@ describe('KnowledgeList', () => {
       />,
     )
 
-    expect(screen.getByRole('link', { name: /First Insight/i }).getAttribute('href')).toBe(
-      '/id/knowledge/first-insight',
-    )
+    expect(
+      screen.getByRole('link', { name: /First Insight/i }).getAttribute('href'),
+    ).toBe('/id/knowledge/first-insight')
   })
 })

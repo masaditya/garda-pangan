@@ -3,7 +3,10 @@ import { localizedPath } from './routing'
 import type { Messages } from './messages'
 import type { NavItem } from '#/lib/nav-active'
 
-export function getHeaderNavItems(locale: Locale, messages: Messages): NavItem[] {
+export function getHeaderNavItems(
+  locale: Locale,
+  messages: Messages,
+): NavItem[] {
   return [
     { href: localizedPath('/', locale), label: messages.footer.home },
     { href: localizedPath('/program', locale), label: messages.nav.program },
@@ -17,13 +20,19 @@ export function getHeaderNavItems(locale: Locale, messages: Messages): NavItem[]
       ],
     },
     { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
-    { href: localizedPath('/merchandise', locale), label: locale === 'id' ? 'Produk' : 'Products' },
+    {
+      href: localizedPath('/merchandise', locale),
+      label: locale === 'id' ? 'Produk' : 'Products',
+    },
     { href: localizedPath('/support', locale), label: messages.nav.donate },
     { href: localizedPath('/kontak', locale), label: messages.nav.contact },
   ]
 }
 
-export function getFooterNavItems(locale: Locale, messages: Messages): NavItem[] {
+export function getFooterNavItems(
+  locale: Locale,
+  messages: Messages,
+): NavItem[] {
   return [
     { href: localizedPath('/', locale), label: messages.footer.home },
     { href: localizedPath('/program', locale), label: messages.nav.program },
@@ -37,7 +46,10 @@ export function getFooterNavItems(locale: Locale, messages: Messages): NavItem[]
       ],
     },
     { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
-    { href: localizedPath('/merchandise', locale), label: locale === 'id' ? 'Produk' : 'Products' },
+    {
+      href: localizedPath('/merchandise', locale),
+      label: locale === 'id' ? 'Produk' : 'Products',
+    },
     { href: localizedPath('/support', locale), label: messages.nav.donate },
     { href: localizedPath('/kontak', locale), label: messages.nav.contact },
   ]

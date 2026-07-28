@@ -5,12 +5,15 @@ type HeroTitleProps = {
   impactBackgroundImage?: string | null
 }
 
-export function HeroTitle({ oPortalRef, impactBackgroundImage }: HeroTitleProps) {
+export function HeroTitle({
+  oPortalRef,
+  impactBackgroundImage,
+}: HeroTitleProps) {
   const portalImage = impactBackgroundImage || '/garda-hero-reference.png'
   return (
     <>
       <span className="relative block text-garda-sun">
-        <span className='text-white'>ONE STOP</span>{' '}
+        <span className="text-white">ONE STOP</span>{' '}
         <span className="whitespace-nowrap">
           {'F'}
           <span
@@ -28,7 +31,9 @@ export function HeroTitle({ oPortalRef, impactBackgroundImage }: HeroTitleProps)
           {'OD'}
         </span>
       </span>
-      <span className="block text-white">LOSS &amp; <span className='text-garda-sun'>WASTE</span></span>
+      <span className="block text-white">
+        LOSS &amp; <span className="text-garda-sun">WASTE</span>
+      </span>
       <span className="block text-garda-sun">SOLUTION</span>
     </>
   )

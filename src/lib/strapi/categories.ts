@@ -12,7 +12,9 @@ export type Category = StrapiEntry & {
 
 export type CategoriesResponse = StrapiCollectionResponse<Category>
 
-export async function getCategories({ locale = 'id' }: StrapiLocaleOptions = {}) {
+export async function getCategories({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
   return fetchAllStrapiPages<Category>(
     '/api/categories',
     withStrapiLocale(

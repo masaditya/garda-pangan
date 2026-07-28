@@ -110,14 +110,19 @@
 }
 
 @keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @theme inline {
   --font-sans: 'Satoshi', 'Avenir Next', 'Segoe UI', sans-serif;
   --font-serif: 'Hedvig Letters Serif', Georgia, 'Times New Roman', serif;
-  --font-display: 'Hedvig Letters Serif', 'Geist', 'Darker Grotesque', var(--font-sans);
+  --font-display:
+    'Hedvig Letters Serif', 'Geist', 'Darker Grotesque', var(--font-sans);
 
   --animate-marquee: marquee-scroll 28s linear infinite;
 
@@ -284,7 +289,9 @@ main:not(.no-page-transition) {
 /* Varied scroll-reveal transitions */
 html.js .reveal {
   opacity: 0;
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
 
@@ -308,4 +315,3 @@ html.js .reveal.is-visible {
   opacity: 1;
   transform: translate(0) scale(1);
 }
-

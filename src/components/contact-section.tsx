@@ -45,7 +45,9 @@ export function ContactSection({
                 <div className="mb-8 flex aspect-video w-full items-center justify-center rounded-2xl bg-garda-mint-soft/30 overflow-hidden">
                   {cat.thumbnail?.url ? (
                     <img
-                      src={normalizeStrapiMediaUrl(cat.thumbnail.url) ?? undefined}
+                      src={
+                        normalizeStrapiMediaUrl(cat.thumbnail.url) ?? undefined
+                      }
                       alt={cat.title}
                       loading="lazy"
                       decoding="async"

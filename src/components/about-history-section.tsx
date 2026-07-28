@@ -5,7 +5,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
   const title = data?.historyTitle || 'Sejarah Kami'
   const content1 = data?.historyContent1 || ''
   const content2 = data?.historyContent2 || ''
-  
+
   const imageUrl1 = normalizeStrapiMediaUrl(data?.historyImage1?.url)
   const imageUrl2 = normalizeStrapiMediaUrl(data?.historyImage2?.url)
   const imageUrl3 = normalizeStrapiMediaUrl(data?.historyImage3?.url)
@@ -24,7 +24,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
             {content2}
           </div>
         </div>
-        
+
         <div className="lg:col-span-7 lg:pl-8">
           <div className="text-xl leading-relaxed text-garda-ink-soft">
             {imageUrl1 && (
@@ -38,7 +38,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
             )}
             <div className="whitespace-pre-wrap">{content1}</div>
           </div>
-          
+
           <div className="relative aspect-square sm:aspect-[4/3] w-full mt-16 sm:mt-24">
             {imageUrl2 ? (
               <img
@@ -51,7 +51,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
             ) : (
               <div className="absolute left-0 top-0 w-[60%] h-[75%] rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl bg-garda-paper/50" />
             )}
-            
+
             {imageUrl3 ? (
               <img
                 src={imageUrl3}

@@ -31,7 +31,7 @@ function PartnerLogoCard({
   alt: string
 }) {
   return (
-    <article className="flex aspect-4/3 items-center justify-center rounded-lg bg-white p-2 transition-shadow duration-300 hover:shadow-xs">
+    <article className="flex aspect-4/3 items-center justify-center rounded-lg bg-white p-4 transition-shadow duration-300 hover:shadow-xs">
       <img
         className="h-full w-full object-contain"
         src={logoSrc}
@@ -98,7 +98,10 @@ export function PartnersGridSection({
               className="flex flex-wrap w-full justify-center gap-3 lg:gap-4"
             >
               {row.map((partner) => (
-                <div key={partner.id} className="w-[calc((100%-1.5rem)/3)] sm:w-[calc((100%-2.25rem)/4)] md:w-[calc((100%-3rem)/5)] lg:w-[calc((100%-6rem)/7)]">
+                <div
+                  key={partner.id}
+                  className="w-[calc((100%-1.5rem)/3)] sm:w-[calc((100%-2.25rem)/4)] md:w-[calc((100%-3rem)/5)] lg:w-[calc((100%-6rem)/7)]"
+                >
                   <PartnerLogoCard
                     name={partner.name}
                     logoSrc={partner.logoSrc}
