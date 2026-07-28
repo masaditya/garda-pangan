@@ -1,5 +1,6 @@
 import { GardaButton } from './garda-button'
 import { normalizeStrapiMediaUrl } from '../lib/strapi/client'
+import { localizedPath, type Locale } from '#/lib/i18n'
 
 type AgentChangeBannerProps = {
   title?: string | null
@@ -7,14 +8,16 @@ type AgentChangeBannerProps = {
   ctaText?: string | null
   ctaLink?: string | null
   personImage?: string | null
+  locale?: Locale
 }
 
 export function AgentChangeBanner({
   title,
   subtitle,
   ctaText = 'MULAI',
-  ctaLink = '/relawan',
+  ctaLink,
   personImage,
+  locale = 'id',
 }: AgentChangeBannerProps) {
   console.log(personImage)
   return (
@@ -50,7 +53,7 @@ export function AgentChangeBanner({
           </div>
 
           <GardaButton
-            href={ctaLink || '#'}
+            href={localizedPath(ctaLink || '/relawan', locale)}
             variant="impact"
             className="min-w-[180px]"
           >

@@ -59,6 +59,7 @@ const homepage = homepageResponse?.data
         title={homepage?.agenPerubahanTitle}
         subtitle={homepage?.agenPerubahanSubtitle}
         cards={homepage?.agenPerubahanCards}
+        locale={locale}
       />
     </div>
     <div class="reveal reveal-fade-up">
@@ -68,6 +69,7 @@ const homepage = homepageResponse?.data
         ctaText={homepage?.agenPerubahanBannerCtaText}
         ctaLink={homepage?.agenPerubahanBannerCtaLink}
         personImage={homepage?.agenPerubahanBannerThumbnail?.url}
+        locale={locale}
       />
     </div>
     <div class="reveal reveal-fade-up">

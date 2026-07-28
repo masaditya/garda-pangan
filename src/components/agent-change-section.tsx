@@ -2,6 +2,7 @@ import { ActionCard } from './action-card'
 import { GardaButton } from './garda-button'
 import { SectionShell } from './section-shell'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { localizedPath, type Locale } from '#/lib/i18n'
 
 type AgentChangeSectionProps = {
   title?: string | null
@@ -11,13 +12,16 @@ type AgentChangeSectionProps = {
     title: string
     description: string
     image?: { url: string } | null
+    ctaLink?: string | null
   }[]
+  locale?: Locale
 }
 
 export function AgentChangeSection({
   title,
   subtitle,
   cards,
+  locale = 'id',
 }: AgentChangeSectionProps) {
   const defaultCards = [
     {
@@ -50,6 +54,7 @@ export function AgentChangeSection({
           iconSrc:
             normalizeStrapiMediaUrl(card.image?.url) ||
             defaultCards[index % defaultCards.length].iconSrc,
+          ctaLink: card.ctaLink,
         }))
       : defaultCards
 
@@ -85,7 +90,11 @@ export function AgentChangeSection({
             className="rounded-lg!"
             action={
               <div className="flex">
-                <GardaButton href="#" variant="impact" className="w-full">
+                <GardaButton
+                  href={localizedPath((card as any).ctaLink || '/', locale)}
+                  variant="impact"
+                  className="w-full"
+                >
                   MULAI
                 </GardaButton>
               </div>

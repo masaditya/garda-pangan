@@ -2,6 +2,7 @@ import { ActionCard } from './action-card'
 import { GardaButton } from './garda-button'
 import { SectionShell } from './section-shell'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { localizedPath, type Locale } from '#/lib/i18n'
 
 const defaultAgentCards = [
   {
@@ -37,12 +38,14 @@ type SupportersCollaboratorsSectionProps = {
     ctaText?: string | null
     ctaLink?: string | null
   }[]
+  locale?: Locale
 }
 
 export function SupportersCollaboratorsSection({
   title,
   subtitle,
   cards,
+  locale = 'id',
 }: SupportersCollaboratorsSectionProps) {
   const displayCards =
     cards && cards.length > 0
@@ -53,12 +56,12 @@ export function SupportersCollaboratorsSection({
             normalizeStrapiMediaUrl(card.image?.url) ||
             defaultAgentCards[index % defaultAgentCards.length].iconSrc,
           ctaText: card.ctaText || 'MULAI',
-          ctaLink: card.ctaLink || '#',
+          ctaLink: localizedPath(card.ctaLink || '#', locale),
         }))
       : defaultAgentCards.map((c) => ({
           ...c,
           ctaText: 'MULAI',
-          ctaLink: '#',
+          ctaLink: localizedPath('#', locale),
         }))
 
   return (

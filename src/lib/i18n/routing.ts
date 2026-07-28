@@ -5,6 +5,9 @@ export function getLocalePrefix(locale: Locale) {
 }
 
 export function localizedPath(path: string, locale: Locale = DEFAULT_LOCALE) {
+  if (!path || path.startsWith('http') || path.startsWith('#')) {
+    return path
+  }
   const normalized = path.startsWith('/') ? path : `/${path}`
   const base = normalized === '/' ? '' : normalized
 
