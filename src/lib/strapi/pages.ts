@@ -250,6 +250,28 @@ export type ContactPage = StrapiEntry & {
   actionCards?: ContactActionCard[]
 }
 
+export type SupportPage = StrapiEntry & {
+  heroTitleLine1?: string | null
+  heroTitleLine2?: string | null
+  heroIntro?: string | null
+  paymentQris?: StrapiMedia | null
+  heroBackground?: StrapiMedia | null
+}
+
+export async function getSupportPage({
+  locale = 'id',
+}: StrapiLocaleOptions = {}) {
+  return fetchStrapiSingleSafe<SupportPage>(
+    '/api/dukung-kami-page',
+    withStrapiLocale(
+      {
+        pLevel: '',
+      },
+      locale,
+    ),
+  )
+}
+
 export async function getContactPage({
   locale = 'id',
 }: StrapiLocaleOptions = {}) {

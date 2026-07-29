@@ -13,23 +13,26 @@ describe('SupportSection', () => {
         titleLine1={messages.support.titleLine1}
         titleLine2={messages.support.titleLine2}
         description={messages.support.description}
-        embedPlaceholder={messages.support.embedPlaceholder}
+        qrisImageSrc={messages.support.qrisImageSrc}
       />,
     )
     expect(screen.getAllByText(/Dukung/i)).toBeDefined()
     expect(screen.getAllByText(/Kami/i)).toBeDefined()
   })
 
-  it('should render the midtrans embed placeholder', () => {
+  it('should render the QRIS image', () => {
     render(
       <SupportSection
         titleLine1={messages.support.titleLine1}
         titleLine2={messages.support.titleLine2}
         description={messages.support.description}
-        embedPlaceholder={messages.support.embedPlaceholder}
+        qrisImageSrc={messages.support.qrisImageSrc}
       />,
     )
-    expect(screen.getByText(/embed code dari midtrans/i)).toBeDefined()
+    const qrisImg = screen.getByAltText('QRIS')
+    expect(qrisImg).toBeDefined()
+    // URL is normalized by normalizeStrapiMediaUrl utility
+    expect(qrisImg.getAttribute('src')).toContain('/qris/qris-garda-pangan.png')
   })
 
   it('should render the description', () => {
@@ -38,7 +41,7 @@ describe('SupportSection', () => {
         titleLine1={messages.support.titleLine1}
         titleLine2={messages.support.titleLine2}
         description={messages.support.description}
-        embedPlaceholder={messages.support.embedPlaceholder}
+        qrisImageSrc={messages.support.qrisImageSrc}
       />,
     )
     expect(screen.getByText(/dana operasional/i)).toBeDefined()

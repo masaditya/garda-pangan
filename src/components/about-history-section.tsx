@@ -13,6 +13,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
   return (
     <SectionShell tone="white">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-12">
+        
         <div className="lg:col-span-5 flex flex-col">
           <h2
             className="text-5xl font-medium tracking-tight text-garda-forest lg:text-7xl"
@@ -20,13 +21,25 @@ export function AboutHistorySection({ data }: { data?: any }) {
               __html: title.split(' ').join('<br class="hidden lg:block" /> '),
             }}
           />
+          <div className="text-xl leading-relaxed text-garda-ink-soft mt-6 lg:mt-12 block md:hidden">
+            {imageUrl1 && (
+              <img
+                src={imageUrl1}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="float-left w-1/3 mr-6 mb-4 object-cover"
+              />
+            )}
+            <div className="whitespace-pre-wrap">{content1}</div>
+          </div>
           <div className="mt-8 lg:mt-20 space-y-6 text-xl leading-relaxed text-garda-ink-soft whitespace-pre-wrap">
             {content2}
           </div>
         </div>
 
         <div className="lg:col-span-7 lg:pl-8">
-          <div className="text-xl leading-relaxed text-garda-ink-soft">
+          <div className="text-xl leading-relaxed text-garda-ink-soft hidden md:block">
             {imageUrl1 && (
               <img
                 src={imageUrl1}

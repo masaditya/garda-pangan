@@ -7,6 +7,8 @@ import {
   localizedPath,
   resolveLocale,
 } from '#/lib/i18n'
+import { getSupportPage } from '#/lib/strapi/pages'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 export function getStaticPaths() {
   return getLangStaticPaths()
@@ -14,7 +16,16 @@ export function getStaticPaths() {
 
 const locale = resolveLocale(Astro.params.lang)
 const messages = getMessages(locale)
-const bgImage = '/hero-support.jpg'
+
+const supportPageResponse = await getSupportPage({ locale })
+const supportPageData = supportPageResponse?.data
+const titleLine1 = supportPageData?.heroTitleLine1 || messages.support.titleLine1
+const titleLine2 = supportPageData?.heroTitleLine2 || messages.support.titleLine2
+const description = supportPageData?.heroIntro || messages.support.description
+const qrisImageSrc =
+  normalizeStrapiMediaUrl(supportPageData?.paymentQris?.url) ||
+  messages.support.qrisImageSrc
+const bgImage = normalizeStrapiMediaUrl(supportPageData?.heroBackground?.url)
 ---
 
 <BaseLayout
@@ -39,10 +50,10 @@ const bgImage = '/hero-support.jpg'
     <div class="relative z-10 w-full">
       <SupportSection
         client:load
-        titleLine1={messages.support.titleLine1}
-        titleLine2={messages.support.titleLine2}
-        description={messages.support.description}
-        embedPlaceholder={messages.support.embedPlaceholder}
+        titleLine1={titleLine1}
+        titleLine2={titleLine2}
+        description={description}
+        qrisImageSrc={qrisImageSrc}
       />
     </div>
   </main>

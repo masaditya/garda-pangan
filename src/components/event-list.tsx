@@ -11,6 +11,7 @@ import type { StrapiMedia } from '../lib/strapi/types'
 import type { Locale } from '#/lib/i18n/locales'
 import { getIntlLocale } from '#/lib/i18n/locales'
 import { localizedPath } from '#/lib/i18n/routing'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 export type EventListLabels = {
   searchPlaceholder: string
@@ -164,7 +165,7 @@ export function EventList({
         <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredEvents.map((event) => {
             const imageUrl =
-              event?.coverImage?.url || 'https://placehold.co/600x400'
+              normalizeStrapiMediaUrl(event?.coverImage?.url) || 'https://placehold.co/600x400'
             const dateObj = new Date(event.date)
             const formattedDate = new Intl.DateTimeFormat(
               getIntlLocale(locale),

@@ -53,7 +53,7 @@ export type Messages = {
     titleLine1: string
     titleLine2: string
     description: string
-    embedPlaceholder: string
+    qrisImageSrc: string
     pageTitle: string
     pageDescription: string
   }
@@ -194,7 +194,7 @@ const id: Messages = {
     titleLine2: 'Kami',
     description:
       'Dukung gerakan kami dengan berdonasi dana operasional, atau menjadi donatur rutin',
-    embedPlaceholder: '< embed code dari midtrans/ >',
+    qrisImageSrc: '/qris/qris-garda-pangan.png',
     pageTitle: 'Dukung Kami - Garda Pangan',
     pageDescription:
       'Dukung gerakan Garda Pangan melalui donasi dana operasional atau menjadi donatur rutin.',
@@ -398,7 +398,7 @@ const en: Messages = {
     titleLine2: 'Us',
     description:
       'Support our movement through operational donations or become a recurring donor.',
-    embedPlaceholder: '< embed code from midtrans/ >',
+    qrisImageSrc: '/qris/qris-garda-pangan.png',
     pageTitle: 'Support Us - Garda Pangan',
     pageDescription:
       'Support Garda Pangan through operational donations or recurring contributions.',
