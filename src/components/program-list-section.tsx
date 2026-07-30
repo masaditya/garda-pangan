@@ -2,6 +2,8 @@ import { useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import type { ProgramDetailButton } from '#/lib/strapi/programs'
+import { localizedPath } from '#/lib/i18n/routing'
+import { DEFAULT_LOCALE, type Locale } from '#/lib/i18n/locales'
 import { GardaButton } from './garda-button'
 
 function isMoreDetailsButton(button: ProgramDetailButton) {
@@ -15,12 +17,15 @@ export type ProgramListItem = {
   buttons?: ProgramDetailButton[]
 }
 
+export type { Locale }
+
 type ProgramListSectionProps = {
   title: string
   description: string
   backgroundImage?: string | null
   programs: ProgramListItem[]
   moreLabel: string
+  locale?: Locale
 }
 
 function getImageUrl(image?: string | null) {
@@ -33,6 +38,7 @@ export function ProgramListSection({
   backgroundImage,
   programs,
   moreLabel,
+  locale = DEFAULT_LOCALE,
 }: ProgramListSectionProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
   const listContainerRef = useRef<HTMLDivElement>(null)
@@ -165,7 +171,7 @@ export function ProgramListSection({
                                   {modalButtons.map((btn, i) => (
                                     <GardaButton
                                       key={i}
-                                      href={btn.href}
+                                      href={localizedPath(btn.href, locale)}
                                       variant={btn.variant || 'primary'}
                                     >
                                       {btn.text}
