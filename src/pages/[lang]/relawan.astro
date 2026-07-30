@@ -7,6 +7,10 @@ import {
   localizedPath,
   resolveLocale,
 } from '#/lib/i18n'
+import {
+  getHeroBackgroundUrl,
+  getRelawanPage,
+} from '#/lib/strapi/relawan'
 
 export function getStaticPaths() {
   return getLangStaticPaths()
@@ -14,7 +18,24 @@ export function getStaticPaths() {
 
 const locale = resolveLocale(Astro.params.lang)
 const messages = getMessages(locale)
-const bgImage = '/hero-relawan.jpg'
+
+const relawanPage = await getRelawanPage({ locale })
+const pageData = relawanPage.data
+
+const heroTitle = pageData?.heroTitle ?? ''
+const titleWords = heroTitle.split(' ')
+const midPoint = Math.ceil(titleWords.length / 2)
+
+const titleLine1 =
+  pageData?.heroTitle ? titleWords.slice(0, midPoint).join(' ') : messages.volunteer.titleLine1
+const titleLine2 =
+  pageData?.heroTitle ? titleWords.slice(midPoint).join(' ') : messages.volunteer.titleLine2
+const description = pageData?.heroSubtitle ?? messages.volunteer.description
+const cta = pageData?.buttonText ?? messages.volunteer.cta
+const ctaLink = pageData?.buttonLink ?? '#'
+const backgroundImage = pageData?.heroBackground
+  ? getHeroBackgroundUrl(pageData.heroBackground)
+  : null
 ---
 
 <BaseLayout
@@ -24,25 +45,15 @@ const bgImage = '/hero-relawan.jpg'
   canonicalPath={localizedPath('/relawan', locale)}
 >
   <main class="relative isolate min-h-screen">
-    <div
-      class="absolute inset-0 -z-20 bg-cover bg-fixed bg-center"
-      style={`background-image: url(${bgImage})`}
-    >
-    </div>
-    <div class="absolute inset-0 -z-10 bg-[#0C381E]/75 mix-blend-multiply">
-    </div>
-    <div
-      class="absolute inset-x-0 top-0 -z-10 h-[50vh] bg-linear-to-b from-[#0C381E]/60 to-transparent"
-    >
-    </div>
-
     <div class="relative z-10 w-full">
       <VolunteerSection
         client:load
-        titleLine1={messages.volunteer.titleLine1}
-        titleLine2={messages.volunteer.titleLine2}
-        description={messages.volunteer.description}
-        cta={messages.volunteer.cta}
+        titleLine1={titleLine1}
+        titleLine2={titleLine2}
+        description={description}
+        cta={cta}
+        ctaLink={ctaLink}
+        backgroundImage={backgroundImage}
       />
     </div>
   </main>
