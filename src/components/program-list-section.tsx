@@ -145,7 +145,7 @@ export function ProgramListSection({
                             <div className="w-full md:w-1/3 shrink-0">
                               <div className="aspect-4/3 w-full overflow-hidden rounded-2xl shadow-md">
                                 <img
-                                  src={imageUrl}
+                                  src={normalizeStrapiMediaUrl(program.image) || '/images/food-rescue-fallback.jpg'}
                                   alt={program.title}
                                   className="h-full w-full object-cover"
                                   loading="lazy"
