@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { EventShareButtons } from './event-share-buttons'
+import { getEmbedUrl, getEmbedType } from '#/lib/utils'
 
 export type KnowledgeDetailProps = {
   title: string
@@ -10,6 +11,7 @@ export type KnowledgeDetailProps = {
   parsedContent: string
   articleUrl: string
   caption?: string
+  videoLink?: string | null
 }
 
 export function KnowledgeDetail({
@@ -20,6 +22,7 @@ export function KnowledgeDetail({
   tags,
   parsedContent,
   articleUrl,
+  videoLink,
   caption,
 }: KnowledgeDetailProps) {
   const galleryImages =
@@ -165,6 +168,26 @@ export function KnowledgeDetail({
             className="prose prose-garda prose-lg max-w-none font-serif text-gray-700 prose-headings:font-serif prose-headings:font-normal prose-headings:text-garda-forest prose-p:font-serif prose-a:text-garda-forest prose-img:rounded-2xl"
             dangerouslySetInnerHTML={{ __html: parsedContent }}
           />
+          {videoLink ? (
+            <div className="mt-8 w-full">
+              <div className="mx-auto overflow-hidden rounded-2xl shadow-sm">
+                <div
+                  className={`w-full bg-black ${
+                    getEmbedType(videoLink) === 'reel' ? 'aspect-[9/16] max-w-sm mx-auto' : 'aspect-video max-w-4xl'
+                  }`}
+                >
+                  <iframe
+                    src={getEmbedUrl(videoLink) ?? ''}
+                    title="Video"
+                    className="h-full w-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
     </>

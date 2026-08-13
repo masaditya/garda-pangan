@@ -1,12 +1,7 @@
 ---
 import BaseLayout from '#/layouts/BaseLayout.astro'
 import { KnowledgeDetail } from '#/components/knowledge-detail'
-import {
-  getLangStaticPaths,
-  getMessages,
-  localizedPath,
-  resolveLocale,
-} from '#/lib/i18n'
+import { getMessages, localizedPath, resolveLocale } from '#/lib/i18n'
 import {
   getArticleSlugsForPaths,
   getKnowledgeArticleBySlug,
@@ -56,18 +51,22 @@ const articleUrl = new URL(
   localizedPath(`/knowledge/${resolvedArticle.slug}`, locale),
   Astro.url.origin,
 ).toString()
-const tags = resolvedArticle.category?.name ? [resolvedArticle.category.name] : []
+const tags = resolvedArticle.category?.name
+  ? [resolvedArticle.category.name]
+  : []
 const caption = getArticleImageCaption(
   resolvedArticle,
   messages.common.imageCourtesy,
 )
+
 const coverUrl = images[0]
 ---
 
 <BaseLayout
   locale={locale}
   title={`${resolvedArticle.title} | ${messages.meta.titleSuffix}`}
-  description={resolvedArticle.description ?? messages.knowledge.pageDescription}
+  description={resolvedArticle.description ??
+    messages.knowledge.pageDescription}
   canonicalPath={localizedPath(`/knowledge/${resolvedArticle.slug}`, locale)}
   ogImage={coverUrl}
 >
@@ -78,6 +77,7 @@ const coverUrl = images[0]
       authorName={resolvedArticle.author?.name ?? messages.meta.titleSuffix}
       date={formattedDate}
       images={images}
+      videoLink={resolvedArticle?.videoLink}
       tags={tags}
       parsedContent={parsedContent}
       articleUrl={articleUrl}

@@ -64,6 +64,7 @@ export type Article = StrapiEntry & {
   category?: ArticleCategory | null
   blocks?: ArticleBlock[]
   isFeatured?: boolean
+  videoLink?: string | null
 }
 
 export type ArticlesResponse = StrapiCollectionResponse<Article>
