@@ -27,6 +27,7 @@ export type Messages = {
     legal: string
     recalls: string
     copyright: string
+    testimonials: string
   }
   common: {
     search: string
@@ -165,6 +166,7 @@ const id: Messages = {
     legal: 'Legal',
     recalls: 'Recalls',
     copyright: 'Copyright By gardapangan.org',
+    testimonials: 'Testimoni',
   },
   common: {
     search: 'Cari',
@@ -369,6 +371,7 @@ const en: Messages = {
     legal: 'Legal',
     recalls: 'Recalls',
     copyright: 'Copyright By gardapangan.org',
+    testimonials: 'Testimonials',
   },
   common: {
     search: 'Search',

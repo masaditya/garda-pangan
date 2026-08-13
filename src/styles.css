@@ -315,3 +315,13 @@ html.js .reveal.is-visible {
   opacity: 1;
   transform: translate(0) scale(1);
 }
+
+/* Utility to hide scrollbars (works on WebKit, Firefox, and IE/Edge) */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+  height: 0; /* ensure horizontal scrollbar hidden */
+}

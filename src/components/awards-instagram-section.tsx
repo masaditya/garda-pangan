@@ -15,7 +15,7 @@ const defaultAwards = Array.from({ length: 10 }, (_, index) => ({
   year: '2017',
   title: 'Startup with Best Social Impact',
   source: 'TEMPO.CO',
-  image: '/figma/award-medal.svg',
+  image: '/figma/medal.png',
 }))
 
 const defaultInstagramPosts = [
@@ -114,12 +114,12 @@ function AwardCard({
         </div>
 
         <img
-          src={image || '/figma/award-medal.svg'}
+          src={image || '/figma/medal.png'}
           alt=""
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute -right-10 -bottom-5 h-auto w-24 object-contain lg:w-32"
+          className="pointer-events-none absolute -right-10 -bottom-5 w-24 h-auto object-contain lg:w-32"
         />
       </CardContent>
     </Card>

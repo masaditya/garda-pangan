@@ -169,31 +169,33 @@ export function KnowledgeList({
       </div>
 
       <div className="mb-12 flex flex-col items-center justify-between gap-6 border-b border-garda-border/40 md:flex-row">
-        <div className="flex flex-wrap items-center gap-8">
-          {displayCategoriesTabs.map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              onClick={() => setSelectedCategoryTab(tab)}
-              className={`pb-4 text-base font-bold transition-all relative ${
-                selectedCategoryTab === tab
-                  ? 'text-garda-forest'
-                  : 'text-garda-forest/40 hover:text-garda-forest/70'
-              }`}
-            >
-              {tab}
-              {selectedCategoryTab === tab && (
-                <div className="absolute bottom-0 left-0 h-0.5 w-full bg-garda-forest" />
-              )}
-            </button>
-          ))}
+        <div className="w-full overflow-x-auto py-2 hide-scrollbar">
+          <div className="flex items-center gap-8 flex-nowrap">
+            {displayCategoriesTabs.map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setSelectedCategoryTab(tab)}
+                className={`flex-shrink-0 pb-4 text-base font-bold transition-all relative ${
+                  selectedCategoryTab === tab
+                    ? 'text-garda-forest'
+                    : 'text-garda-forest/40 hover:text-garda-forest/70'
+                }`}
+              >
+                {tab}
+                {selectedCategoryTab === tab && (
+                  <div className="absolute bottom-0 left-0 h-0.5 w-full bg-garda-forest" />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="relative pb-4">
           <button
             type="button"
             onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
-            className="flex items-center gap-3 rounded-full border border-garda-border bg-white px-6 py-2.5 text-sm font-semibold text-garda-forest shadow-sm transition-all hover:bg-garda-mint-soft"
+            className="flex items-center gap-3 rounded-full border border-garda-border bg-white px-6 py-2.5 text-sm font-semibold text-garda-forest shadow-sm transition-all hover:bg-garda-mint-soft whitespace-nowrap w-auto flex-shrink-0"
           >
             <span>{sortOrder}</span>
             <ChevronDown
