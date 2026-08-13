@@ -27,52 +27,10 @@ function FeaturedLogoContent({ logo }: { logo: LogoItem }) {
         alt={logo.label ?? ''}
         loading="lazy"
         decoding="async"
-        className="h-20 w-auto object-contain opacity-80 transition-opacity duration-300 hover:opacity-100"
+        className="h-12 w-auto object-contain"
       />
     )
   }
-
-  return (
-    <span
-      className={
-        logo.variant === 'tempo'
-          ? 'text-center text-[1.4rem] font-black tracking-tight text-[#d7352a] lg:text-[1.8rem]'
-          : logo.variant === 'cnn'
-            ? 'flex flex-col items-center text-[#cf1e1e]'
-            : logo.variant === 'metro'
-              ? 'text-center text-[1.3rem] font-black tracking-tight text-[#1d6db4] lg:text-[1.6rem]'
-              : logo.variant === 'forbes'
-                ? 'flex items-start text-black'
-                : logo.variant === 'bbc'
-                  ? 'flex flex-col items-center rounded-sm bg-[#bb1e22] px-3 py-1.5 text-[0.85rem] font-black tracking-wider text-white'
-                  : logo.variant === 'trans'
-                    ? 'text-center text-[1.25rem] font-black tracking-tight text-[#1c4e9e] lg:text-[1.5rem]'
-                    : 'text-center text-[1.6rem] font-medium tracking-tight text-[#d7d7d7]'
-      }
-      aria-label={logo.label ?? ''}
-    >
-      {logo.variant === 'cnn' ? (
-        <>
-          <span className="text-[1.4rem] font-black lg:text-[1.7rem]">CNN</span>
-          <span className="text-[0.6rem] font-bold">Indonesia</span>
-        </>
-      ) : logo.variant === 'forbes' ? (
-        <>
-          <span className="text-[1.6rem] font-black lg:text-[2rem]">
-            Forbes
-          </span>
-          <span className="ml-1 text-[0.5rem] font-semibold">Indonesia</span>
-        </>
-      ) : logo.variant === 'bbc' ? (
-        <>
-          <span>BBC</span>
-          <span>NEWS</span>
-        </>
-      ) : (
-        logo.label
-      )}
-    </span>
-  )
 }
 
 type FeaturedBySectionProps = {
@@ -124,7 +82,7 @@ export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
               <LogoCard
                 key={`${logo.id}-${i}`}
                 data-testid={`featured-card-${logo.id}-${i}`}
-                className="h-28 w-[160px] shrink-0 rounded-[0.75rem] border-transparent bg-white shadow-none *:data-[slot=card-content]:flex *:data-[slot=card-content]:h-full *:data-[slot=card-content]:min-h-0 *:data-[slot=card-content]:items-center *:data-[slot=card-content]:justify-center *:data-[slot=card-content]:p-4"
+                className="h-22 w-[160px] rounded-sm border-transparent bg-white shadow-none flex justify-center items-center"
                 aria-hidden={i >= items.length}
               >
                 <FeaturedLogoContent logo={logo} />

@@ -128,6 +128,7 @@ export type Homepage = StrapiEntry & {
   heroCtaLink?: string | null
   heroBackground?: StrapiMedia | null
   didYouKnow?: DidYouKnowItem[]
+  didYouKnowTitle?: string | null
   impactTitle?: string | null
   impactImage?: StrapiMedia | null
   aboutBackground?: StrapiMedia | null

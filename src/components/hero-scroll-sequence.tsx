@@ -30,6 +30,7 @@ type HeroScrollSequenceProps = {
   ctaLink?: string | null
   backgroundImage?: string | null
   didYouKnowSlides?: { id: number | string; content: string }[]
+  didYouKnowTitle?: string | null
   portionsRescued?: string | null
   co2Reduced?: string | null
   foodLossPotential?: string | null
@@ -618,9 +619,32 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                 <div className="grid md:grid-cols-2 gap-8 relative z-10">
                   <div>
                     <h2 className="text-garda-sun font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.1]">
-                      Tahukah
-                      <br />
-                      Kamu?
+                      {(() => {
+                        const raw = props.didYouKnowTitle ?? 'Tahukah Kamu?'
+                        // If string contains explicit newlines, render them
+                        if (/\r?\n/.test(raw)) {
+                          return raw.split(/\r?\n/).map((line, i) => (
+                            <span key={i}>
+                              {line}
+                              {i < raw.split(/\r?\n/).length - 1 ? <br /> : null}
+                            </span>
+                          ))
+                        }
+
+                        // Otherwise, split on the first space to mimic "Tahukah\nKamu?"
+                        const firstSpace = raw.indexOf(' ')
+                        if (firstSpace > 0) {
+                          return (
+                            <>
+                              {raw.slice(0, firstSpace)}
+                              <br />
+                              {raw.slice(firstSpace + 1)}
+                            </>
+                          )
+                        }
+
+                        return raw
+                      })()}
                     </h2>
                     <GardaLogo className="mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-150 origin-top-left" />
                   </div>
