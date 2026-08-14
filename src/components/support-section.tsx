@@ -5,6 +5,7 @@ type SupportSectionProps = {
   titleLine2: string
   description: string
   qrisImageSrc: string
+  caption: string
 }
 
 export function SupportSection({
@@ -12,6 +13,7 @@ export function SupportSection({
   titleLine2,
   description,
   qrisImageSrc,
+  caption,
 }: SupportSectionProps) {
   const qrisUrl = normalizeStrapiMediaUrl(qrisImageSrc)
 
@@ -36,6 +38,11 @@ export function SupportSection({
               className="h-auto w-full"
               loading="lazy"
             />
+          </div>
+          <div className='mt-8 text-center max-w-md'>
+            <p className='text-sm text-garda-forest-deep-dark'>
+              {caption}
+            </p>
           </div>
         </div>
       </div>

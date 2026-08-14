@@ -22,6 +22,7 @@ const supportPageData = supportPageResponse?.data
 const titleLine1 = supportPageData?.heroTitleLine1 || messages.support.titleLine1
 const titleLine2 = supportPageData?.heroTitleLine2 || messages.support.titleLine2
 const description = supportPageData?.heroIntro || messages.support.description
+const qrisCaption = supportPageData?.caption || messages.support.caption
 const qrisImageSrc =
   normalizeStrapiMediaUrl(supportPageData?.paymentQris?.url) ||
   messages.support.qrisImageSrc
@@ -54,6 +55,7 @@ const bgImage = normalizeStrapiMediaUrl(supportPageData?.heroBackground?.url)
         titleLine2={titleLine2}
         description={description}
         qrisImageSrc={qrisImageSrc}
+        caption={qrisCaption}
       />
     </div>
   </main>
