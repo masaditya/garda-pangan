@@ -13,7 +13,6 @@ export function SupportSection({
   description,
   qrisImageSrc,
 }: SupportSectionProps) {
-  console.log(qrisImageSrc, description)
   const qrisUrl = normalizeStrapiMediaUrl(qrisImageSrc)
 
   return (

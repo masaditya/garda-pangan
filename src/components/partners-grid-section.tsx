@@ -1,6 +1,6 @@
 import { SectionShell } from './section-shell'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
-// Placeholder logos — will be replaced with API data
 const defaultPartners = Array.from({ length: 19 }, (_, index) => ({
   id: `partner-${index + 1}`,
   name: `Partner ${index + 1}`,
@@ -8,20 +8,31 @@ const defaultPartners = Array.from({ length: 19 }, (_, index) => ({
   alt: `Partner ${index + 1}`,
 }))
 
-/** Split items into rows of 6-7-6 pattern */
-function splitRows<T>(items: T[]): T[][] {
-  const pattern = [6, 7, 6]
-  const rows: T[][] = []
-  let cursor = 0
-  for (let i = 0; cursor < items.length; i++) {
-    const size = pattern[i % pattern.length]
-    rows.push(items.slice(cursor, cursor + size))
-    cursor += size
-  }
+const defaultSupporters = Array.from({ length: 12 }, (_, index) => ({
+  id: `supporter-${index + 1}`,
+  name: 'Badan Pangan Nasional',
+  logoSrc: '/brands/badan-pangan-nasional.svg',
+  alt: 'Badan Pangan Nasional',
+}))
+
+function splitIntoThreeRows<T>(items: T[]): T[][] {
+  const rows: T[][] = [[], [], []]
+  items.forEach((item, index) => {
+    rows[index % 3].push(item)
+  })
   return rows
 }
 
-function PartnerLogoCard({
+function getRowTrack<T>(rowItems: T[]): T[] {
+  if (rowItems.length === 0) return []
+  let track = [...rowItems]
+  while (track.length < 15) {
+    track = [...track, ...rowItems]
+  }
+  return [...track, ...track]
+}
+
+function PartnerMarqueeCard({
   name,
   logoSrc,
   alt,
@@ -31,7 +42,7 @@ function PartnerLogoCard({
   alt: string
 }) {
   return (
-    <article className="flex aspect-4/3 items-center justify-center rounded-lg bg-white p-4 transition-shadow duration-300 hover:shadow-xs">
+    <article className="flex h-24 w-36 shrink-0 items-center justify-center rounded-xl bg-white p-4 transition-shadow duration-300 hover:shadow-xs">
       <img
         className="h-full w-full object-contain"
         src={logoSrc}
@@ -46,28 +57,55 @@ function PartnerLogoCard({
 
 type PartnersGridSectionProps = {
   title?: string | null
+  subtitle?: string | null
   partners?: {
     id: number | string
     name?: string | null
     logoSrc?: string | null
   }[]
+  supporters?: {
+    id: number
+    title: string
+    image?: { url: string } | null
+  }[]
 }
 
 export function PartnersGridSection({
   title,
+  subtitle,
   partners,
+  supporters,
 }: PartnersGridSectionProps) {
-  const items =
+  const partnerItems =
     partners && partners.length > 0
       ? partners.map((p) => ({
-          id: String(p.id),
+          id: `partner-${p.id}`,
           name: p.name || '',
           logoSrc: p.logoSrc || '/figma/garda-logo.png',
           alt: p.name || '',
         }))
-      : defaultPartners
+      : []
 
-  const rows = splitRows(items)
+  const supporterItems =
+    supporters && supporters.length > 0
+      ? supporters.map((s) => ({
+          id: `supporter-${s.id}`,
+          name: s.title || '',
+          logoSrc:
+            normalizeStrapiMediaUrl(s.image?.url) ||
+            '/brands/badan-pangan-nasional.svg',
+          alt: s.title || '',
+        }))
+      : []
+
+  const combinedItems = [...partnerItems, ...supporterItems]
+
+  const items =
+    combinedItems.length > 0
+      ? combinedItems
+      : [...defaultPartners, ...defaultSupporters]
+
+  const rows = splitIntoThreeRows(items)
 
   return (
     <SectionShell
@@ -75,42 +113,64 @@ export function PartnersGridSection({
       aria-labelledby="partners-heading"
       spacing="default"
       tone="transparent"
-      className="bg-[#FCF9E0]"
+      className="bg-(--forest-950)"
     >
       <div className="mx-auto flex w-full flex-col gap-10 md:gap-12">
-        <div className="flex justify-center text-center">
+        <div className="flex flex-col items-center gap-4 text-center">
           <h2
             id="partners-heading"
-            className="garda-section-heading !text-garda-forest-deep text-[clamp(2rem,5vw,3rem)] lg:text-[3.5rem]"
+            className="garda-section-heading text-[clamp(2rem,5vw,3rem)] lg:text-[3.5rem]"
           >
-            {title || 'Partners'}
+            {title || 'Partners & Supporters'}
           </h2>
+          {subtitle && (
+            <p className="max-w-3xl text-base font-medium text-gray-200 sm:text-lg">
+              {subtitle}
+            </p>
+          )}
         </div>
 
+        {/* 3-Row Marquee Container */}
         <div
-          data-testid="partners-grid"
-          className="flex flex-col items-center gap-3 lg:gap-4"
-          aria-label="Daftar partner"
+          data-testid="partners-marquee-container"
+          className="relative overflow-hidden w-full flex flex-col gap-4 py-2"
+          aria-label="Daftar partner dan supporter"
         >
-          {rows.map((row, rowIdx) => (
-            <div
-              key={rowIdx}
-              className="flex flex-wrap w-full justify-center gap-3 lg:gap-4"
-            >
-              {row.map((partner) => (
+          {/* Left fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-(--forest-950) to-transparent" />
+          {/* Right fade */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-(--forest-950) to-transparent" />
+
+          {rows.map((rowItems, rowIdx) => {
+            const track = getRowTrack(rowItems)
+            const isReverse = rowIdx === 1
+
+            return (
+              <div
+                key={rowIdx}
+                className="flex overflow-hidden w-full"
+                data-testid={`marquee-row-${rowIdx}`}
+              >
                 <div
-                  key={partner.id}
-                  className="w-[calc((100%-1.5rem)/3)] sm:w-[calc((100%-2.25rem)/4)] md:w-[calc((100%-3rem)/5)] lg:w-[calc((100%-6rem)/7)]"
+                  className="flex animate-marquee gap-4"
+                  style={{
+                    width: 'max-content',
+                    animationDuration: '50s',
+                    animationDirection: isReverse ? 'reverse' : 'normal',
+                  }}
                 >
-                  <PartnerLogoCard
-                    name={partner.name}
-                    logoSrc={partner.logoSrc}
-                    alt={partner.alt}
-                  />
+                  {track.map((item, i) => (
+                    <PartnerMarqueeCard
+                      key={`${item.id}-${rowIdx}-${i}`}
+                      name={item.name}
+                      logoSrc={item.logoSrc}
+                      alt={item.alt}
+                    />
+                  ))}
                 </div>
-              ))}
-            </div>
-          ))}
+              </div>
+            )
+          })}
         </div>
       </div>
     </SectionShell>
