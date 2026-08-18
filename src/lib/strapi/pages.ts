@@ -257,7 +257,8 @@ export type SupportPage = StrapiEntry & {
   heroIntro?: string | null
   paymentQris?: StrapiMedia | null
   heroBackground?: StrapiMedia | null
-  caption?: string | null
+  ctaLink?: string | null
+  ctaText?: string | null
 }
 
 export async function getSupportPage({

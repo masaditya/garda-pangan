@@ -57,7 +57,8 @@ export type Messages = {
     qrisImageSrc: string
     pageTitle: string
     pageDescription: string
-    caption: string
+    ctaLink: string
+    ctaText: string
   }
   contact: {
     heroTitleLine1: string
@@ -198,10 +199,11 @@ const id: Messages = {
     description:
       'Dukung gerakan kami dengan berdonasi dana operasional, atau menjadi donatur rutin',
     qrisImageSrc: '/qris/qris-garda-pangan.png',
+    ctaLink: '#',
+    ctaText: 'Donasi',
     pageTitle: 'Dukung Kami - Garda Pangan',
     pageDescription:
       'Dukung gerakan Garda Pangan melalui donasi dana operasional atau menjadi donatur rutin.',
-    caption: 'Gunakan Kode QRIS di atas untuk berdonasi atau memberikan dukungan finansial kepada GardanPangan. Setiap kontribusi akan membantu kami melanjutkan misi dalam mengurangi limbah pangan dan mendukung ketahanan pangan masyarakat.',
   },
   contact: {
     heroTitleLine1: 'Hubungi',
@@ -404,6 +406,8 @@ const en: Messages = {
     description:
       'Support our movement through operational donations or become a recurring donor.',
     qrisImageSrc: '/qris/qris-garda-pangan.png',
+    ctaLink: '#',
+    ctaText: 'Donate',
     pageTitle: 'Support Us - Garda Pangan',
     pageDescription:
       'Support Garda Pangan through operational donations or recurring contributions.',

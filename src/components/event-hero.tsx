@@ -28,12 +28,6 @@ export function EventHero({
         }}
       />
 
-      {/* Top blur overlay */}
-      <div className="absolute inset-x-0 top-0 z-10 h-40 bg-linear-to-b from-garda-forest/40 to-transparent backdrop-blur-md mask-[linear-gradient(to_bottom,black,transparent)]" />
-
-      {/* Bottom blur overlay */}
-      <div className="absolute inset-x-0 bottom-0 z-10 h-64 bg-linear-to-t from-garda-forest/60 to-transparent backdrop-blur-lg mask-[linear-gradient(to_top,black,transparent)]" />
-
       {/* Main overlays for text readability */}
       <div className="absolute inset-0 bg-garda-forest/20 mix-blend-multiply" />
       <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />

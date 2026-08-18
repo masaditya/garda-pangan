@@ -1,11 +1,13 @@
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { GardaButton } from './garda-button'
 
 type SupportSectionProps = {
   titleLine1: string
   titleLine2: string
   description: string
   qrisImageSrc: string
-  caption: string
+  ctaLink: string
+  ctaText : string
 }
 
 export function SupportSection({
@@ -13,7 +15,8 @@ export function SupportSection({
   titleLine2,
   description,
   qrisImageSrc,
-  caption,
+  ctaLink,
+  ctaText
 }: SupportSectionProps) {
   const qrisUrl = normalizeStrapiMediaUrl(qrisImageSrc)
 
@@ -26,9 +29,9 @@ export function SupportSection({
           {titleLine2}
         </h1>
 
-        <p className="mx-auto max-w-2xl text-base font-medium leading-relaxed text-white/80 sm:text-lg">
+        {/* <p className="mx-auto max-w-2xl text-sm font-medium leading-relaxed text-white/80">
           {description}
-        </p>
+        </p> */}
 
         <div className="mx-auto mt-12 w-full max-w-sm overflow-hidden rounded-[40px] bg-white p-8 shadow-[0_24px_80px_rgba(0,0,0,0.3)] animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <div className="flex flex-col items-center gap-4">
@@ -41,9 +44,17 @@ export function SupportSection({
           </div>
           <div className='mt-8 text-center max-w-md'>
             <p className='text-sm text-garda-forest-deep-dark'>
-              {caption}
+              {description}
             </p>
           </div>
+
+          <GardaButton 
+            size='compact'
+            className='mt-8'
+            href={ctaLink}
+          >
+            {ctaText}
+          </GardaButton>
         </div>
       </div>
     </div>
