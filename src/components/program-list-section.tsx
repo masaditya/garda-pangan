@@ -64,8 +64,6 @@ export function ProgramListSection({
             backgroundColor: '#334155',
           }}
         />
-        <div className="absolute inset-x-0 top-0 z-10 h-40 bg-linear-to-b from-garda-forest/40 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-        <div className="absolute inset-x-0 bottom-0 z-10 h-64 bg-linear-to-t from-garda-forest/60 to-transparent backdrop-blur-lg [mask-image:linear-gradient(to_top,black,transparent)]" />
         <div className="absolute inset-0 bg-garda-forest/20 mix-blend-multiply" />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/10" />
 
@@ -110,24 +108,21 @@ export function ProgramListSection({
                       className={`group relative flex w-full items-center justify-between gap-4 border-b border-white/10 px-2 py-4 text-left transition-colors duration-300 sm:gap-6 sm:px-4 sm:py-5 md:py-6 ${isExpanded ? 'bg-white/5' : ''}`}
                     >
                       <span
-                        className={`absolute inset-y-0 left-0 w-1 bg-garda-sun transition-transform duration-300 ${
-                          isExpanded ? 'scale-y-100' : 'scale-y-0'
-                        }`}
+                        className={`absolute inset-y-0 left-0 w-1 bg-garda-sun transition-transform duration-300 ${isExpanded ? 'scale-y-100' : 'scale-y-0'
+                          }`}
                         aria-hidden="true"
                       />
 
                       <span
-                        className={`relative z-10 font-serif text-[clamp(1.125rem,3.5vw,2.25rem)] uppercase leading-[1.15] tracking-[-0.02em] transition-colors duration-300 ${
-                          isExpanded ? 'text-garda-sun' : 'text-white'
-                        }`}
+                        className={`relative z-10 font-serif text-[clamp(1.125rem,3.5vw,2.25rem)] uppercase leading-[1.15] tracking-[-0.02em] transition-colors duration-300 ${isExpanded ? 'text-garda-sun' : 'text-white'
+                          }`}
                       >
                         {program.title}
                       </span>
 
                       <span
-                        className={`relative z-10 flex shrink-0 items-center gap-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em] transition-colors duration-300 sm:gap-2 sm:text-xs ${
-                          isExpanded ? 'text-garda-sun' : 'text-garda-sun/80'
-                        }`}
+                        className={`relative z-10 flex shrink-0 items-center gap-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em] transition-colors duration-300 sm:gap-2 sm:text-xs ${isExpanded ? 'text-garda-sun' : 'text-garda-sun/80'
+                          }`}
                       >
                         <span className="hidden sm:inline">{moreLabel}</span>
                         <ChevronDown
@@ -139,11 +134,10 @@ export function ProgramListSection({
                     </button>
 
                     <div
-                      className={`grid transition-all duration-300 ease-in-out ${
-                        isExpanded
+                      className={`grid transition-all duration-300 ease-in-out ${isExpanded
                           ? 'grid-rows-[1fr] opacity-100'
                           : 'grid-rows-[0fr] opacity-0'
-                      }`}
+                        }`}
                     >
                       <div className="overflow-hidden">
                         <div className="bg-[#f8fdf9] p-6 sm:p-8 md:p-10 text-garda-forest rounded-b-xl border border-t-0 border-white/10">
