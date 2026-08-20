@@ -21,7 +21,7 @@ export function getHeaderNavItems(
     },
     { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
     {
-      href: localizedPath('/merchandise', locale),
+      href: localizedPath('/product', locale),
       label: locale === 'id' ? 'Produk' : 'Products',
     },
     { href: localizedPath('/support', locale), label: messages.nav.donate },
@@ -47,7 +47,7 @@ export function getFooterNavItems(
     },
     { href: localizedPath('/relawan', locale), label: messages.nav.volunteer },
     {
-      href: localizedPath('/merchandise', locale),
+      href: localizedPath('/product', locale),
       label: locale === 'id' ? 'Produk' : 'Products',
     },
     { href: localizedPath('/support', locale), label: messages.nav.donate },
