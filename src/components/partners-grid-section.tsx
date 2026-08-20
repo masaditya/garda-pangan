@@ -42,7 +42,7 @@ function PartnerMarqueeCard({
   alt: string
 }) {
   return (
-    <article className="flex h-24 w-36 shrink-0 items-center justify-center rounded-xl bg-white p-4 transition-shadow duration-300 hover:shadow-xs">
+    <article className="flex h-18 w-[120px] shrink-0 items-center justify-center rounded-sm bg-white p-3 transition-shadow duration-300 hover:shadow-xs">
       <img
         className="h-full w-full object-contain"
         src={logoSrc}
@@ -155,7 +155,7 @@ export function PartnersGridSection({
                   className="flex animate-marquee gap-4"
                   style={{
                     width: 'max-content',
-                    animationDuration: '50s',
+                    animationDuration: '25s',
                     animationDirection: isReverse ? 'reverse' : 'normal',
                   }}
                 >

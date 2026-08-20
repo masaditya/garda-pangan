@@ -4,29 +4,35 @@ import { describe, expect, test } from 'vitest'
 import { FeaturedBySection } from './featured-by-section'
 
 describe('FeaturedBySection', () => {
-  test('renders the heading, logo set, and responsive grid shell', () => {
-    const { container } = render(<FeaturedBySection />)
+  const mockLogos = [
+    { id: 1, url: '/tempo.png', name: 'TEMPO.CO' },
+    { id: 2, url: '/cnn.png', name: 'CNN Indonesia' },
+  ]
 
-    const heading = screen.getByRole('heading', { name: /featured by/i })
+  test('renders heading and logos in a marquee with default speed', () => {
+    const { container } = render(
+      <FeaturedBySection title="Our Sponsors" logos={mockLogos} />
+    )
 
+    const heading = screen.getByRole('heading', { name: /our sponsors/i })
     expect(heading).toBeTruthy()
-    expect(heading.className).toContain('lg:text-[3.5rem]')
-    expect(screen.getByText(/tempo\.co/i)).toBeTruthy()
-    expect(screen.getByText(/cnn/i)).toBeTruthy()
-    expect(screen.getByText(/forbes/i)).toBeTruthy()
-    expect(
-      screen.queryByText(/since 2021, we have partnered with these companies/i),
-    ).toBeNull()
-    expect(screen.getByTestId('featured-grid').className).toContain('grid')
-    expect(screen.getByTestId('featured-grid').className).toContain(
-      'lg:grid-cols-5',
+
+    const tempoImages = screen.getAllByAltText('TEMPO.CO')
+    expect(tempoImages.length).toBeGreaterThan(0)
+    expect(tempoImages[0].getAttribute('src')).toBe('/tempo.png')
+
+    const marqueeContainer = container.querySelector('.animate-marquee') as HTMLElement
+    expect(marqueeContainer).toBeTruthy()
+    expect(marqueeContainer.style.animationDuration).toBe('25s')
+  })
+
+  test('applies custom speed prop', () => {
+    const { container } = render(
+      <FeaturedBySection logos={mockLogos} speed="10s" />
     )
-    expect(screen.getByTestId('featured-card-tempo').className).toContain(
-      'shadow-none',
-    )
-    expect(screen.getByTestId('featured-card-tempo').className).toContain(
-      'rounded-[0.75rem]',
-    )
-    expect(container.querySelector('.featured-section')).toBeNull()
+
+    const marqueeContainer = container.querySelector('.animate-marquee') as HTMLElement
+    expect(marqueeContainer).toBeTruthy()
+    expect(marqueeContainer.style.animationDuration).toBe('10s')
   })
 })

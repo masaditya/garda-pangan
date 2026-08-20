@@ -7,6 +7,8 @@ import {
   localizedPath,
   resolveLocale,
 } from '#/lib/i18n'
+import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
+import { getProgramPage } from '#/lib/strapi/program-page'
 import {
   formatProgramDescription,
   getProgramThumbnailUrl,
@@ -20,17 +22,26 @@ export function getStaticPaths() {
 
 const locale = resolveLocale(Astro.params.lang)
 const messages = getMessages(locale)
+
+const pageResponse = await getProgramPage({ locale })
+const pageData = pageResponse.data ?? {
+  title: messages.program.heroTitle,
+  description: messages.program.heroDescription,
+  backgroundImage: null,
+}
+
+const heroTitle = pageData.title ?? messages.program.heroTitle
+const heroDescription = pageData.description ?? messages.program.heroDescription
+const heroBackground = normalizeStrapiMediaUrl(pageData.backgroundImage?.url)
+
 const programs = await getPrograms({ locale })
 
-const programData = {
-  heroDescription: messages.program.heroDescription,
-  programs: programs.map((program) => ({
-    title: program.title,
-    image: getProgramThumbnailUrl(program.thumbnail),
-    description: formatProgramDescription(program.description),
-    buttons: mapProgramToDetailButtons(program, locale),
-  })),
-}
+const programItems = programs.map((program) => ({
+  title: program.title,
+  image: getProgramThumbnailUrl(program.thumbnail),
+  description: formatProgramDescription(program.description),
+  buttons: mapProgramToDetailButtons(program, locale),
+}))
 ---
 
 <BaseLayout
@@ -42,11 +53,11 @@ const programData = {
   <main class="garda-main">
     <ProgramListSection
       client:load
-      title={messages.program.heroTitle}
-      description={programData.heroDescription}
+      title={heroTitle}
+      description={heroDescription}
       moreLabel={messages.program.moreLabel}
-      backgroundImage="/bg-program-page.jpg"
-      programs={programData.programs}
+      backgroundImage={heroBackground}
+      programs={programItems}
       locale={locale}
     />
   </main>

@@ -632,7 +632,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                         }
 
                         // Otherwise, split on the first space to mimic "Tahukah\nKamu?"
-                        const firstSpace = raw.indexOf(' ')
+                        const firstSpace = raw.lastIndexOf(' ')
                         if (firstSpace > 0) {
                           return (
                             <>

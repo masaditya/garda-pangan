@@ -36,9 +36,14 @@ function FeaturedLogoContent({ logo }: { logo: LogoItem }) {
 type FeaturedBySectionProps = {
   title?: string | null
   logos?: { id: number; url: string; name?: string | null }[]
+  speed?: string
 }
 
-export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
+export function FeaturedBySection({
+  title,
+  logos,
+  speed = '25s',
+}: FeaturedBySectionProps) {
   const items: LogoItem[] =
     logos && logos.length > 0
       ? logos.map((l) => ({ id: l.id, url: l.url, label: l.name }))
@@ -76,13 +81,13 @@ export function FeaturedBySection({ title, logos }: FeaturedBySectionProps) {
 
           <div
             className="flex animate-marquee gap-4"
-            style={{ width: 'max-content', animationDuration: '50s' }}
+            style={{ width: 'max-content', animationDuration: speed }}
           >
             {track.map((logo, i) => (
               <LogoCard
                 key={`${logo.id}-${i}`}
                 data-testid={`featured-card-${logo.id}-${i}`}
-                className="h-22 w-[160px] rounded-sm border-transparent bg-white shadow-none flex justify-center items-center"
+                className="h-16 w-[120px] rounded-sm border-transparent bg-white shadow-none flex justify-center items-center"
                 aria-hidden={i >= items.length}
               >
                 <FeaturedLogoContent logo={logo} />
