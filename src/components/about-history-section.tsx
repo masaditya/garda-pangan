@@ -16,7 +16,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
 
   return (
     <SectionShell tone="white">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-12">
+      <div className="grid gap-12 lg:grid-cols-1 lg:gap-12">
         
         <div className="lg:col-span-5 flex flex-col">
           <h2
