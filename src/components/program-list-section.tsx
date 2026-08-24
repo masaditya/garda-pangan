@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { marked } from 'marked'
 import { ChevronDown } from 'lucide-react'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import type { ProgramDetailButton } from '#/lib/strapi/programs'
@@ -49,6 +50,7 @@ export function ProgramListSection({
       : backgroundImage
     : '/images/hero-program-fallback.jpg'
   const titleLines = title.split(/<br\s*\/?>|\\n|\n/i)
+  const htmlDescription = description ? (marked.parse(description) as string) : ''
 
   return (
     <>
@@ -81,7 +83,7 @@ export function ProgramListSection({
             </h1>
             <div className="flex w-full justify-end md:w-2/5">
               <p className="max-w-[420px] text-base font-medium leading-relaxed text-white/95 sm:text-lg md:text-right lg:text-xl">
-                {description}
+                <div dangerouslySetInnerHTML={{ __html: htmlDescription }} />
               </p>
             </div>
           </div>
@@ -135,8 +137,8 @@ export function ProgramListSection({
 
                     <div
                       className={`grid transition-all duration-300 ease-in-out ${isExpanded
-                          ? 'grid-rows-[1fr] opacity-100'
-                          : 'grid-rows-[0fr] opacity-0'
+                        ? 'grid-rows-[1fr] opacity-100'
+                        : 'grid-rows-[0fr] opacity-0'
                         }`}
                     >
                       <div className="overflow-hidden">

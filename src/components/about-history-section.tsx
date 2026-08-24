@@ -17,7 +17,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
   return (
     <SectionShell tone="white">
       <div className="grid gap-12 lg:grid-cols-1 lg:gap-12">
-        
+
         <div className="lg:col-span-5 flex flex-col">
           <h2
             className="text-5xl font-medium tracking-tight text-garda-forest lg:text-7xl"
@@ -58,7 +58,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
           </div>
 
           <div className="relative aspect-square sm:aspect-[4/3] w-full mt-16 sm:mt-24">
-            {imageUrl2 ? (
+            {imageUrl2 && (
               <img
                 src={imageUrl2}
                 alt=""
@@ -66,11 +66,9 @@ export function AboutHistorySection({ data }: { data?: any }) {
                 decoding="async"
                 className="absolute left-0 top-0 w-[60%] h-[75%] object-cover rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl shadow-sm"
               />
-            ) : (
-              <div className="absolute left-0 top-0 w-[60%] h-[75%] rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl bg-garda-paper/50" />
             )}
 
-            {imageUrl3 ? (
+            {imageUrl3 && (
               <img
                 src={imageUrl3}
                 alt=""
@@ -78,8 +76,6 @@ export function AboutHistorySection({ data }: { data?: any }) {
                 decoding="async"
                 className="absolute right-0 bottom-0 w-[60%] h-[70%] object-cover border-8 border-white shadow-lg z-10"
               />
-            ) : (
-              <div className="absolute right-0 bottom-0 w-[60%] h-[70%] border-8 border-white bg-garda-paper/50 shadow-lg z-10" />
             )}
           </div>
         </div>
