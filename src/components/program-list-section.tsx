@@ -50,7 +50,6 @@ export function ProgramListSection({
       : backgroundImage
     : '/images/hero-program-fallback.jpg'
   const titleLines = title.split(/<br\s*\/?>|\\n|\n/i)
-  const htmlDescription = description ? (marked.parse(description) as string) : ''
 
   return (
     <>
@@ -83,7 +82,7 @@ export function ProgramListSection({
             </h1>
             <div className="flex w-full justify-end md:w-2/5">
               <p className="max-w-[420px] text-base font-medium leading-relaxed text-white/95 sm:text-lg md:text-right lg:text-xl">
-                <div dangerouslySetInnerHTML={{ __html: htmlDescription }} />
+                {description}
               </p>
             </div>
           </div>
@@ -99,7 +98,7 @@ export function ProgramListSection({
                     (button) => !isMoreDetailsButton(button),
                   ) || []
                 const imageUrl = getImageUrl(program.image)
-
+                const contentHtml = marked.parse(program.description) || ""
                 return (
                   <li key={`${program.title}-${index}`}>
                     <button
@@ -159,7 +158,7 @@ export function ProgramListSection({
                               <div
                                 className="prose prose-garda prose-sm sm:prose-base max-w-none text-garda-forest/80 mb-6"
                                 dangerouslySetInnerHTML={{
-                                  __html: program.description,
+                                  __html: contentHtml,
                                 }}
                               />
                               {modalButtons.length > 0 ? (
