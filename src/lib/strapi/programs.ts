@@ -96,7 +96,7 @@ export async function getPrograms({
     withStrapiLocale(
       {
         populate: '*',
-        sort: 'createdAt:asc',
+        sort: 'title:asc',
       },
       locale,
     ),
