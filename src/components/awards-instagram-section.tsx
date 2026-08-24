@@ -119,7 +119,7 @@ function AwardCard({
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute -right-5 -bottom-5 w-20 h-auto object-contain lg:w-20"
+          className="pointer-events-none absolute -right-5 -bottom-5 w-22 h-auto object-contain lg:w-22"
         />
       </CardContent>
     </Card>
