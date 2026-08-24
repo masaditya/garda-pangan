@@ -64,7 +64,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="absolute left-0 top-0 w-[60%] h-[75%] object-cover rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl shadow-sm"
+                className="absolute left-0 top-0 w-[60%] h-[75%] object-contain rounded-t-[2.5rem] rounded-bl-[2.5rem] rounded-br-xl shadow-sm"
               />
             )}
 
