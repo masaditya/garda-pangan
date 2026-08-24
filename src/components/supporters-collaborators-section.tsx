@@ -2,7 +2,8 @@ import { ActionCard } from './action-card'
 import { GardaButton } from './garda-button'
 import { SectionShell } from './section-shell'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
-import { localizedPath, type Locale } from '#/lib/i18n'
+import { localizedPath } from '#/lib/i18n'
+import type { Locale } from '#/lib/i18n'
 
 const defaultAgentCards = [
   {

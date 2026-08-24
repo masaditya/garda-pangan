@@ -1,3 +1,4 @@
+import { marked } from 'marked'
 import { SectionShell } from './section-shell'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
@@ -5,6 +6,9 @@ export function AboutHistorySection({ data }: { data?: any }) {
   const title = data?.historyTitle || 'Sejarah Kami'
   const content1 = data?.historyContent1 || ''
   const content2 = data?.historyContent2 || ''
+
+  const htmlContent1 = content1 ? (marked.parse(content1) as string) : ''
+  const htmlContent2 = content2 ? (marked.parse(content2) as string) : ''
 
   const imageUrl1 = normalizeStrapiMediaUrl(data?.historyImage1?.url)
   const imageUrl2 = normalizeStrapiMediaUrl(data?.historyImage2?.url)
@@ -31,11 +35,12 @@ export function AboutHistorySection({ data }: { data?: any }) {
                 className="float-left w-1/3 mr-6 mb-4 object-cover"
               />
             )}
-            <div className="whitespace-pre-wrap">{content1}</div>
+            <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: htmlContent1 }} />
           </div>
-          <div className="mt-8 lg:mt-20 space-y-6 text-xl leading-relaxed text-garda-ink-soft whitespace-pre-wrap">
-            {content2}
-          </div>
+          <div
+            className="mt-8 lg:mt-20 space-y-6 text-xl leading-relaxed text-garda-ink-soft whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: htmlContent2 }}
+          />
         </div>
 
         <div className="lg:col-span-7 lg:pl-8">
@@ -49,7 +54,7 @@ export function AboutHistorySection({ data }: { data?: any }) {
                 className="float-left w-1/3 mr-6 mb-4 object-cover"
               />
             )}
-            <div className="whitespace-pre-wrap">{content1}</div>
+            <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: htmlContent1 }} />
           </div>
 
           <div className="relative aspect-square sm:aspect-[4/3] w-full mt-16 sm:mt-24">

@@ -19,7 +19,6 @@ export function AgentChangeBanner({
   personImage,
   locale = 'id',
 }: AgentChangeBannerProps) {
-  console.log(personImage)
   return (
     <section aria-labelledby="agent-banner-heading" className="overflow-hidden">
       {/* Split-screen: photo left, content right */}
@@ -38,7 +37,7 @@ export function AgentChangeBanner({
         </div>
 
         {/* Right: dark green content panel */}
-        <div className="relative flex w-full lg:w-1/2 flex-col items-start justify-center gap-6 bg-[#0e2f1a] px-8 py-12 sm:px-12 sm:py-16 lg:px-16">
+        <div className="relative flex w-full lg:w-1/2 flex-col items-start justify-center gap-6 bg-[#0A5A2F] px-8 py-12 sm:px-12 sm:py-16 lg:px-16">
           <div className="flex flex-col items-start gap-4">
             <h2
               id="agent-banner-heading"

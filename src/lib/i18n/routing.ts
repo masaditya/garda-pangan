@@ -5,7 +5,18 @@ export function getLocalePrefix(locale: Locale) {
 }
 
 export function localizedPath(path: string, locale: Locale = DEFAULT_LOCALE) {
-  if (!path || path.startsWith('http') || path.startsWith('#')) {
+  if (!path) {
+    return path
+  }
+  if (path.includes('wa.me')) {
+    return path.startsWith('http://') || path.startsWith('https://')
+      ? path
+      : `https://${path}`
+  }
+  if (path.startsWith('mailto:') || path.includes('mailto:')) {
+    return path
+  }
+  if (path.startsWith('http') || path.startsWith('#')) {
     return path
   }
   const normalized = path.startsWith('/') ? path : `/${path}`
