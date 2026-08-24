@@ -119,7 +119,7 @@ function AwardCard({
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="pointer-events-none absolute -right-10 -bottom-5 w-24 h-auto object-contain lg:w-32"
+          className="pointer-events-none absolute -right-5 -bottom-5 w-20 h-auto object-contain lg:w-20"
         />
       </CardContent>
     </Card>
@@ -141,18 +141,18 @@ export function AwardsSection({ title, awards }: AwardsSectionProps) {
   const displayAwards =
     awards && awards.length > 0
       ? awards.map((a) => {
-          const imageUrl = Array.isArray(a.images)
-            ? a.images[0]?.url
-            : a.images?.url
-          return {
-            id: `award-${a.id}`,
-            year: a.year,
-            title: a.title,
-            awardByLogo:
-              normalizeStrapiMediaUrl(a.awardByLogo?.url) || undefined,
-            image: normalizeStrapiMediaUrl(imageUrl) || undefined,
-          }
-        })
+        const imageUrl = Array.isArray(a.images)
+          ? a.images[0]?.url
+          : a.images?.url
+        return {
+          id: `award-${a.id}`,
+          year: a.year,
+          title: a.title,
+          awardByLogo:
+            normalizeStrapiMediaUrl(a.awardByLogo?.url) || undefined,
+          image: normalizeStrapiMediaUrl(imageUrl) || undefined,
+        }
+      })
       : defaultAwards
 
   return (
@@ -222,13 +222,13 @@ export function InstagramSection({ title, posts }: InstagramSectionProps) {
   const displayPosts =
     posts && posts.length > 0
       ? posts.map((p) => ({
-          id: `ig-${p.id}`,
-          src:
-            normalizeStrapiMediaUrl(p.image?.url) ||
-            '/figma/instagram/post-1.png',
-          alt: p.title || 'Instagram post',
-          href: p.instagramLink || null,
-        }))
+        id: `ig-${p.id}`,
+        src:
+          normalizeStrapiMediaUrl(p.image?.url) ||
+          '/figma/instagram/post-1.png',
+        alt: p.title || 'Instagram post',
+        href: p.instagramLink || null,
+      }))
       : defaultInstagramPosts.map((p) => ({ ...p, href: null }))
 
   return (
