@@ -57,27 +57,25 @@ export function AboutHistorySection({ data }: { data?: any }) {
             <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: htmlContent1 }} />
           </div>
 
-          <div className="relative aspect-square sm:aspect-[4/3] w-full mt-16 sm:mt-24">
-            {imageUrl2 && (
-              <img
-                src={imageUrl2}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute left-0 top-0 w-[60%] h-[75%] object-contain"
-              />
-            )}
+          {imageUrl2 && (
+            <img
+              src={imageUrl2}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="w-full object-contain"
+            />
+          )}
 
-            {imageUrl3 && (
-              <img
-                src={imageUrl3}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute right-0 bottom-0 w-[60%] h-[70%] object-contain z-10"
-              />
-            )}
-          </div>
+          {imageUrl3 && (
+            <img
+              src={imageUrl3}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="w-full object-contain"
+            />
+          )}
         </div>
       </div>
     </SectionShell>
