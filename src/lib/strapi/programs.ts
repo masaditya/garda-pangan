@@ -74,11 +74,11 @@ export function mapProgramToDetailButtons(
     })
   }
 
-  buttons.push({
-    text: partnerCta,
-    href: localizedPath('/kontak', locale),
-    variant: 'primary',
-  })
+  // buttons.push({
+  //   text: partnerCta,
+  //   href: localizedPath('/kontak', locale),
+  //   variant: 'primary',
+  // })
 
   return buttons
 }

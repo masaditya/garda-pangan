@@ -54,7 +54,7 @@ export function AgentChangeBanner({
           <GardaButton
             href={localizedPath(ctaLink || '/relawan', locale)}
             variant="impact"
-            className="min-w-[180px]"
+            className="min-w-[180px] bg-(--forest-950) hover:!bg-(--forest-950)"
           >
             {ctaText || 'MULAI'}
           </GardaButton>
