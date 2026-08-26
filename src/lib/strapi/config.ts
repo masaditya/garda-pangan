@@ -1,4 +1,4 @@
-const DEFAULT_STRAPI_URL = 'https://garda.naufaldi.com'
+const DEFAULT_STRAPI_URL = 'https://gardapangan.org'
 
 export function getStrapiBaseUrl() {
   const env = import.meta.env
