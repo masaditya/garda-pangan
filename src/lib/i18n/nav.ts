@@ -61,10 +61,10 @@ export function getFooterSecondaryLinks(locale: Locale, messages: Messages) {
       label: messages.footer.aboutUs,
       href: localizedPath('/tentang-kami', locale),
     },
-    {
-      label: messages.footer.testimonials,
-      href: localizedPath('/penerima', locale),
-    }
+    // {
+    //   label: messages.footer.testimonials,
+    //   href: localizedPath('/penerima', locale),
+    // }
   
     // { label: messages.footer.terms, href: '#' },
     // { label: messages.footer.privacy, href: '#' },

@@ -179,7 +179,7 @@ function HeroScrollSequenceStatic({
         <div className="absolute inset-0 bg-garda-forest-deep/20" />
         <div className="absolute inset-0 bg-linear-to-b from-garda-forest-deep/10 via-transparent to-garda-forest-deep/55" />
 
-        <div className="relative z-10 flex min-h-screen flex-col justify-end px-6 pb-24 pt-32 sm:px-12 md:px-16 lg:px-24">
+        {/* <div className="relative z-10 flex min-h-screen flex-col justify-end px-6 pb-24 pt-32 sm:px-12 md:px-16 lg:px-24">
           <div
             data-testid="hero-impact-stats"
             className="mx-auto grid w-full max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4"
@@ -218,7 +218,7 @@ function HeroScrollSequenceStatic({
               )
             })}
           </div>
-        </div>
+        </div> */}
       </section>
 
       <DidYouKnowSection
@@ -612,9 +612,9 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
           className="pointer-events-none absolute inset-0 z-30 flex items-center opacity-0"
         >
           <div className="pointer-events-auto w-full px-6 sm:px-12 md:px-16 lg:px-24">
-            <div className="relative mx-auto max-w-5xl mt-12">
+            <div className="relative mx-auto max-w-5xl mt-6 md:mt-12">
               {/* Top Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-10 overflow-hidden shadow-2xl">
+              <div className="relative bg-[#0d2b14] rounded-[2rem] p-5 md:p-10 overflow-hidden shadow-2xl">
                 {/* Watermark Logo Placeholder */}
                 <div className="absolute -bottom-16 -left-16 text-white/5 opacity-20 pointer-events-none">
                   <svg
@@ -627,9 +627,9 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                   </svg>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 relative z-10">
-                  <div>
-                    <h2 className="text-garda-sun font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.1]">
+                <div className="grid md:grid-cols-2 gap-4 md:gap-8 relative z-10">
+                  <div className="flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start gap-4 md:gap-0">
+                    <h2 className="text-garda-sun font-serif text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.1]">
                       {(() => {
                         const raw = props.didYouKnowTitle ?? 'Tahukah Kamu?'
                         // If string contains explicit newlines, render them
@@ -657,7 +657,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                         return raw
                       })()}
                     </h2>
-                    <GardaLogo className="mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-150 origin-top-left" />
+                    <GardaLogo className="md:mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-110 md:scale-150 origin-right md:origin-top-left shrink-0" />
                   </div>
                   <div className="flex flex-col justify-between items-end w-full max-w-md ml-auto">
                     <DidYouKnowCarouselInternal
@@ -668,7 +668,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               </div>
 
               {/* Person Image */}
-              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[42%] md:top-[10%] z-10 w-[160px] md:w-[300px] pointer-events-none">
+              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[42%] md:top-[10%] z-10 w-[120px] sm:w-[140px] md:w-[300px] pointer-events-none">
                 <img
                   src="/hero-facts.png"
                   alt="Volunteer"
@@ -679,8 +679,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               </div>
 
               {/* Bottom Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-8 mt-16 md:mt-24 z-20 shadow-2xl">
-                <div className="grid grid-cols-1 md:grid-cols-2  gap-3 md:gap-5">
+              <div className="relative bg-[#0d2b14] rounded-[2rem] p-4 sm:p-5 md:p-8 mt-6 sm:mt-10 md:mt-24 z-20 shadow-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2  gap-2 md:gap-5">
                   {metrics.slice(0, 4).map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/)
                     const numStr = numMatch ? numMatch[0] : ''
