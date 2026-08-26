@@ -185,6 +185,8 @@ function HeroScrollSequenceStatic({
             className="mx-auto grid w-full max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4"
           >
             {metrics.map((metric) => {
+              const numMatch = metric.value.match(/[\d,.]+/)
+              const numStr = numMatch ? numMatch[0] : ''
               const [unit, ...restLabel] = metric.label.split(' ')
               const remainingLabel = restLabel.join(' ')
 
@@ -192,7 +194,16 @@ function HeroScrollSequenceStatic({
                 <div key={metric.label} className="text-left flex flex-col">
                   <div className="flex items-baseline gap-2 text-garda-sun">
                     <span className="font-serif text-[clamp(2rem,4vw,3.25rem)] leading-none">
-                      {metric.value}
+                      {numStr ? (
+                        <span
+                          className="impact-number"
+                          data-value={numStr.replace(/,/g, '')}
+                        >
+                          0
+                        </span>
+                      ) : (
+                        metric.value
+                      )}
                     </span>
                     {unit && (
                       <span className="text-sm font-medium uppercase tracking-widest sm:text-base">
@@ -230,12 +241,12 @@ function DidYouKnowCarouselInternal({
     slides && slides.length > 0
       ? slides
       : [
-          {
-            id: 'default',
-            content:
-              '“Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”',
-          },
-        ]
+        {
+          id: 'default',
+          content:
+            '“Kalau sepertiga makanan yang diproduksi di seluruh dunia terbuang sia-sia? Kerugian ekonomi yang ditimbulkan juga luar biasa besar!”',
+        },
+      ]
 
   return (
     <Carousel
@@ -669,7 +680,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
               {/* Bottom Card */}
               <div className="relative bg-[#0d2b14] rounded-[2rem] p-6 md:p-8 mt-16 md:mt-24 z-20 shadow-2xl">
-                <div className="grid grid-cols-2 gap-3 md:gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2  gap-3 md:gap-5">
                   {metrics.slice(0, 4).map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/)
                     const numStr = numMatch ? numMatch[0] : ''
