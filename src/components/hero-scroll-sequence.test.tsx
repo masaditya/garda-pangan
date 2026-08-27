@@ -117,7 +117,7 @@ describe('HeroScrollSequence', () => {
 
   test('keeps facts overlay, volunteer, and impact stats reachable inside the short pin viewport', async () => {
     mockMatchMedia(false)
-    const { ScrollTrigger } = await import('#/lib/gsap-client')
+    const { gsap, ScrollTrigger } = await import('#/lib/gsap-client')
     render(<HeroScrollSequence />)
 
     const pin = screen.getByTestId('hero-scroll-pin')
@@ -126,10 +126,17 @@ describe('HeroScrollSequence', () => {
     const stats = screen.getByTestId('hero-impact-stats')
 
     expect(pin.className).toMatch(/overflow-hidden/)
-    expect(pin.className).toMatch(/h-dvh|min-h-dvh/)
     expect(overlay.className).toMatch(/overflow-y-auto/)
+    expect(overlay.className).toMatch(/safe-area-inset-top/)
+    expect(stats.className).toMatch(/grid-cols-2/)
+    expect(stats.className).toMatch(/min-height:760px/)
     expect(volunteer.getAttribute('alt')).toMatch(/volunteer/i)
     expect(stats.textContent).toMatch(/food rescued/i)
+    expect(gsap.timeline).toHaveBeenCalledWith(
+      expect.objectContaining({
+        scrollTrigger: expect.objectContaining({ pinType: 'fixed' }),
+      }),
+    )
     expect(ScrollTrigger.config).toHaveBeenCalled()
     expect(ScrollTrigger.normalizeScroll).toHaveBeenCalled()
   })
