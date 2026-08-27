@@ -1,10 +1,12 @@
 import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
+import sitemap from '@astrojs/sitemap'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
+  site: 'https://gardapangan.org',
   output: 'static',
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
     resolve: {
