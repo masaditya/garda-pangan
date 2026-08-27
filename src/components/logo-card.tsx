@@ -16,7 +16,7 @@ export function LogoCard({ children, className, ...props }: LogoCardProps) {
       )}
       {...props}
     >
-      <CardContent className="flex min-h-[10.5rem] items-center justify-center px-8 py-16">
+      <CardContent className="flex min-h-[10.5rem] items-center justify-center px-6 py-12">
         {children}
       </CardContent>
     </Card>
