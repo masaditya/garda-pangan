@@ -97,7 +97,7 @@ export default function Header({
   const homeHref = localizedPath('/', locale)
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-6 z-50">
+    <header className="pointer-events-none fixed inset-x-0 top-[max(1.5rem,env(safe-area-inset-top))] z-50">
       <SiteContainer>
         <div className="pointer-events-auto flex min-h-[72px] items-center justify-between gap-4 rounded-full border border-white/60 bg-white/95 px-6 py-2 shadow-[0_24px_60px_rgba(13,42,22,0.12)] backdrop-blur-xl sm:px-8">
           <a

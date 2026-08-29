@@ -6,6 +6,7 @@ import { HeroScrollSequence } from './hero-scroll-sequence'
 const timelineMock = {
   to: vi.fn().mockReturnThis(),
   fromTo: vi.fn().mockReturnThis(),
+  call: vi.fn().mockReturnThis(),
 }
 
 vi.mock('#/lib/gsap-client', () => ({
@@ -21,6 +22,8 @@ vi.mock('#/lib/gsap-client', () => ({
   ScrollTrigger: {
     refresh: vi.fn(),
     isScrolling: vi.fn(() => false),
+    config: vi.fn(),
+    normalizeScroll: vi.fn(),
   },
 }))
 
@@ -85,9 +88,9 @@ describe('HeroScrollSequence', () => {
         screen.getByTestId('hero-reveal-image') as HTMLImageElement
       ).getAttribute('src'),
     ).toBe('/garda-hero-reference.png')
-    expect(screen.getByText(/portions of food rescued/i)).toBeTruthy()
+    expect(screen.getByText(/food rescued/i)).toBeTruthy()
     expect(
-      screen.getByRole('heading', { name: /tahukah kamu\?/i }),
+      screen.getByRole('heading', { name: /tahukah/i }),
     ).toBeTruthy()
     expect(screen.getByRole('link', { name: /scroll ke konten/i })).toBeTruthy()
     expect(gsap.timeline).toHaveBeenCalled()
@@ -110,5 +113,31 @@ describe('HeroScrollSequence', () => {
 
     expect(screen.getByTestId('hero-scroll-sequence-static')).toBeTruthy()
     expect(screen.queryByTestId('hero-scroll-sequence')).toBeNull()
+  })
+
+  test('keeps facts overlay, volunteer, and impact stats reachable inside the short pin viewport', async () => {
+    mockMatchMedia(false)
+    const { gsap, ScrollTrigger } = await import('#/lib/gsap-client')
+    render(<HeroScrollSequence />)
+
+    const pin = screen.getByTestId('hero-scroll-pin')
+    const overlay = screen.getByTestId('hero-facts-overlay')
+    const volunteer = screen.getByTestId('hero-facts-volunteer')
+    const stats = screen.getByTestId('hero-impact-stats')
+
+    expect(pin.className).toMatch(/overflow-hidden/)
+    expect(overlay.className).toMatch(/overflow-y-auto/)
+    expect(overlay.className).toMatch(/safe-area-inset-top/)
+    expect(stats.className).toMatch(/grid-cols-2/)
+    expect(stats.className).toMatch(/min-height:760px/)
+    expect(volunteer.getAttribute('alt')).toMatch(/volunteer/i)
+    expect(stats.textContent).toMatch(/food rescued/i)
+    expect(gsap.timeline).toHaveBeenCalledWith(
+      expect.objectContaining({
+        scrollTrigger: expect.objectContaining({ pinType: 'fixed' }),
+      }),
+    )
+    expect(ScrollTrigger.config).toHaveBeenCalled()
+    expect(ScrollTrigger.normalizeScroll).toHaveBeenCalled()
   })
 })

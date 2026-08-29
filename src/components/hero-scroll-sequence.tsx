@@ -92,6 +92,28 @@ function getCircleClip(
   return `circle(${radius}px at ${cx}px ${cy}px)`
 }
 
+function readVisualViewportHeight() {
+  if (typeof window === 'undefined') {
+    return 0
+  }
+
+  return window.visualViewport?.height ?? window.innerHeight
+}
+
+function applyVisualViewportHeight(
+  wrapper: HTMLElement,
+  pin: HTMLElement,
+) {
+  const viewportHeight = readVisualViewportHeight()
+  if (!viewportHeight) {
+    return
+  }
+
+  pin.style.height = `${viewportHeight}px`
+  pin.style.minHeight = `${viewportHeight}px`
+  wrapper.style.height = `${(SCROLL_DISTANCE_VH / 100) * viewportHeight}px`
+}
+
 function readMotionPreference() {
   if (typeof window === 'undefined') {
     return false
@@ -258,7 +280,7 @@ function DidYouKnowCarouselInternal({
       <CarouselContent>
         {items.map((slide) => (
           <CarouselItem key={slide.id}>
-            <p className="text-white text-lg md:text-xl font-medium leading-relaxed text-right pb-20">
+            <p className="text-right pb-8 text-sm font-medium leading-relaxed text-white sm:text-lg [@media(min-height:760px)]:pb-20 [@media(min-height:760px)]:text-base md:text-xl">
               {slide.content}
             </p>
           </CarouselItem>
@@ -357,6 +379,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
     }
 
     ensureGsapPlugins()
+    ScrollTrigger.config({ ignoreMobileResize: true })
+    ScrollTrigger.normalizeScroll(true)
 
     const html = document.documentElement
     html.dataset.heroScroll = 'active'
@@ -408,6 +432,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
           end: 'bottom bottom',
           scrub: 0.45,
           pin,
+          pinType: 'fixed',
           pinSpacing: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
@@ -478,6 +503,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
     }, wrapper)
 
     const refreshScroll = () => {
+      applyVisualViewportHeight(wrapper, pin)
       const currentPortal = syncPortal()
       if (currentPortal) {
         revealState.maxRadius = getMaxCircleRadius(currentPortal, pin)
@@ -486,11 +512,15 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       ScrollTrigger.refresh()
     }
 
+    applyVisualViewportHeight(wrapper, pin)
+
     const refreshFrame = window.requestAnimationFrame(refreshScroll)
     const refreshTimeout = window.setTimeout(refreshScroll, 250)
 
     window.addEventListener('load', refreshScroll)
     window.addEventListener('resize', refreshScroll)
+    window.visualViewport?.addEventListener('resize', refreshScroll)
+    window.visualViewport?.addEventListener('scroll', refreshScroll)
     document.fonts?.ready.then(refreshScroll).catch(() => undefined)
 
     setIsScrollReady(true)
@@ -500,6 +530,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       window.clearTimeout(refreshTimeout)
       window.removeEventListener('load', refreshScroll)
       window.removeEventListener('resize', refreshScroll)
+      window.visualViewport?.removeEventListener('resize', refreshScroll)
+      window.visualViewport?.removeEventListener('scroll', refreshScroll)
       delete html.dataset.heroScroll
       setIsScrollReady(false)
       ctx.revert()
@@ -516,11 +548,12 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       data-testid="hero-scroll-sequence"
       data-scroll-ready={isScrollReady ? 'true' : 'false'}
       className="relative"
-      style={{ height: `${SCROLL_DISTANCE_VH}vh` }}
+      style={{ height: `${SCROLL_DISTANCE_VH}dvh` }}
     >
       <div
         ref={pinRef}
-        className="relative h-svh min-h-svh w-full overflow-hidden bg-garda-forest-deep"
+        data-testid="hero-scroll-pin"
+        className="relative h-dvh min-h-dvh w-full overflow-hidden bg-garda-forest-deep"
       >
         {heroBgUrl ? (
           <div
@@ -609,12 +642,13 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
         <div
           ref={factsRef}
-          className="pointer-events-none absolute inset-0 z-30 flex items-center opacity-0"
+          data-testid="hero-facts-overlay"
+          className="pointer-events-none absolute inset-0 z-30 overflow-y-auto overscroll-contain pt-[calc(env(safe-area-inset-top,0px)+6.75rem)] pb-3 opacity-0"
         >
-          <div className="pointer-events-auto w-full px-6 sm:px-12 md:px-16 lg:px-24">
-            <div className="relative mx-auto max-w-5xl mt-6 md:mt-12">
+          <div className="pointer-events-auto flex min-h-full w-full items-start px-4 sm:px-12 sm:items-center md:px-16 lg:px-24">
+            <div className="relative mx-auto w-full max-w-5xl">
               {/* Top Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-5 md:p-10 overflow-hidden shadow-2xl">
+              <div className="relative overflow-hidden rounded-[1.5rem] bg-[#0d2b14] p-3 shadow-2xl sm:rounded-[2rem] sm:p-5 md:p-10">
                 {/* Watermark Logo Placeholder */}
                 <div className="absolute -bottom-16 -left-16 text-white/5 opacity-20 pointer-events-none">
                   <svg
@@ -629,7 +663,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
                 <div className="grid md:grid-cols-2 gap-4 md:gap-8 relative z-10">
                   <div className="flex flex-row md:flex-col items-center md:items-start justify-between md:justify-start gap-4 md:gap-0">
-                    <h2 className="text-garda-sun font-serif text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.1]">
+                    <h2 className="text-garda-sun font-serif text-[clamp(1.35rem,6.4vw,1.85rem)] leading-[1.1] [@media(min-height:760px)]:text-[clamp(1.75rem,4vw,3.5rem)]">
                       {(() => {
                         const raw = props.didYouKnowTitle ?? 'Tahukah Kamu?'
                         // If string contains explicit newlines, render them
@@ -657,7 +691,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                         return raw
                       })()}
                     </h2>
-                    <GardaLogo className="md:mt-6 opacity-30 invert brightness-0 pointer-events-none transform scale-110 md:scale-150 origin-right md:origin-top-left shrink-0" />
+                    <GardaLogo className="hidden shrink-0 origin-right scale-90 opacity-30 invert brightness-0 pointer-events-none [@media(min-height:760px)]:block md:mt-6 md:origin-top-left md:scale-150" />
                   </div>
                   <div className="flex flex-col justify-between items-end w-full max-w-md ml-auto">
                     <DidYouKnowCarouselInternal
@@ -668,19 +702,22 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               </div>
 
               {/* Person Image */}
-              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[35%] md:top-[10%] z-10 w-[120px] sm:w-[140px] md:w-[300px] pointer-events-none">
+              <div className="pointer-events-none absolute top-[28%] left-1/3 z-10 hidden w-[88px] -translate-x-1/2 [@media(min-height:760px)]:block sm:w-[140px] md:top-[10%] md:left-1/2 md:w-[300px]">
                 <img
                   src="/hero-facts.png"
                   alt="Volunteer"
+                  data-testid="hero-facts-volunteer"
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-auto drop-shadow-2xl"
+                  className="h-auto w-full drop-shadow-2xl"
                 />
               </div>
 
               {/* Bottom Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-4 sm:p-5 md:p-8 mt-6 sm:mt-10 md:mt-24 z-20 shadow-2xl">
-                <div className="grid grid-cols-1 md:grid-cols-2  gap-2 md:gap-5">
+              <div
+                data-testid="hero-impact-stats"
+                className="relative z-20 mt-3 grid grid-cols-2 gap-x-3 gap-y-2 rounded-[1.5rem] bg-[#0d2b14] p-3 shadow-2xl sm:mt-10 sm:rounded-[2rem] sm:p-5 md:mt-24 md:grid-cols-2 md:p-8 [@media(min-height:760px)]:mt-4 [@media(min-height:760px)]:grid-cols-1 [@media(min-height:760px)]:md:grid-cols-2"
+              >
                   {metrics.slice(0, 4).map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/)
                     const numStr = numMatch ? numMatch[0] : ''
@@ -690,7 +727,7 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                     return (
                       <div key={metric.label}>
                         <div className="flex items-baseline gap-1.5 text-garda-sun mb-2 flex-wrap xl:flex-nowrap">
-                          <span className="font-serif text-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem] tracking-tighter">
+                          <span className="font-serif text-lg tracking-tighter [@media(min-height:760px)]:text-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem]">
                             {numStr ? (
                               <span
                                 className="impact-number"
@@ -714,7 +751,6 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
                       </div>
                     )
                   })}
-                </div>
               </div>
             </div>
           </div>
