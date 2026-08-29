@@ -3,6 +3,20 @@ import { marked } from 'marked'
 import { ChevronDown } from 'lucide-react'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 import type { ProgramDetailButton } from '#/lib/strapi/programs'
+
+function renderMd(text: string): string {
+  if (!text) return ''
+  const html = marked.parse(text) as string
+  return html
+    // Inline styles for marked-parsed em/strong
+    .replace(/<em>/g, '<em style="font-style:italic">')
+    .replace(/<strong>/g, '<strong style="font-weight:700">')
+    // Fallback: handle _text_ that marked v18 might not parse as em
+    .replace(/(?<![\w])_([^_\n]+?)_(?![\w])/g, '<em style="font-style:italic">$1</em>')
+    // Fallback: **text**
+    .replace(/\*\*([^*\n]+?)\*\*/g, '<strong style="font-weight:700">$1</strong>')
+}
+
 import { localizedPath } from '#/lib/i18n/routing'
 import { DEFAULT_LOCALE, type Locale } from '#/lib/i18n/locales'
 import { GardaButton } from './garda-button'
@@ -98,7 +112,7 @@ export function ProgramListSection({
                     (button) => !isMoreDetailsButton(button),
                   ) || []
                 const imageUrl = getImageUrl(program.image)
-                const contentHtml = marked.parse(program.description) || ""
+                const contentHtml = renderMd(program.description)
                 return (
                   <li key={`${program.title}-${index}`}>
                     <button
@@ -156,10 +170,8 @@ export function ProgramListSection({
                             </div>
                             <div className="flex w-full flex-col justify-start">
                               <div
-                                className="prose prose-garda prose-sm sm:prose-base max-w-none text-garda-forest/80 mb-6"
-                                dangerouslySetInnerHTML={{
-                                  __html: contentHtml,
-                                }}
+                                className="prose prose-sm max-w-none text-garda-forest/80 mb-6"
+                                dangerouslySetInnerHTML={{ __html: contentHtml }}
                               />
                               {modalButtons.length > 0 ? (
                                 <div className="flex flex-wrap items-center gap-4 mt-auto">

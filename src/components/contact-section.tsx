@@ -1,7 +1,23 @@
+import { marked } from 'marked'
 import { ArrowRight } from 'lucide-react'
 import { normalizeStrapiMediaUrl } from '#/lib/strapi/client'
 
 import type { ContactCategory } from '#/lib/i18n/contact'
+
+function renderMd(text: string): string {
+  if (!text) return ''
+  const html = marked.parse(text) as string
+  return html
+    // Inline styles for marked-parsed em/strong
+    .replace(/<em>/g, '<em style="font-style:italic">')
+    .replace(/<strong>/g, '<strong style="font-weight:700">')
+    // Fallback: handle _text_ that marked v18 might not parse as em
+    .replace(/(?<![\w])_([^_\n]+?)_(?![\w])/g, '<em style="font-style:italic">$1</em>')
+    // Fallback: **text**
+    .replace(/\*\*([^*\n]+?)\*\*/g, '<strong style="font-weight:700">$1</strong>')
+}
+
+
 
 type ContactSectionProps = {
   titleLine1: string
@@ -18,7 +34,6 @@ export function ContactSection({
   illustrationLabel,
   categories,
 }: ContactSectionProps) {
-  console.log(categories)
   return (
     <div className="relative w-full">
       <section className="relative flex min-h-[85vh] flex-col items-start justify-center px-6 text-left">
@@ -66,9 +81,10 @@ export function ContactSection({
                 <h3 className="mb-4 font-sans text-xl leading-tight tracking-wider text-black/80 uppercase">
                   {cat.title}
                 </h3>
-                <p className="mb-8 text-lg font-medium leading-relaxed text-black/70">
-                  {cat.description}
-                </p>
+                <div
+                  className="mb-8 text-base leading-relaxed text-black/70"
+                  dangerouslySetInnerHTML={{ __html: renderMd(cat.description ?? '') }}
+                />
                 <div className="mt-auto self-end">
                   <a
                     href={cat.buttonLink}
