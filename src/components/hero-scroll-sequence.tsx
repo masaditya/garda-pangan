@@ -258,7 +258,7 @@ function DidYouKnowCarouselInternal({
       <CarouselContent>
         {items.map((slide) => (
           <CarouselItem key={slide.id}>
-            <p className="text-white text-lg md:text-xl font-medium leading-relaxed text-right pb-20">
+            <p className="text-right pb-12 text-base font-medium leading-relaxed text-white sm:text-lg md:pb-20 md:text-xl">
               {slide.content}
             </p>
           </CarouselItem>
@@ -357,6 +357,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
     }
 
     ensureGsapPlugins()
+    ScrollTrigger.config({ ignoreMobileResize: true })
+    ScrollTrigger.normalizeScroll(true)
 
     const html = document.documentElement
     html.dataset.heroScroll = 'active'
@@ -491,6 +493,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
     window.addEventListener('load', refreshScroll)
     window.addEventListener('resize', refreshScroll)
+    window.visualViewport?.addEventListener('resize', refreshScroll)
+    window.visualViewport?.addEventListener('scroll', refreshScroll)
     document.fonts?.ready.then(refreshScroll).catch(() => undefined)
 
     setIsScrollReady(true)
@@ -500,6 +504,8 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       window.clearTimeout(refreshTimeout)
       window.removeEventListener('load', refreshScroll)
       window.removeEventListener('resize', refreshScroll)
+      window.visualViewport?.removeEventListener('resize', refreshScroll)
+      window.visualViewport?.removeEventListener('scroll', refreshScroll)
       delete html.dataset.heroScroll
       setIsScrollReady(false)
       ctx.revert()
@@ -516,11 +522,12 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
       data-testid="hero-scroll-sequence"
       data-scroll-ready={isScrollReady ? 'true' : 'false'}
       className="relative"
-      style={{ height: `${SCROLL_DISTANCE_VH}vh` }}
+      style={{ height: `${SCROLL_DISTANCE_VH}dvh` }}
     >
       <div
         ref={pinRef}
-        className="relative h-svh min-h-svh w-full overflow-hidden bg-garda-forest-deep"
+        data-testid="hero-scroll-pin"
+        className="relative h-dvh min-h-dvh w-full overflow-hidden bg-garda-forest-deep"
       >
         {heroBgUrl ? (
           <div
@@ -609,12 +616,13 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
 
         <div
           ref={factsRef}
-          className="pointer-events-none absolute inset-0 z-30 flex items-center opacity-0"
+          data-testid="hero-facts-overlay"
+          className="pointer-events-none absolute inset-0 z-30 overflow-y-auto opacity-0"
         >
-          <div className="pointer-events-auto w-full px-6 sm:px-12 md:px-16 lg:px-24">
-            <div className="relative mx-auto max-w-5xl mt-6 md:mt-12">
+          <div className="pointer-events-auto flex min-h-full w-full items-center px-4 py-24 sm:px-12 md:px-16 lg:px-24">
+            <div className="relative mx-auto w-full max-w-5xl">
               {/* Top Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-5 md:p-10 overflow-hidden shadow-2xl">
+              <div className="relative overflow-hidden rounded-[2rem] bg-[#0d2b14] p-4 shadow-2xl sm:p-5 md:p-10">
                 {/* Watermark Logo Placeholder */}
                 <div className="absolute -bottom-16 -left-16 text-white/5 opacity-20 pointer-events-none">
                   <svg
@@ -668,19 +676,23 @@ export function HeroScrollSequence(props: HeroScrollSequenceProps) {
               </div>
 
               {/* Person Image */}
-              <div className="absolute left-1/3 md:left-1/2 -translate-x-1/2 top-[35%] md:top-[10%] z-10 w-[120px] sm:w-[140px] md:w-[300px] pointer-events-none">
+              <div className="pointer-events-none absolute top-[28%] left-1/3 z-10 w-[88px] -translate-x-1/2 sm:top-[35%] sm:w-[140px] md:top-[10%] md:left-1/2 md:w-[300px]">
                 <img
                   src="/hero-facts.png"
                   alt="Volunteer"
+                  data-testid="hero-facts-volunteer"
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-auto drop-shadow-2xl"
+                  className="h-auto w-full drop-shadow-2xl"
                 />
               </div>
 
               {/* Bottom Card */}
-              <div className="relative bg-[#0d2b14] rounded-[2rem] p-4 sm:p-5 md:p-8 mt-6 sm:mt-10 md:mt-24 z-20 shadow-2xl">
-                <div className="grid grid-cols-1 md:grid-cols-2  gap-2 md:gap-5">
+              <div
+                data-testid="hero-impact-stats"
+                className="relative z-20 mt-4 rounded-[2rem] bg-[#0d2b14] p-4 shadow-2xl sm:mt-10 sm:p-5 md:mt-24 md:p-8"
+              >
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-5">
                   {metrics.slice(0, 4).map((metric) => {
                     const numMatch = metric.value.match(/[\d,.]+/)
                     const numStr = numMatch ? numMatch[0] : ''

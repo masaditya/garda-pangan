@@ -7,18 +7,21 @@ describe('Header', () => {
   test('renders Garda branding, nav links, and the active home state', () => {
     const { container } = render(<Header currentPath="/" />)
 
-    expect(screen.getByText(/garda pangan/i)).toBeTruthy()
+    expect(screen.getByRole('link', { name: /garda pangan/i })).toBeTruthy()
     expect(
       screen.getByRole('navigation', { name: /primary navigation/i }),
     ).toBeTruthy()
     expect(screen.getByRole('link', { name: /donasi/i })).toBeTruthy()
     expect(screen.getByRole('link', { name: /relawan/i })).toBeTruthy()
-    expect(screen.getByRole('link', { name: /berita/i })).toBeTruthy()
+    expect(screen.getByRole('link', { name: /knowledge/i })).toBeTruthy()
 
     const homeLink = screen.getByRole('link', { name: /^beranda$/i })
     expect(homeLink.getAttribute('aria-current')).toBe('page')
     expect(homeLink.className).toContain('text-garda-sun')
     expect(container.querySelector('.site-header')).toBeNull()
+    expect(screen.getByRole('banner').className).toMatch(
+      /safe-area-inset-top/,
+    )
   })
 
   test('marks the current section active on nested routes', () => {
