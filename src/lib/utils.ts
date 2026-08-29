@@ -13,7 +13,7 @@ export function getEmbedUrl(url : string): string | null {
     // Instagram Reel
     if (parsed.hostname.includes("instagram.com")) {
       const match = parsed.pathname.match(
-        /^\/reel\/([A-Za-z0-9_-]+)/
+        /^\/reels?\/([A-Za-z0-9_-]+)/
       );
 
       if (match) {
@@ -57,7 +57,7 @@ export function getEmbedType(url: string): EmbedType {
     const parsed = new URL(url)
 
     if (parsed.hostname.includes('instagram.com')) {
-      if (/^\/reel\//.test(parsed.pathname)) return 'reel'
+      if (/^\/reels?\//.test(parsed.pathname)) return 'reel'
     }
 
     if (
